@@ -26,13 +26,18 @@ int WRD_unique_id() {
     return ++idcnt_;
 }
 
+// Kalbos dalys, части речи:
+//      daiktavardis, noun, существительное (daikta = вещь, vardis = имя)
+//      būdvardis, adjective, прилагательное (būd = способ)
+//      veiksmazodis, verb, глагол (veiksma = действие)
+//      įvardis, pronoun, местоимение
 void WRD_pridelioti_zodis(AttributeType *cfg) {
     WordGeneric *p = 0;
     if (!cfg->is_dict()) {
         return;
     }
     if ((*cfg)[L"Type"].is_equal(L"daiktavardis")) {
-            p = new DaiktavardisGeneric(cfg);
+        p = new DaiktavardisGeneric(cfg);
     } else {
         printf_error(L"Undefined Type %s", (*cfg)[L"Type"].to_string());
     }

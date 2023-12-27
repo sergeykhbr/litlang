@@ -1,7 +1,7 @@
 {
   "Lang":"lt",
   "Items":[
-    {"Lang":"lt","Value":"daiktavardis","Type":"daiktavardis","Gimine":"Vyriskoji","Ru":["существительное"]},
-    {"Lang":"lt","Value":"linksnis","Type":"daiktavardis","Gimine":"V","Ru":["род"]}
+    {"Value":"daiktavardis","Type":"daiktavardis","Gimine":"Vyriskoji","Ru":["существительное"]},
+    {"Value":"linksnis","Type":"daiktavardis","Gimine":"V","Ru":["род"]}
   ]
 }
