@@ -63,8 +63,8 @@ typedef enum EParadigma {
 
 typedef enum EAtvejis {
     Vardininkas,    // Именительный падеж: Кто, что? (Kas?)
-    Kilmininkas,    // Родительный падеж: Кого, чего? (Ko?)
-    Naudininkas,    // Дательный падеж: Кому, чему? (Kam?)
+    Kilmininkas,    // Родительный падеж: Кого, чего? (Ko?) (kilminis = родной)
+    Naudininkas,    // Дательный падеж: Кому, чему? (Kam?) (naudinis = полезный)
     Galininkas,     // Винительный падеж? Кого, что? (Ką?)
     Inagininkas,    // Творительный падеж? Кем, чем? (Kuo?)
     Vietininkas,    // Местный падеж? Где, в ком, в чем? (Kur, kame?)
