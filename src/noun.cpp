@@ -250,16 +250,16 @@ void DaiktavardisGeneric::atnaujinti() {
         break;
 
     case Paradigma_2_ia:
-        lentele_[Skaicus_Vienaskaita][Vardininkas] = saknis + std::wstring(L"ia");  // именительный. višnia
+        lentele_[Skaicus_Vienaskaita][Vardininkas] = saknis + std::wstring(L"ia");  // именительный. vyšnia
         lentele_[Skaicus_Vienaskaita][Kilmininkas] = saknis + std::wstring(L"ios");   // родительный. vyšnios
         lentele_[Skaicus_Vienaskaita][Naudininkas] = saknis + std::wstring(L"iai");  // дательный/полезный. vyšniai
         lentele_[Skaicus_Vienaskaita][Galininkas] = saknis + std::wstring(L"ią");    // винительный/могущий. višnią
-        lentele_[Skaicus_Vienaskaita][Inagininkas] = saknis + std::wstring(L"ia");   // творительный. višnia
-        lentele_[Skaicus_Vienaskaita][Vietininkas] = saknis + std::wstring(L"ioje");  // местный. višnioje
-        lentele_[Skaicus_Vienaskaita][Sauksmininkas] = saknis + std::wstring(L"ia");  // звательный. višnia
+        lentele_[Skaicus_Vienaskaita][Inagininkas] = saknis + std::wstring(L"ia");   // творительный. vyšnia
+        lentele_[Skaicus_Vienaskaita][Vietininkas] = saknis + std::wstring(L"ioje");  // местный. vyšnioje
+        lentele_[Skaicus_Vienaskaita][Sauksmininkas] = saknis + std::wstring(L"ia");  // звательный. vyšnia
 
-        lentele_[Skaicus_Daugiskaita][Vardininkas] = saknis + std::wstring(L"ios");  // višnios
-        lentele_[Skaicus_Daugiskaita][Kilmininkas] = daugiskaita_kilmininkas + std::wstring(L"ių");// višnių
+        lentele_[Skaicus_Daugiskaita][Vardininkas] = saknis + std::wstring(L"ios");  // vyšnios
+        lentele_[Skaicus_Daugiskaita][Kilmininkas] = daugiskaita_kilmininkas + std::wstring(L"ių");// vyšnių
         lentele_[Skaicus_Daugiskaita][Naudininkas] = saknis + std::wstring(L"ioms"); // vyšnioms
         lentele_[Skaicus_Daugiskaita][Galininkas] = saknis + std::wstring(L"ias");   // vyšnias
         lentele_[Skaicus_Daugiskaita][Inagininkas] = saknis + std::wstring(L"iomis"); // vyšniomis

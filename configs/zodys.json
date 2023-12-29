@@ -2,6 +2,19 @@
   "Lang":"lt",
   "Items":[
     {"Value":"daiktavardis","Type":"daiktavardis","Gimine":"Vyriskoji","Ru":["существительное"]},
-    {"Value":"linksnis","Type":"daiktavardis","Gimine":"V","Ru":["род"]}
+    {"Value":"linksnis","Type":"daiktavardis","Gimine":"V","Ru":["род"]},
+    {"Value":"namas","Type":"daiktavardis","Gimine":"V","Ru":["дом"]},
+    {"Value":"kelias","Type":"daiktavardis","Gimine":"V","Ru":["дорога"]},
+    {"Value":"brolis","Type":"daiktavardis","Gimine":"V","Ru":["брат"]},
+    {"Value":"kambarys","Type":"daiktavardis","Gimine":"V","Ru":["комната"]},
+    {"Value":"kniga","Type":"daiktavardis","Gimine":"V","Ru":["книга"]},
+    {"Value":"vyšnia","Type":"daiktavardis","Gimine":"Materiskoji","Ru":["вишня"]},
+    {"Value":"gatvė","Type":"daiktavardis","Gimine":"M","Ru":["улица"]},
+    {"Value":"pilis","Type":"daiktavardis","Gimine":"V","Ru":["замок"]},
+    {"Value":"dantis","Type":"daiktavardis","Gimine":"V","Ru":["зубы"]},
+    {"Value":"sūnus","Type":"daiktavardis","Gimine":"V","Ru":["сын"]},
+    {"Value":"vaisius","Type":"daiktavardis","Gimine":"V","Ru":["фрукт"]},
+    {"Value":"akmuo","Type":"daiktavardis","Gimine":"V","Ru":["камень"]},
+    {"Value":"sesuo","Type":"daiktavardis","Gimine":"M","Ru":["сестра"]},
   ]
 }
