@@ -21,3 +21,4 @@
 
 int WRD_unique_id();
 void WRD_pridelioti_zodis(AttributeType *w);
+void WRD_info();

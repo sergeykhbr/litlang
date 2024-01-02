@@ -18,6 +18,8 @@
 #include <iostream>
 #include <string.h>
 #include <utils.h>
+#include <io.h>
+#include <fcntl.h>
 
 int main(int argc, const char *argv[]) {
     AttributeType databuf;
@@ -33,6 +35,10 @@ int main(int argc, const char *argv[]) {
     for (unsigned i = 0; i < zodis.size(); i++) {
         WRD_pridelioti_zodis(&zodis[i]);
     }
+
+    _setmode(_fileno(stdout), _O_U8TEXT);
+
+    WRD_info();
 
     // Create sentense: "существительного падежи" = "daiktavardžių linksniai"
     // 

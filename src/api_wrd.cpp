@@ -47,3 +47,8 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
     }
 }
 
+void WRD_info() {
+    for (auto &p : zodynas_) {
+        p->info();
+    }
+}

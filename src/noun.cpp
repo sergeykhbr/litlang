@@ -71,6 +71,13 @@ DaiktavardisGeneric::DaiktavardisGeneric(AttributeType *cfg)
         }
     }
 
+    AttributeType &ru = (*cfg)[L"Ru"];
+    if (ru.is_list()) {
+        ru_[Skaicus_Vienaskaita][Vardininkas] = std::wstring(ru[0u].to_string());
+    } else if (ru.is_string()) {
+        ru_[Skaicus_Vienaskaita][Vardininkas] = std::wstring(ru.to_string());
+    }
+
     nustatyti_paradigma();
     atnaujinti();
 }
@@ -80,24 +87,6 @@ void DaiktavardisGeneric::nustatyti_paradigma() {
     const wchar_t *p = value_.c_str();
     int sz = static_cast<int>(value_.size());
     int tcnt = 0;
-    /*
-    // 1 linksniuotė
-    Paradigma_1_as,
-    Paradigma_1_ias,
-    Paradigma_1_is,
-    Paradigma_1_ys,
-    // 2 linksniuotė
-    Paradigma_2_a,
-    Paradigma_2_ia,
-    Paradigma_2_ė,
-    // 3 linksniuotė
-    Paradigma_3_is,
-    // 4 linksniuotė
-    Paradigma_4_us,
-    Paradigma_4_ius,
-    // 5 linksniuotė
-    Paradigma_5_uo,
-    Paradigma_5_ė,*/
     if (p[sz-1] == L's') {
         if (p[sz-3] == L'i' && p[sz-2] == L'a') {
             paradigma_ = Paradigma_1_ias;
@@ -457,4 +446,90 @@ std::wstring DaiktavardisGeneric::imkSaknis() {
     }
     ret = std::wstring(tstr);
     return ret;
+}
+
+int DaiktavardisGeneric::imkLinksniuote() {
+    int ret = Linksniuote_nezinoma;
+    switch (paradigma_) {
+    // 1 linksniuotė
+    case Paradigma_1_as:
+    case Paradigma_1_ias:
+    case Paradigma_1_is:
+    case Paradigma_1_ys:
+        ret = 1;
+        break;
+    // 2 linksniuotė
+    case Paradigma_2_a:
+    case Paradigma_2_ia:
+    case Paradigma_2_e:  // ė
+        ret = 2;
+        break;
+    // 3 linksniuotė
+    case Paradigma_3_is:
+        ret = 3;
+        break;
+    // 4 linksniuotė
+    case Paradigma_4_us:
+    case Paradigma_4_ius:
+        ret = 4;
+        break;
+    // 5 linksniuotė
+    case Paradigma_5_uo:
+    case Paradigma_5_e:  // ė
+        ret = 5;
+       break; 
+    }
+    return ret;
+}
+
+int add2wline(wchar_t *buf, int pos, const wchar_t *s, int align) {
+    wchar_t *p = &buf[pos];
+    while (*s) {
+        *p++ = *s++;
+        *p = 0;
+    }
+   for (int i = p - &buf[pos]; i < align; i++) {
+        *p++ = L' ';
+        *p = 0;
+   }
+   return pos + (p - &buf[pos]);
+}
+
+void DaiktavardisGeneric::info() {
+    wchar_t tstr[1024];
+    int tcnt = 0;
+    printf_log(L"\nDaiktavardis: %s, linksniuotė: %d, (%s)\n",
+            value_.c_str(),
+            imkLinksniuote(),
+            ru_[Skaicus_Vienaskaita][Vardininkas].c_str());
+
+    tcnt = add2wline(tstr, 0, L"Kilmininkas (ko?): ", 30);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Vienaskaita][Kilmininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Daugiskaita][Kilmininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"Naudininkas (kam?): ", 30);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Vienaskaita][Naudininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Daugiskaita][Naudininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"Galininkas (ką?): ", 30);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Vienaskaita][Galininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Daugiskaita][Galininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"Inagininkas (kuo?): ", 30);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Vienaskaita][Inagininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Daugiskaita][Inagininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"Vietininkas (kur? kame?): ", 30);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Vienaskaita][Vietininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Daugiskaita][Vietininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"Šauksmininkas: ", 30);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Vienaskaita][Sauksmininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Skaicus_Daugiskaita][Sauksmininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
 }

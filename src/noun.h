@@ -77,6 +77,8 @@ class DaiktavardisGeneric : public WordGeneric {
  public:
     DaiktavardisGeneric(AttributeType *cfg);
 
+    virtual void info() override;
+
  protected:
     // определить парадигму
     void nustatyti_paradigma();
@@ -85,11 +87,13 @@ class DaiktavardisGeneric : public WordGeneric {
 
     // šaknis = корень (getRoot)
     std::wstring imkSaknis();
+    int imkLinksniuote();
 
  protected:
     EGimine gimine_;
     EParadigma paradigma_;
     ELinksniuote linksniuote_;
     std::wstring lentele_[Skaicus_Total][Atvejis_Total];
+    std::wstring ru_[Skaicus_Total][Atvejis_Total];
 };
 
