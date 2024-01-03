@@ -17,6 +17,7 @@
 #include "api_wrd.h"
 #include <attribute.h>
 #include "noun.h"
+#include "adjective.h"
 #include <utils.h>
 
 static int idcnt_ = 0;
@@ -38,6 +39,8 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
     }
     if ((*cfg)[L"Type"].is_equal(L"daiktavardis")) {
         p = new DaiktavardisGeneric(cfg);
+    } else if ((*cfg)[L"Type"].is_equal(L"budvardis")) {
+        p = new BudvardisGeneric(cfg);
     } else {
         printf_error(L"Undefined Type %s", (*cfg)[L"Type"].to_string());
     }

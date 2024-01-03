@@ -22,5 +22,65 @@
 class BudvardisGeneric : public WordGeneric {     // глагол
  public:
     BudvardisGeneric(AttributeType *cfg);
+
+    virtual void info() override;
+
+ protected:
+    // определить парадигму
+    void nustatyti_paradigma();
+    // обновить (заполнить таблицу склонений)
+    void atnaujinti();
+
+    // šaknis = корень (getRoot)
+    std::wstring imkSaknis();
+    int imkLinksniuote();
+
+ protected:
+    typedef enum ELinksniuote {
+        Linksniuote_nezinoma,
+        Linksniuote_V1,
+        Linksniuote_V2,
+        Linksniuote_V3,
+        Linksniuote_M1,
+        Linksniuote_M2,
+        Linksniuote_M3,
+        Linksniuote_Total
+    } ELinksniuote;
+
+    typedef enum EParadigma {
+        Paradigma_nezinoma,
+        // Vyriškoji 1 linksniuotė
+        Paradigma_V1_as,
+        Paradigma_V1_ias,
+        Paradigma_V1_is,
+        // Vyriškoji 2 linksniuotė
+        Paradigma_V2_us,
+        // Vyrųkoji 3 linksniuotė
+        Paradigma_V3_is,
+        // Moteriųkoji 1 linksniuotė
+        Paradigma_M1_a,
+        Paradigma_M1_ia,
+        // Moteriųkoji 2 linksniuotė
+        Paradigma_M2_i,
+        // Moteriųkoji 3 linksniuotė
+        Paradigma_M3_e,  // ė
+        Pardigma_Total
+    } EParadigma;
+
+    typedef enum EAtvejis {
+        Vardininkas,    // Именительный падеж: koks? kokia?
+        Kilmininkas,    // Родительный падеж: kokio? kokios?
+        Naudininkas,    // Дательный падеж: kokiam? kokiai?
+        Galininkas,     // Винительный падеж: kokį? kokią?
+        Inagininkas,    // Творительный падеж: kokiu? kokia?
+        Vietininkas,    // Местный падеж: kokiame? kokioje?
+        Atvejis_Total
+    } EAtvejis;
+
+    EGimine gimine_;
+    EParadigma paradigma_;
+    ELinksniuote linksniuote_;
+    std::wstring lentele_[Skaicus_Total][Atvejis_Total];
+    std::wstring ru_[Skaicus_Total][Atvejis_Total];
 };
 

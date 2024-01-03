@@ -22,3 +22,16 @@ WordGeneric::WordGeneric(AttributeType *cfg) {
     id_ = WRD_unique_id();
 }
 
+int WordGeneric::add2wline(wchar_t *buf, int pos, const wchar_t *s, int align) {
+    wchar_t *p = &buf[pos];
+    while (*s) {
+        *p++ = *s++;
+        *p = 0;
+    }
+   for (int i = p - &buf[pos]; i < align; i++) {
+        *p++ = L' ';
+        *p = 0;
+   }
+   return pos + (p - &buf[pos]);
+}
+

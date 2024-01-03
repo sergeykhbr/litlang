@@ -17,60 +17,6 @@
 #pragma once
 
 #include "wordgen.h"
-typedef enum EGimine {
-    Gimine_nezinoma,
-    Gimine_viriskoji,
-    Gimine_moteriskoji
-} EGimine;
-
-typedef enum ESkaicus {
-    Skaicus_Vienaskaita,
-    Skaicus_Daugiskaita,
-    Skaicus_Total
-} ESkaicus;
-
-typedef enum ELinksniuote {
-    Linksniuote_nezinoma,
-    Linksniuote_1,
-    Linksniuote_2,
-    Linksniuote_3,
-    Linksniuote_4,
-    Linksniuote_5,
-    Linksniuote_Total
-} ELinksniuote;
-
-typedef enum EParadigma {
-    Paradigma_nezinoma,
-    // 1 linksniuotė
-    Paradigma_1_as,
-    Paradigma_1_ias,
-    Paradigma_1_is,
-    Paradigma_1_ys,
-    // 2 linksniuotė
-    Paradigma_2_a,
-    Paradigma_2_ia,
-    Paradigma_2_e,  // ė
-    // 3 linksniuotė
-    Paradigma_3_is,
-    // 4 linksniuotė
-    Paradigma_4_us,
-    Paradigma_4_ius,
-    // 5 linksniuotė
-    Paradigma_5_uo,
-    Paradigma_5_e,  // ė
-    Pardigma_Total
-} EParadigma;
-
-typedef enum EAtvejis {
-    Vardininkas,    // Именительный падеж: Кто, что? (Kas?)
-    Kilmininkas,    // Родительный падеж: Кого, чего? (Ko?) (kilminis = родной)
-    Naudininkas,    // Дательный падеж: Кому, чему? (Kam?) (naudinis = полезный)
-    Galininkas,     // Винительный падеж? Кого, что? (Ką?)
-    Inagininkas,    // Творительный падеж? Кем, чем? (Kuo?)
-    Vietininkas,    // Местный падеж? Где, в ком, в чем? (Kur, kame?)
-    Sauksmininkas,  // Звательный падеж
-    Atvejis_Total
-} EAtvejis;
 
 // существительное, daiktavardis
 class DaiktavardisGeneric : public WordGeneric {
@@ -89,7 +35,50 @@ class DaiktavardisGeneric : public WordGeneric {
     std::wstring imkSaknis();
     int imkLinksniuote();
 
- protected:
+ private:
+    typedef enum ELinksniuote {
+        Linksniuote_nezinoma,
+        Linksniuote_1,
+        Linksniuote_2,
+        Linksniuote_3,
+        Linksniuote_4,
+        Linksniuote_5,
+        Linksniuote_Total
+    } ELinksniuote;
+
+    typedef enum EParadigma {
+        Paradigma_nezinoma,
+        // 1 linksniuotė
+        Paradigma_1_as,
+        Paradigma_1_ias,
+        Paradigma_1_is,
+        Paradigma_1_ys,
+        // 2 linksniuotė
+        Paradigma_2_a,
+        Paradigma_2_ia,
+        Paradigma_2_e,  // ė
+        // 3 linksniuotė
+        Paradigma_3_is,
+        // 4 linksniuotė
+        Paradigma_4_us,
+        Paradigma_4_ius,
+        // 5 linksniuotė
+        Paradigma_5_uo,
+        Paradigma_5_e,  // ė
+        Pardigma_Total
+    } EParadigma;
+
+    typedef enum EAtvejis {
+        Vardininkas,    // Именительный падеж: Кто, что? (Kas?)
+        Kilmininkas,    // Родительный падеж: Кого, чего? (Ko?) (kilminis = родной)
+        Naudininkas,    // Дательный падеж: Кому, чему? (Kam?) (naudinis = полезный)
+        Galininkas,     // Винительный падеж? Кого, что? (Ką?)
+        Inagininkas,    // Творительный падеж? Кем, чем? (Kuo?)
+        Vietininkas,    // Местный падеж? Где, в ком, в чем? (Kur, kame?)
+        Sauksmininkas,  // Звательный падеж
+        Atvejis_Total
+    } EAtvejis;
+
     EGimine gimine_;
     EParadigma paradigma_;
     ELinksniuote linksniuote_;

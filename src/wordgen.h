@@ -20,19 +20,33 @@
 #include <list>
 #include <attribute.h>
 
+typedef enum EGimine {
+    Gimine_nezinoma,
+    Vyriskoji,
+    Moteriskoji
+} EGimine;
+
+typedef enum ESkaicus {
+    Vienaskaita,
+    Daugiskaita,
+    Skaicus_Total
+} ESkaicus;
+
+
 class WordGeneric {
  public:
     WordGeneric(AttributeType *cfg);
 
     virtual const wchar_t *getValue() { return value_.c_str(); }
     virtual bool isEqual(const wchar_t *w) { return value_ == w; }
-    virtual void addTranslation(WordGeneric *w) { translation_.push_back(w); }
 
     virtual void info() {}
 
  protected:
+    virtual int add2wline(wchar_t *buf, int pos, const wchar_t *s, int align);
+
+ protected:
     int id_;                                // to avoid pointer saving will use this one id
     std::wstring value_;
-    std::list<WordGeneric *> translation_;
 };
 

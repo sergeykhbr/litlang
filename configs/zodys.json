@@ -16,5 +16,6 @@
     {"Value":"vaisius","Type":"daiktavardis","Gimine":"V","Ru":["фрукт"]},
     {"Value":"akmuo","Type":"daiktavardis","Gimine":"V","Ru":["камень"]},
     {"Value":"sesuo","Type":"daiktavardis","Gimine":"M","Ru":["сестра"]},
+    {"Value":"geras","Type":"budvardis","Gimine":"M","Ru":["хороший"]},
   ]
 }
