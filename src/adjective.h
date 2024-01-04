@@ -27,7 +27,7 @@ class BudvardisGeneric : public WordGeneric {     // глагол
 
  protected:
     // определить парадигму
-    void nustatyti_paradigma();
+    void nustatyti_paradigma(int linksniuote);
     // обновить (заполнить таблицу склонений)
     void atnaujinti();
 
@@ -79,8 +79,7 @@ class BudvardisGeneric : public WordGeneric {     // глагол
 
     EGimine gimine_;
     EParadigma paradigma_;
-    ELinksniuote linksniuote_;
-    std::wstring lentele_[Skaicus_Total][Atvejis_Total];
-    std::wstring ru_[Skaicus_Total][Atvejis_Total];
+    std::wstring lentele_[Skaicus_Total][Gimine_Total][Atvejis_Total];
+    std::wstring ru_[Skaicus_Total][Gimine_Total][Atvejis_Total];
 };
 

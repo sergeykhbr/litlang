@@ -23,7 +23,8 @@
 typedef enum EGimine {
     Gimine_nezinoma,
     Vyriskoji,
-    Moteriskoji
+    Moteriskoji,
+    Gimine_Total
 } EGimine;
 
 typedef enum ESkaicus {

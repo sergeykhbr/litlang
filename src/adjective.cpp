@@ -18,7 +18,8 @@
 #include <utils.h>
 
 /** 
-   Būdvardis - прилагательное, {"Type":"budvardis"}
+   Būdvardis - прилагательное, {"Type":"budvardis"}, может склоняться
+   в мужском и женском роде:
      - форма
          местоименная
          не местоименная
@@ -32,22 +33,22 @@
      - Skaičiu
          Vienaskaita 
          Daugiskaita
+     - Linksniuotė
+         Vyriškoji 1 = -is
+         Vyriųkoji 3 = -is
      - Atvejis, падеж
-        Verdininkas, koks? kokia? какой? какая?
-        Kilmininkas, kokio? kokios?
-        Naudininkas, kokiam? kokiai?
+        Verdininkas, koks? kokia? / kokie? kokios? (какой? какая? / какие? какие?)
+        Kilmininkas, kokio? kokios? kokių? (какого? какой? / каких?)
+        Naudininkas, kokiam? kokiai? kokiems? kokioms? (какому? какой? / каким? каким?)
         Galininkas, kokį? kokia?
         Įnagininkas, kokiu? kokia?
         Vietininkas, kokiame? kokioje?
-     - Linksniuotė - склонение {"Linksniuote":1 or ..}
-        1 .. 3 в зависимости от окончания
 */
 
 BudvardisGeneric::BudvardisGeneric(AttributeType *cfg)
     : WordGeneric(cfg),
     gimine_(Gimine_nezinoma),
-    paradigma_(Paradigma_nezinoma),
-    linksniuote_(Linksniuote_nezinoma)
+    paradigma_(Paradigma_nezinoma)
 {
     if ((*cfg).has_key(L"Gimine")) {
         AttributeType &gimine = (*cfg)[L"Gimine"];
@@ -60,60 +61,61 @@ BudvardisGeneric::BudvardisGeneric(AttributeType *cfg)
         }
     }
     // Linksniuote turi būti nustatyta su gimine
+    int linksniuote = Linksniuote_nezinoma;
     if ((*cfg).has_key(L"Linksniuote")) {
-        AttributeType &linksniuote = (*cfg)[L"Linksniuote"];
-        if (gimine_ == Vyriskoji) {
-            if (linksniuote.to_int() == 1) {
-                linksniuote_ = Linksniuote_V1;
-            } else if (linksniuote.to_int() == 2) {
-                linksniuote_ = Linksniuote_V2;
-            } else if (linksniuote.to_int() == 3) {
-                linksniuote_ = Linksniuote_V3;
-            }
-        } else if (gimine_ == Moteriskoji) {
-            if (linksniuote.to_int() == 1) {
-                linksniuote_ = Linksniuote_M1;
-            } else if (linksniuote.to_int() == 2) {
-                linksniuote_ = Linksniuote_M2;
-            } else if (linksniuote.to_int() == 3) {
-                linksniuote_ = Linksniuote_M3;
-            }
-        } else {
-            printf_error(L"Neteisingas budvardžio linksnio formatas %d",
-                        linksniuote.to_int());
-        }
+        AttributeType &Linksniuote = (*cfg)[L"Linksniuote"];
+        linksniuote = Linksniuote.to_int();
     }
 
     AttributeType &ru = (*cfg)[L"Ru"];
     if (ru.is_list()) {
-        ru_[Vienaskaita][Vardininkas] = std::wstring(ru[0u].to_string());
+        ru_[Vienaskaita][Vyriskoji][Vardininkas] = std::wstring(ru[0u].to_string());
     } else if (ru.is_string()) {
-        ru_[Vienaskaita][Vardininkas] = std::wstring(ru.to_string());
+        ru_[Vienaskaita][Vyriskoji][Vardininkas] = std::wstring(ru.to_string());
     }
 
-    nustatyti_paradigma();
+    nustatyti_paradigma(linksniuote);
     atnaujinti();
 }
 
 // Užpildykite deklinacijos lentelę - Заполнить таблицу склонений (склонятельную таблицу)
 void BudvardisGeneric::atnaujinti() {
     std::wstring saknis = imkSaknis();
+    std::wstring *l;
 
     switch (paradigma_) {
     case Paradigma_V1_as:
-        lentele_[Vienaskaita][Vardininkas] = saknis + std::wstring(L"as");  // именительный. geras = хороший
-        lentele_[Vienaskaita][Kilmininkas] = saknis + std::wstring(L"o");   // родительный. gero = хорошего
-        lentele_[Vienaskaita][Naudininkas] = saknis + std::wstring(L"am");  // дательный/полезный. geram = хорошему
-        lentele_[Vienaskaita][Galininkas] = saknis + std::wstring(L"ą");    // винительный/могущий. gerą = хорошего
-        lentele_[Vienaskaita][Inagininkas] = saknis + std::wstring(L"u");   // творительный. geru = хорошим
-        lentele_[Vienaskaita][Vietininkas] = saknis + std::wstring(L"ame"); // местный. gerame = в хорошем
+        l = lentele_[Vienaskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"as");  // именительный. geras = хороший
+        l[Kilmininkas] = saknis + std::wstring(L"o");   // родительный. gero = хорошего
+        l[Naudininkas] = saknis + std::wstring(L"am");  // дательный/полезный. geram = хорошему
+        l[Galininkas] = saknis + std::wstring(L"ą");    // винительный/могущий. gerą = хорошего
+        l[Inagininkas] = saknis + std::wstring(L"u");   // творительный. geru = хорошим
+        l[Vietininkas] = saknis + std::wstring(L"ame"); // местный. gerame = в хорошем
 
-        lentele_[Daugiskaita][Vardininkas] = saknis + std::wstring(L"i");   // geri = хорошие
-        lentele_[Daugiskaita][Kilmininkas] = saknis + std::wstring(L"ų");   // gerų = хороших
-        lentele_[Daugiskaita][Naudininkas] = saknis + std::wstring(L"iems");// geriems = хорошим
-        lentele_[Daugiskaita][Galininkas] = saknis + std::wstring(L"us");   // gerus = хорошие
-        lentele_[Daugiskaita][Inagininkas] = saknis + std::wstring(L"ais"); // gerais = хорошими
-        lentele_[Daugiskaita][Vietininkas] = saknis + std::wstring(L"uose");// geruose = в хороших
+        l = lentele_[Daugiskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"i");   // geri = хорошие
+        l[Kilmininkas] = saknis + std::wstring(L"ų");   // gerų = хороших
+        l[Naudininkas] = saknis + std::wstring(L"iems");// geriems = хорошим
+        l[Galininkas] = saknis + std::wstring(L"us");   // gerus = хорошие
+        l[Inagininkas] = saknis + std::wstring(L"ais"); // gerais = хорошими
+        l[Vietininkas] = saknis + std::wstring(L"uose");// geruose = в хороших
+
+        l = lentele_[Vienaskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"a");   // именительный. gera = хорошая
+        l[Kilmininkas] = saknis + std::wstring(L"os");  // родительный. geros = хорошего
+        l[Naudininkas] = saknis + std::wstring(L"ai");  // дательный/полезный. gerai = хорошей
+        l[Galininkas] = saknis + std::wstring(L"ą");    // винительный/могущий. gerą = хорошую
+        l[Inagininkas] = saknis + std::wstring(L"a");   // творительный. gera = хорошей
+        l[Vietininkas] = saknis + std::wstring(L"oje"); // местный. geroje = в хорошей
+
+        l = lentele_[Daugiskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"os");   // geros = хорошие ж.р
+        l[Kilmininkas] = saknis + std::wstring(L"ų");    // gerų = хороших ж.р
+        l[Naudininkas] = saknis + std::wstring(L"oms");  // geriems = хорошим ж.р
+        l[Galininkas] = saknis + std::wstring(L"as");    // gerus = хорошие ж.р.
+        l[Inagininkas] = saknis + std::wstring(L"omis"); // gerais = хорошими ж.р
+        l[Vietininkas] = saknis + std::wstring(L"ose");  // geruose = в хороших ж.р
         break;
     }
 }
@@ -150,7 +152,7 @@ std::wstring BudvardisGeneric::imkSaknis() {
 }
 
 // Определить парадигму
-void BudvardisGeneric::nustatyti_paradigma() {
+void BudvardisGeneric::nustatyti_paradigma(int linksniuote) {
     const wchar_t *p = value_.c_str();
     int sz = static_cast<int>(value_.size());
     int tcnt = 0;
@@ -160,27 +162,40 @@ void BudvardisGeneric::nustatyti_paradigma() {
         } else if (p[sz-2] == L'a') {
             paradigma_ = Paradigma_V1_as;
         } else if (p[sz-2] == L'i'
-            && (linksniuote_ == Linksniuote_nezinoma || linksniuote_ == Linksniuote_V1)) {
+            && (linksniuote == Linksniuote_nezinoma || linksniuote == 1)) {
             paradigma_ = Paradigma_V1_is;
-        } else if (p[sz-2] == L'i' && linksniuote_ == Linksniuote_V3) {
+        } else if (p[sz-2] == L'i' && linksniuote == 3) {
             paradigma_ = Paradigma_V3_is;
         } else if (p[sz-2] == L'u') {
             paradigma_ = Paradigma_V2_us;
         } else {
-            printf_error(L"Negaliu nustatyti paradigma s: %s", p);
+            printf_error(L"Negaliu nustatyti Vyriskoji paradigma: %s", p);
         }
-    } else if (p[sz-1] == L'a') {
-        if (p[sz-2]) {
-            paradigma_ = Paradigma_M1_ia;
-        } else {
-            paradigma_ = Paradigma_M1_a;
+        if (gimine_ == Gimine_nezinoma) {
+            gimine_ = Vyriskoji;
+        } else if (gimine_ == Moteriskoji) {
+            printf_error(L"Neteisinga gimine: %d", gimine_);
         }
-    } else if (p[sz-1] == L'i') {
-        paradigma_ = Paradigma_M2_i;
-    } else if (p[sz-1] == L'ė') {
-        paradigma_ = Paradigma_M3_e;
     } else {
-        printf_error(L"Negaliu nustatyti paradigma: %s", p);
+        if (p[sz-1] == L'a') {
+            if (p[sz-2]) {
+                paradigma_ = Paradigma_M1_ia;
+            } else {
+                paradigma_ = Paradigma_M1_a;
+            }
+        } else if (p[sz-1] == L'i') {
+            paradigma_ = Paradigma_M2_i;
+        } else if (p[sz-1] == L'ė') {
+            paradigma_ = Paradigma_M3_e;
+        } else {
+            printf_error(L"Negaliu nustatyti Moteriskoji paradigma: %s", p);
+        }
+
+        if (gimine_ == Gimine_nezinoma) {
+            gimine_ = Moteriskoji;
+        } else if (gimine_ == Vyriskoji) {
+            printf_error(L"Neteisinga gimine: %d", gimine_);
+        }
     }
 }
 
@@ -216,51 +231,67 @@ void BudvardisGeneric::info() {
     printf_log(L"\nDaiktavardis: %s, linksniuotė: %d, (%s)\n",
             value_.c_str(),
             imkLinksniuote(),
-            ru_[Vienaskaita][Vardininkas].c_str());
+            ru_[Vienaskaita][Vyriskoji][Vardininkas].c_str());
 
-    wstr = L"Kilmininkas ";
-    if (gimine_ == Vyriskoji) {
-        wstr += L"(koks?): ";
-    } else {
-        wstr += L"(kokia?): ";
-    }
-    tcnt = add2wline(tstr, 0, wstr.c_str(), 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Kilmininkas].c_str(), 24);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Kilmininkas].c_str(), 0);
+    tcnt = add2wline(tstr, 0, L"Vardininkas: ", 16);
+    tcnt = add2wline(tstr, tcnt, L"koks? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Vardininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokia? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Vardininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokie? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Vardininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokios? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Vardininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
-    wstr = L"Naudininkas ";
-    if (gimine_ == Vyriskoji) {
-        wstr += L"(kokio?): ";
-    } else {
-        wstr += L"(kokios?): ";
-    }
-    tcnt = add2wline(tstr, 0, wstr.c_str(), 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Naudininkas].c_str(), 24);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Naudininkas].c_str(), 0);
+
+    tcnt = add2wline(tstr, 0, L"Kilmininkas: ", 16);
+    tcnt = add2wline(tstr, tcnt, L"kokio? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Kilmininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokios? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Kilmininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokių? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Kilmininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokių? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Kilmininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
-    wstr = L"Galininkas ";
-    if (gimine_ == Vyriskoji) {
-        wstr += L"(kokiam?): ";
-    } else {
-        wstr += L"(kokiai?): ";
-    }
-    tcnt = add2wline(tstr, 0, wstr.c_str(), 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Galininkas].c_str(), 24);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Galininkas].c_str(), 0);
+
+    tcnt = add2wline(tstr, 0, L"Naudininkas: ", 16);
+    tcnt = add2wline(tstr, tcnt, L"kokiam? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Naudininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokiai? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Naudininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokiems? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Naudininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokioms? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Naudininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
-    wstr = L"Inagininkas ";
-    if (gimine_ == Vyriskoji) {
-        wstr += L"(kokiu?): ";
-    } else {
-        wstr += L"(kokia?): ";
-    }
-    tcnt = add2wline(tstr, 0, wstr.c_str(), 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Inagininkas].c_str(), 24);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Inagininkas].c_str(), 0);
+
+    tcnt = add2wline(tstr, 0, L"Galininkas: ", 16);
+    tcnt = add2wline(tstr, tcnt, L"kokį? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Galininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokią? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Galininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokius? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Galininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokias? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Galininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
+
+
+    tcnt = add2wline(tstr, 0, L"Inagininkas: ", 16);
+    tcnt = add2wline(tstr, tcnt, L"kokiu? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Inagininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokia? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Inagininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokiais? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Inagininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, L"kokiomis? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Inagininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
+
 
     wstr = L"Vietininkas ";
     if (gimine_ == Vyriskoji) {
@@ -269,8 +300,8 @@ void BudvardisGeneric::info() {
         wstr += L"(kokioje?): ";
     }
     tcnt = add2wline(tstr, 0, wstr.c_str(), 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vietininkas].c_str(), 24);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vietininkas].c_str(), 0);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Vietininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Vietininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 }
 
