@@ -40,9 +40,9 @@
 DaiktavardisGeneric::DaiktavardisGeneric(AttributeType *cfg)
     : WordGeneric(cfg),
     gimine_(Gimine_nezinoma),
-    paradigma_(Paradigma_nezinoma),
-    linksniuote_(Linksniuote_nezinoma)
+    paradigma_(Paradigma_nezinoma)
 {
+    int linksniuote = Linksniuote_nezinoma;
     if ((*cfg).has_key(L"Gimine")) {
         AttributeType &gimine = (*cfg)[L"Gimine"];
         if (gimine.is_equal(L"V") || gimine.is_equal(L"Vyriskoji")) {
@@ -54,21 +54,7 @@ DaiktavardisGeneric::DaiktavardisGeneric(AttributeType *cfg)
         }
     }
     if ((*cfg).has_key(L"Linksniuote")) {
-        AttributeType &linksniuote = (*cfg)[L"Linksniuote"];
-        if (linksniuote.to_int() == 1) {
-            linksniuote_ = Linksniuote_1;
-        } else if (linksniuote.to_int() == 2) {
-            linksniuote_ = Linksniuote_2;
-        } else if (linksniuote.to_int() == 3) {
-            linksniuote_ = Linksniuote_3;
-        } else if (linksniuote.to_int() == 4) {
-            linksniuote_ = Linksniuote_4;
-        } else if (linksniuote.to_int() == 5) {
-            linksniuote_ = Linksniuote_5;
-        } else {
-            printf_error(L"Neteisingas daiktavardžio linksnio formatas %d",
-                        linksniuote.to_int());
-        }
+        linksniuote = (*cfg)[L"Linksniuote"].to_int();
     }
 
     AttributeType &ru = (*cfg)[L"Ru"];
@@ -78,12 +64,12 @@ DaiktavardisGeneric::DaiktavardisGeneric(AttributeType *cfg)
         ru_[Vienaskaita][Vardininkas] = std::wstring(ru.to_string());
     }
 
-    nustatyti_paradigma();
+    nustatyti_paradigma(linksniuote);
     atnaujinti();
 }
 
 // Определить парадигму
-void DaiktavardisGeneric::nustatyti_paradigma() {
+void DaiktavardisGeneric::nustatyti_paradigma(int linksniuote) {
     const wchar_t *p = value_.c_str();
     int sz = static_cast<int>(value_.size());
     int tcnt = 0;
@@ -95,9 +81,9 @@ void DaiktavardisGeneric::nustatyti_paradigma() {
         } else if (p[sz-2] == L'y') {
             paradigma_ = Paradigma_1_ys;
         } else if (p[sz-2] == L'i'
-            && (linksniuote_ == Linksniuote_nezinoma || linksniuote_ == Linksniuote_1)) {
+            && (linksniuote == Linksniuote_nezinoma || linksniuote == 1)) {
             paradigma_ = Paradigma_1_is;
-        } else if (p[sz-2] == L'i' && linksniuote_ == Linksniuote_3) {
+        } else if (p[sz-2] == L'i' && linksniuote == 3) {
             paradigma_ = Paradigma_3_is;
         } else if (p[sz-2] == L'u') {
             if (p[sz-3] == L'i') {
@@ -115,9 +101,9 @@ void DaiktavardisGeneric::nustatyti_paradigma() {
             paradigma_ = Paradigma_2_a;
         }
     } else if (p[sz-1] == L'ė') {
-        if (linksniuote_ == Linksniuote_nezinoma || linksniuote_ == Linksniuote_2) {
+        if (linksniuote == Linksniuote_nezinoma || linksniuote == 2) {
             paradigma_ = Paradigma_2_e;
-        } else if (linksniuote_ == Linksniuote_5) {
+        } else if (linksniuote == 5) {
             paradigma_ = Paradigma_5_e;
         } else {
             printf_error(L"Negaliu nustatyti paradigma ė: %s", p);
@@ -484,39 +470,45 @@ int DaiktavardisGeneric::imkLinksniuote() {
 
 void DaiktavardisGeneric::info() {
     wchar_t tstr[1024];
+    int wsz = static_cast<int>(value_.size()) + 8; // ending + spaces (pabaiga + įtrauka)
     int tcnt = 0;
     printf_log(L"\nDaiktavardis: %s, linksniuotė: %d, (%s)\n",
             value_.c_str(),
             imkLinksniuote(),
             ru_[Vienaskaita][Vardininkas].c_str());
 
+    tcnt = add2wline(tstr, 0, L"Vardininkas (kas?): ", 30);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vardininkas].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vardininkas].c_str(), 0);
+    printf_log(L"%s\n", tstr);
+
     tcnt = add2wline(tstr, 0, L"Kilmininkas (ko?): ", 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Kilmininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Kilmininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Kilmininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"Naudininkas (kam?): ", 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Naudininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Naudininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Naudininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"Galininkas (ką?): ", 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Galininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Galininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Galininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"Inagininkas (kuo?): ", 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Inagininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Inagininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Inagininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"Vietininkas (kur? kame?): ", 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vietininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vietininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vietininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"Šauksmininkas: ", 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Sauksmininkas].c_str(), 24);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Sauksmininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Sauksmininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 }

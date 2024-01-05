@@ -27,7 +27,7 @@ class DaiktavardisGeneric : public WordGeneric {
 
  protected:
     // определить парадигму
-    void nustatyti_paradigma();
+    void nustatyti_paradigma(int linksniuote);
     // обновить (заполнить таблицу склонений)
     void atnaujinti();
 
@@ -81,7 +81,6 @@ class DaiktavardisGeneric : public WordGeneric {
 
     EGimine gimine_;
     EParadigma paradigma_;
-    ELinksniuote linksniuote_;
     std::wstring lentele_[Skaicus_Total][Atvejis_Total];
     std::wstring ru_[Skaicus_Total][Atvejis_Total];
 };

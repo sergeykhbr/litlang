@@ -20,12 +20,22 @@
 /** 
    Būdvardis - прилагательное, {"Type":"budvardis"}, может склоняться
    в мужском и женском роде:
+     - inis материал из которого сделана вещь, принадлежность к определенной
+            науке и др. akmeninis - каменный
+     - ingas личные качества, особенности человека и прочее: laimingas - счастливый
+     - Уменьшительные суффиксы
+         -utis, -ytis, -(i)ukas), -(i)ulis, -ėlis, -ylis, -učiukas, -uliukas, -utėlaitis
+         По форме совпадают с такими же для существительных
+     - Оттенки цвета
+
      - форма
          местоименная
          не местоименная
          сравнительная местоименная
+             esnis - сравнительная степерь
          сравнительная не местоименная
          превосходящая местоименнаая
+             ausias - превосходная степерь
          превосходящая не местоименная
      - Geminė, род
          Vyreškoji мужской
@@ -68,10 +78,20 @@ BudvardisGeneric::BudvardisGeneric(AttributeType *cfg)
     }
 
     AttributeType &ru = (*cfg)[L"Ru"];
-    if (ru.is_list()) {
-        ru_[Vienaskaita][Vyriskoji][Vardininkas] = std::wstring(ru[0u].to_string());
-    } else if (ru.is_string()) {
+    if (ru.is_string()) {
         ru_[Vienaskaita][Vyriskoji][Vardininkas] = std::wstring(ru.to_string());
+    } else if (ru.is_list() && ru.size() == 2) {
+        // Vienskaita and Daugiskaita skaicus:
+        // [[[[0,1],[0,1],...Atvejis_Total]], [[0,1],[0,1],...Atvejis_Total]]
+        AttributeType &l1 = (*cfg)[L"Ru"];
+        AttributeType &viena = l1[0u];
+        AttributeType &daug = l1[1];
+        for (int i = 0; i < Atvejis_Total; i++) {
+            ru_[Vienaskaita][Vyriskoji][i] = std::wstring(viena[i][0u].to_string());
+            ru_[Vienaskaita][Moteriskoji][i] = std::wstring(viena[i][1].to_string());
+            ru_[Daugiskaita][Vyriskoji][i] = std::wstring(daug[i][0u].to_string());
+            ru_[Daugiskaita][Moteriskoji][i] = std::wstring(daug[i][1].to_string());
+        }
     }
 
     nustatyti_paradigma(linksniuote);
@@ -116,6 +136,142 @@ void BudvardisGeneric::atnaujinti() {
         l[Galininkas] = saknis + std::wstring(L"as");    // gerus = хорошие ж.р.
         l[Inagininkas] = saknis + std::wstring(L"omis"); // gerais = хорошими ж.р
         l[Vietininkas] = saknis + std::wstring(L"ose");  // geruose = в хороших ж.р
+        break;
+
+    case Paradigma_V1_ias:
+        l = lentele_[Vienaskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ias");  // именительный. žalias
+        l[Kilmininkas] = saknis + std::wstring(L"io");   // родительный.  žalio
+        l[Naudininkas] = saknis + std::wstring(L"iam");  // дательный/полезный. žaliam 
+        l[Galininkas] = saknis + std::wstring(L"ią");    // винительный/могущий. žalia
+        l[Inagininkas] = saknis + std::wstring(L"iu");   // творительный. žaliu
+        l[Vietininkas] = saknis + std::wstring(L"iame"); // местный. žaliame
+
+        l = lentele_[Daugiskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"i");    // žali
+        l[Kilmininkas] = saknis + std::wstring(L"ių");   // žalių
+        l[Naudininkas] = saknis + std::wstring(L"iems"); // žaliems
+        l[Galininkas] = saknis + std::wstring(L"ius");   // žalius
+        l[Inagininkas] = saknis + std::wstring(L"iais"); // žaliais
+        l[Vietininkas] = saknis + std::wstring(L"iuose");// žaliuose
+
+        l = lentele_[Vienaskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ia");   // žalia
+        l[Kilmininkas] = saknis + std::wstring(L"ios");  // žalios
+        l[Naudininkas] = saknis + std::wstring(L"iai");  // žaliai
+        l[Galininkas] = saknis + std::wstring(L"ią");    // žalią
+        l[Inagininkas] = saknis + std::wstring(L"ia");   // žalia
+        l[Vietininkas] = saknis + std::wstring(L"ioje"); // žalioje
+
+        l = lentele_[Daugiskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ios");   // žalios
+        l[Kilmininkas] = saknis + std::wstring(L"ių");    // žalių
+        l[Naudininkas] = saknis + std::wstring(L"ioms");  // žalioms
+        l[Galininkas] = saknis + std::wstring(L"ias");    // žalias
+        l[Inagininkas] = saknis + std::wstring(L"iomis"); // žaliomis
+        l[Vietininkas] = saknis + std::wstring(L"iose");  // žaliose
+        break;
+
+    case Paradigma_V1_is:
+        l = lentele_[Vienaskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"is");  // именительный. didelis
+        l[Kilmininkas] = saknis + std::wstring(L"io");   // родительный. 
+        l[Naudininkas] = saknis + std::wstring(L"iam");  // дательный/полезный. 
+        l[Galininkas] = saknis + std::wstring(L"į");    // винительный/могущий. 
+        l[Inagininkas] = saknis + std::wstring(L"iu");   // творительный. 
+        l[Vietininkas] = saknis + std::wstring(L"ame"); // местный. 
+
+        l = lentele_[Daugiskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"i");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ių");   // 
+        l[Naudininkas] = saknis + std::wstring(L"iems");// 
+        l[Galininkas] = saknis + std::wstring(L"ius");   // 
+        l[Inagininkas] = saknis + std::wstring(L"iais"); // 
+        l[Vietininkas] = saknis + std::wstring(L"iuose");// 
+
+        l = lentele_[Vienaskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ė");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ės");  // 
+        l[Naudininkas] = saknis + std::wstring(L"ei");  // 
+        l[Galininkas] = saknis + std::wstring(L"ę");    // 
+        l[Inagininkas] = saknis + std::wstring(L"e");   // 
+        l[Vietininkas] = saknis + std::wstring(L"ėje"); // 
+
+        l = lentele_[Daugiskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ės");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ių");    // 
+        l[Naudininkas] = saknis + std::wstring(L"ėms");  // 
+        l[Galininkas] = saknis + std::wstring(L"es");    // 
+        l[Inagininkas] = saknis + std::wstring(L"ėmis"); // 
+        l[Vietininkas] = saknis + std::wstring(L"ėse");  // 
+        break;
+
+    case Paradigma_V2_us:
+        l = lentele_[Vienaskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"us");  // именительный. gražus
+        l[Kilmininkas] = saknis + std::wstring(L"aus");   // родительный. 
+        l[Naudininkas] = saknis + std::wstring(L"iam");  // дательный/полезный. 
+        l[Galininkas] = saknis + std::wstring(L"ų");    // винительный/могущий. 
+        l[Inagininkas] = saknis + std::wstring(L"iu");   // творительный. 
+        l[Vietininkas] = saknis + std::wstring(L"iame"); // местный. 
+
+        l = lentele_[Daugiskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ūs");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ių");   // 
+        l[Naudininkas] = saknis + std::wstring(L"iems");// 
+        l[Galininkas] = saknis + std::wstring(L"ius");   // 
+        l[Inagininkas] = saknis + std::wstring(L"iais"); // 
+        l[Vietininkas] = saknis + std::wstring(L"iuose");// 
+
+        l = lentele_[Vienaskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"i");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ios");  // 
+        l[Naudininkas] = saknis + std::wstring(L"iai");  // 
+        l[Galininkas] = saknis + std::wstring(L"ią");    // 
+        l[Inagininkas] = saknis + std::wstring(L"ia");   // 
+        l[Vietininkas] = saknis + std::wstring(L"ioje"); // 
+
+        l = lentele_[Daugiskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ios");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ių");    // 
+        l[Naudininkas] = saknis + std::wstring(L"ioms");  // 
+        l[Galininkas] = saknis + std::wstring(L"ias");    // 
+        l[Inagininkas] = saknis + std::wstring(L"iomis"); // 
+        l[Vietininkas] = saknis + std::wstring(L"iose");  // 
+        break;
+
+    case Paradigma_V3_is:
+        l = lentele_[Vienaskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"is");  // именительный. naminis
+        l[Kilmininkas] = saknis + std::wstring(L"io");   // родительный. 
+        l[Naudininkas] = saknis + std::wstring(L"iam");  // дательный/полезный. 
+        l[Galininkas] = saknis + std::wstring(L"į");    // винительный/могущий. 
+        l[Inagininkas] = saknis + std::wstring(L"iu");   // творительный. 
+        l[Vietininkas] = saknis + std::wstring(L"iame"); // местный. 
+
+        l = lentele_[Daugiskaita][Vyriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"iai");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ių");   // 
+        l[Naudininkas] = saknis + std::wstring(L"iams");// 
+        l[Galininkas] = saknis + std::wstring(L"ius");   // 
+        l[Inagininkas] = saknis + std::wstring(L"iais"); // 
+        l[Vietininkas] = saknis + std::wstring(L"iuose");// 
+
+        l = lentele_[Vienaskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ė");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ės");  // 
+        l[Naudininkas] = saknis + std::wstring(L"ei");  // 
+        l[Galininkas] = saknis + std::wstring(L"ę");    // 
+        l[Inagininkas] = saknis + std::wstring(L"e");   // 
+        l[Vietininkas] = saknis + std::wstring(L"ėje"); // 
+
+        l = lentele_[Daugiskaita][Moteriskoji];
+        l[Vardininkas] = saknis + std::wstring(L"ės");   // 
+        l[Kilmininkas] = saknis + std::wstring(L"ių");    // 
+        l[Naudininkas] = saknis + std::wstring(L"ėms");  // 
+        l[Galininkas] = saknis + std::wstring(L"es");    // 
+        l[Inagininkas] = saknis + std::wstring(L"ėmis"); // 
+        l[Vietininkas] = saknis + std::wstring(L"ėse");  // 
         break;
     }
 }
@@ -226,20 +382,20 @@ int BudvardisGeneric::imkLinksniuote() {
 
 void BudvardisGeneric::info() {
     wchar_t tstr[1024];
-    std::wstring wstr;
+    int wsz = static_cast<int>(value_.size()) + 4; // ending + spaces (pabaiga + įtrauka)
     int tcnt = 0;
-    printf_log(L"\nDaiktavardis: %s, linksniuotė: %d, (%s)\n",
+    printf_log(L"\nBudvardis: %s, linksniuotė: %d, (%s)\n",
             value_.c_str(),
             imkLinksniuote(),
             ru_[Vienaskaita][Vyriskoji][Vardininkas].c_str());
 
     tcnt = add2wline(tstr, 0, L"Vardininkas: ", 16);
     tcnt = add2wline(tstr, tcnt, L"koks? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Vardininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Vardininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokia? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Vardininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Vardininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokie? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Vardininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Vardininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokios? ", 10);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Vardininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
@@ -247,11 +403,11 @@ void BudvardisGeneric::info() {
 
     tcnt = add2wline(tstr, 0, L"Kilmininkas: ", 16);
     tcnt = add2wline(tstr, tcnt, L"kokio? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Kilmininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Kilmininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokios? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Kilmininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Kilmininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokių? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Kilmininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Kilmininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokių? ", 10);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Kilmininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
@@ -259,11 +415,11 @@ void BudvardisGeneric::info() {
 
     tcnt = add2wline(tstr, 0, L"Naudininkas: ", 16);
     tcnt = add2wline(tstr, tcnt, L"kokiam? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Naudininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Naudininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokiai? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Naudininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Naudininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokiems? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Naudininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Naudininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokioms? ", 10);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Naudininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
@@ -271,11 +427,11 @@ void BudvardisGeneric::info() {
 
     tcnt = add2wline(tstr, 0, L"Galininkas: ", 16);
     tcnt = add2wline(tstr, tcnt, L"kokį? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Galininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Galininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokią? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Galininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Galininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokius? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Galininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Galininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokias? ", 10);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Galininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
@@ -283,25 +439,25 @@ void BudvardisGeneric::info() {
 
     tcnt = add2wline(tstr, 0, L"Inagininkas: ", 16);
     tcnt = add2wline(tstr, tcnt, L"kokiu? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Inagininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Inagininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokia? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Inagininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Inagininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokiais? ", 10);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Inagininkas].c_str(), 12);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Inagininkas].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"kokiomis? ", 10);
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Inagininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 
 
-    wstr = L"Vietininkas ";
-    if (gimine_ == Vyriskoji) {
-        wstr += L"(kokiame?): ";
-    } else {
-        wstr += L"(kokioje?): ";
-    }
-    tcnt = add2wline(tstr, 0, wstr.c_str(), 30);
-    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Vietininkas].c_str(), 24);
-    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Vietininkas].c_str(), 0);
+    tcnt = add2wline(tstr, 0, L"Vietininkas: ", 16);
+    tcnt = add2wline(tstr, tcnt, L"kokiame? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Vyriskoji][Vietininkas].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"kokioje? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Vienaskaita][Moteriskoji][Vietininkas].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"kokiuose? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Vyriskoji][Vietininkas].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"kokiose? ", 10);
+    tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Moteriskoji][Vietininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 }
 
