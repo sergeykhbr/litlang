@@ -18,13 +18,15 @@
 
 #include "wordgen.h"
 
+// частица, dalelytė
+class DalelyteGeneric : public WordGeneric {
+ public:
+    explicit DalelyteGeneric(AttributeType *cfg);
 
-int WRD_unique_id();
+    virtual void info() override;
 
-// prideloti = add
-void WRD_pridelioti_zodis(AttributeType *w);
+ protected:
+    EGimine gimine_;
+    AttributeType ru_;
+};
 
-// gauti = get
-WordGeneric *WRD_gauti_zodis(const wchar_t *s);
-
-void WRD_info();

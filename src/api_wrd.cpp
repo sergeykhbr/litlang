@@ -16,8 +16,10 @@
 
 #include "api_wrd.h"
 #include <attribute.h>
-#include "noun.h"
-#include "adjective.h"
+#include "noun_daiktavardis.h"
+#include "adjective_budvardis.h"
+#include "pronoun_ivardis.h"
+#include "particle_dalelyte.h"
 #include <utils.h>
 
 static int idcnt_ = 0;
@@ -41,6 +43,10 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
         p = new DaiktavardisGeneric(cfg);
     } else if ((*cfg)[L"Type"].is_equal(L"budvardis")) {
         p = new BudvardisGeneric(cfg);
+    } else if ((*cfg)[L"Type"].is_equal(L"ivardis")) {
+        p = new IvardisGeneric(cfg);
+    } else if ((*cfg)[L"Type"].is_equal(L"dalelyte")) {
+        p = new DalelyteGeneric(cfg);
     } else {
         printf_error(L"Undefined Type %s", (*cfg)[L"Type"].to_string());
     }
@@ -48,6 +54,16 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
     if (p) {
         zodynas_.push_back(p);
     }
+}
+
+// gauti = get
+WordGeneric *WRD_gauti_zodis(const wchar_t *s) {
+    for (auto &p : zodynas_) {
+        if (wcscmp(p->getValue(), s) == 0) {
+            return p;
+        }
+    }
+    return 0;
 }
 
 void WRD_info() {

@@ -14,7 +14,7 @@
 //  limitations under the License.
 // 
 
-#include "adjective.h"
+#include "adjective_budvardis.h"
 #include <utils.h>
 
 /** 

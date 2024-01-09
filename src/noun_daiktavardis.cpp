@@ -14,7 +14,7 @@
 //  limitations under the License.
 // 
 
-#include "noun.h"
+#include "noun_daiktavardis.h"
 #include <utils.h>
 
 /** 
@@ -58,10 +58,22 @@ DaiktavardisGeneric::DaiktavardisGeneric(AttributeType *cfg)
     }
 
     AttributeType &ru = (*cfg)[L"Ru"];
-    if (ru.is_list()) {
-        ru_[Vienaskaita][Vardininkas] = std::wstring(ru[0u].to_string());
-    } else if (ru.is_string()) {
+    if (ru.is_string()) {
         ru_[Vienaskaita][Vardininkas] = std::wstring(ru.to_string());
+    } else if (ru.is_list() && ru.size() == 2) {
+        AttributeType &viena = ru[0u];
+        AttributeType &daug = ru[1];
+        if (viena.is_list() && viena.size() == Atvejis_Total
+            && daug.is_list() && daug.size() == Atvejis_Total) {
+            for (unsigned i = 0; i < Atvejis_Total; i++) {
+                ru_[Vienaskaita][i] = std::wstring(viena[i].to_string());
+                ru_[Daugiskaita][i] = std::wstring(daug[i].to_string());
+            }
+        } else {
+            printf_error("Neteisinga atvejis format %d", viena.size());
+        }
+    } else {
+        printf_error("Neteisinga [[..],[..]] format %d", ru.size());
     }
 
     nustatyti_paradigma(linksniuote);
@@ -95,7 +107,7 @@ void DaiktavardisGeneric::nustatyti_paradigma(int linksniuote) {
             printf_error(L"Negaliu nustatyti paradigma s: %s", p);
         }
     } else if (p[sz-1] == L'a') {
-        if (p[sz-2]) {
+        if (p[sz-2] == L'i') {
             paradigma_ = Paradigma_2_ia;
         } else {
             paradigma_ = Paradigma_2_a;
@@ -267,7 +279,7 @@ void DaiktavardisGeneric::atnaujinti() {
             // t -> č
             lentele_[Vienaskaita][Naudininkas] = saknis.substr(0, saknis.size() - 1);
             lentele_[Vienaskaita][Naudininkas] += std::wstring(L"č");
-            lentele_[Vienaskaita][Naudininkas] += std::wstring(L"iui");         // dančiui
+            lentele_[Vienaskaita][Naudininkas] += std::wstring(L"iui");         // dančiui, (todo: patirčiai)
         } else {
             lentele_[Vienaskaita][Naudininkas] = saknis + std::wstring(L"iai"); // дательный/полезный. piliai
         }
@@ -280,7 +292,7 @@ void DaiktavardisGeneric::atnaujinti() {
         if (saknis[saknis.size() - 1] == L't') {
             lentele_[Daugiskaita][Kilmininkas] = saknis + std::wstring(L"ų");   // dantų
         } else {
-            lentele_[Daugiskaita][Kilmininkas] = saknis + std::wstring(L"ių");  // pilių
+            lentele_[Daugiskaita][Kilmininkas] = saknis + std::wstring(L"ių");  // pilių, (todo: patirčiu)
         }
         lentele_[Daugiskaita][Naudininkas] = saknis + std::wstring(L"ims");     // pilims; dantims
         lentele_[Daugiskaita][Galininkas] = saknis + std::wstring(L"is");       // pilis; dantis

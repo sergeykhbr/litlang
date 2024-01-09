@@ -14,7 +14,8 @@
 //  limitations under the License.
 // 
 
-#include "pronoun.h"
+#include "pronoun_ivardis.h"
+#include <utils.h>
 
 /** 
     Įvardis - местоимение, {"Type":"ivardis"}
@@ -25,7 +26,7 @@
             asmeninis įvardis - личное местоимение, я, ты, он
                               - притяжательные
             sangražinis įvardis - возвратное местоимение
-                              - неопределенные: не'кто, не'который, не'сколько
+                              - неопределенные: нЕкто, нЕкоторый, нЕсколько
             parodomasis įvardis - указательное местоимение: столько, этот, эта, это, эти, тот, та, то, те, такие, таковы, сии
                               - вопросительные
                               - относительные: кто, что, какой, каков, чей, который
@@ -37,4 +38,18 @@
 */
 
 IvardisGeneric::IvardisGeneric(AttributeType *cfg) : WordGeneric(cfg) {
+    AttributeType &ru = (*cfg)[L"Ru"];
+    if (ru.is_string()) {
+        ru_[Vienaskaita][Vyriskoji][Vardininkas] = std::wstring(ru.to_string());
+    }}
+
+void IvardisGeneric::info() {
+    wchar_t tstr[1024];
+    int tcnt = 0;
+    tcnt = add2wline(tstr, tcnt, L"\nĮvardis: ", 0);
+    tcnt = add2wline(tstr, tcnt, value_.c_str(), 0);
+    tcnt = add2wline(tstr, tcnt, L", (", 0);
+    tcnt = add2wline(tstr, tcnt, ru_[Vienaskaita][Vyriskoji][Vardininkas].c_str(), 0);
+    tcnt = add2wline(tstr, tcnt, L")", 0);
+    printf_log(L"%s\n", tstr);
 }

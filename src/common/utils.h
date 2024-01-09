@@ -36,8 +36,10 @@ extern "C" {
 int printf_log(const wchar_t *fmt, ...);
 int sprintf_log(wchar_t *s, size_t len, const wchar_t *fmt, ...);
 
+#define WIDEN2(x) L ## x
+#define WIDEN(x) WIDEN2(x)
 #define printf_error(fmt, ...) \
-    printf_log(L"%s:%d " fmt, __FILE__, __LINE__, __VA_ARGS__)
+    printf_log(L"\n%s:%d " fmt, WIDEN(__FILE__), __LINE__, __VA_ARGS__)
 
 int utils_read_json_file(const char *filename, void *outattr);
 void utils_set_current_dir();

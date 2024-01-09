@@ -1,4 +1,4 @@
-// 
+﻿// 
 //  Copyright 2023 Sergey Khabarov, sergeykhbr@gmail.com
 // 
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +14,12 @@
 //  limitations under the License.
 // 
 
-#pragma once
+#include "adverb_prieveiksmis.h"
 
-#include "wordgen.h"
+/** 
+    Prieveiksmis - наречие {"Type":"prieveiksmis"}
 
-// местоимение, įvardis
-class IvardisGeneric : public WordGeneric {
- public:
-    IvardisGeneric(AttributeType *cfg);
-};
+*/
 
+PrieveiksmisGeneric::PrieveiksmisGeneric(AttributeType *cfg) : WordGeneric(cfg) {
+}

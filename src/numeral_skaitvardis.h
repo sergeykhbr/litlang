@@ -18,13 +18,13 @@
 
 #include "wordgen.h"
 
+// Skaitvardis, числительное
+class SkaitvardisGeneric : public WordGeneric {
+ public:
+    SkaitvardisGeneric(AttributeType *cfg);
 
-int WRD_unique_id();
+    virtual void info() override;
+ private:
+    std::wstring ru_[Skaicus_Total][Gimine_Total][Atvejis_Total];
+};
 
-// prideloti = add
-void WRD_pridelioti_zodis(AttributeType *w);
-
-// gauti = get
-WordGeneric *WRD_gauti_zodis(const wchar_t *s);
-
-void WRD_info();

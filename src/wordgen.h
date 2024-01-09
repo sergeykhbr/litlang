@@ -1,4 +1,4 @@
-// 
+﻿// 
 //  Copyright 2023 Sergey Khabarov, sergeykhbr@gmail.com
 // 
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +32,17 @@ typedef enum ESkaicus {
     Daugiskaita,
     Skaicus_Total
 } ESkaicus;
+
+typedef enum EAtvejis {
+    Vardininkas,    // Именительный падеж: Кто, что? (Kas?)
+    Kilmininkas,    // Родительный падеж: Кого, чего? (Ko?) (kilminis = родной)
+    Naudininkas,    // Дательный падеж: Кому, чему? (Kam?) (naudinis = полезный)
+    Galininkas,     // Винительный падеж? Кого, что? (Ką?)
+    Inagininkas,    // Творительный падеж? Кем, чем? (Kuo?)
+    Vietininkas,    // Местный падеж? Где, в ком, в чем? (Kur, kame?)
+    Sauksmininkas,  // Звательный падеж
+    Atvejis_Total
+} EAtvejis;
 
 
 class WordGeneric {

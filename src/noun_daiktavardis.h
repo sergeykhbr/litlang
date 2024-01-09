@@ -68,17 +68,6 @@ class DaiktavardisGeneric : public WordGeneric {
         Pardigma_Total
     } EParadigma;
 
-    typedef enum EAtvejis {
-        Vardininkas,    // Именительный падеж: Кто, что? (Kas?)
-        Kilmininkas,    // Родительный падеж: Кого, чего? (Ko?) (kilminis = родной)
-        Naudininkas,    // Дательный падеж: Кому, чему? (Kam?) (naudinis = полезный)
-        Galininkas,     // Винительный падеж? Кого, что? (Ką?)
-        Inagininkas,    // Творительный падеж? Кем, чем? (Kuo?)
-        Vietininkas,    // Местный падеж? Где, в ком, в чем? (Kur, kame?)
-        Sauksmininkas,  // Звательный падеж
-        Atvejis_Total
-    } EAtvejis;
-
     EGimine gimine_;
     EParadigma paradigma_;
     std::wstring lentele_[Skaicus_Total][Atvejis_Total];

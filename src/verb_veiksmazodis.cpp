@@ -14,11 +14,29 @@
 //  limitations under the License.
 // 
 
-#include "verb.h"
+#include "verb_veiksmazodis.h"
 
 /** 
     Veiksmažodis - глагол, {"Type":"veiksmazodis"}
-            
+        Giminė - Род
+            мужской
+            женский
+        Наклонение
+            показательное (indicative)
+            сослагательное (subjunctive)
+            повелительное (imperative)
+        Время
+            настоящее
+            прошедшее
+            прошедшее многократное
+            будующее
+        Лицо
+            1 ед.ч
+            2 ед.ч
+            3 ед.ч
+            1 мн.ч
+            2 мн.ч
+            3 мн.ч
 
 */
 

@@ -67,16 +67,6 @@ class BudvardisGeneric : public WordGeneric {     // глагол
         Pardigma_Total
     } EParadigma;
 
-    typedef enum EAtvejis {
-        Vardininkas,    // Именительный падеж: koks? kokia?
-        Kilmininkas,    // Родительный падеж: kokio? kokios?
-        Naudininkas,    // Дательный падеж: kokiam? kokiai?
-        Galininkas,     // Винительный падеж: kokį? kokią?
-        Inagininkas,    // Творительный падеж: kokiu? kokia?
-        Vietininkas,    // Местный падеж: kokiame? kokioje?
-        Atvejis_Total
-    } EAtvejis;
-
     EGimine gimine_;
     EParadigma paradigma_;
     std::wstring lentele_[Skaicus_Total][Gimine_Total][Atvejis_Total];

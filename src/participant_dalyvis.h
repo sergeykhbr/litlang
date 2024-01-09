@@ -18,13 +18,9 @@
 
 #include "wordgen.h"
 
+// причастие, dalyvis
+class DalyvisGeneric : public WordGeneric {
+ public:
+    DalyvisGeneric(AttributeType *cfg);
+};
 
-int WRD_unique_id();
-
-// prideloti = add
-void WRD_pridelioti_zodis(AttributeType *w);
-
-// gauti = get
-WordGeneric *WRD_gauti_zodis(const wchar_t *s);
-
-void WRD_info();
