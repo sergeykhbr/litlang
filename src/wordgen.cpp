@@ -60,6 +60,48 @@ WordGeneric::WordGeneric(AttributeType *cfg) {
     id_ = WRD_unique_id();
 }
 
+EAtvejis WordGeneric::str2atvejis(const wchar_t *s) {
+    EAtvejis ret = Vardininkas;
+    if (wcscmp(s, L"Kilmininkas") == 0
+        || wcscmp(s, L"Kil") == 0 || wcscmp(s, L"K") == 0) {
+        ret = Kilmininkas;
+    } else if (wcscmp(s, L"Naudininkas") == 0
+        || wcscmp(s, L"Nau") == 0 || wcscmp(s, L"N") == 0) {
+        ret = Naudininkas;
+    } else if (wcscmp(s, L"Galininkas") == 0
+        || wcscmp(s, L"Gal") == 0 || wcscmp(s, L"G") == 0) {
+        ret = Galininkas;
+    } else if (wcscmp(s, L"Inagininkas") == 0
+        || wcscmp(s, L"In") == 0 || wcscmp(s, L"I") == 0) {
+        ret = Inagininkas;
+    } else if (wcscmp(s, L"Vietininkas") == 0
+        || wcscmp(s, L"Vt") == 0) {
+        ret = Vietininkas;
+    } else if (wcscmp(s, L"Sauksmininkas") == 0
+        || wcscmp(s, L"Sau") == 0 || wcscmp(s, L"S") == 0) {
+        ret = Sauksmininkas;
+    }
+    return ret;
+}
+
+EGimine WordGeneric::str2gimine(const wchar_t *s) {
+    EGimine ret = Vyriskoji;
+    if (wcscmp(s, L"Moteriskoji") == 0
+        || wcscmp(s, L"M") == 0) {
+        ret = Moteriskoji;
+    }
+    return ret;
+}
+
+ESkaicus WordGeneric::str2skaicus(const wchar_t *s) {
+    ESkaicus ret = Vienaskaita;
+    if (wcscmp(s, L"Daugiskaita") == 0
+        || wcscmp(s, L"D") == 0) {
+        ret = Daugiskaita;
+    }
+    return ret;
+}
+
 int WordGeneric::add2wline(wchar_t *buf, int pos, const wchar_t *s, int align) {
     wchar_t *p = &buf[pos];
     while (*s) {

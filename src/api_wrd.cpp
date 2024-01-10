@@ -39,20 +39,28 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
     if (!cfg->is_dict()) {
         return;
     }
-    if ((*cfg)[L"Type"].is_equal(L"daiktavardis")) {
-        p = new DaiktavardisGeneric(cfg);
-    } else if ((*cfg)[L"Type"].is_equal(L"budvardis")) {
-        p = new BudvardisGeneric(cfg);
-    } else if ((*cfg)[L"Type"].is_equal(L"ivardis")) {
-        p = new IvardisGeneric(cfg);
-    } else if ((*cfg)[L"Type"].is_equal(L"dalelyte")) {
-        p = new DalelyteGeneric(cfg);
-    } else {
-        printf_error(L"Undefined Type %s", (*cfg)[L"Type"].to_string());
-    }
+    AttributeType &zodiai = (*cfg)[L"Items"];
+    for (unsigned i = 0; i < zodiai.size(); i++) {
+        AttributeType &zodis = zodiai[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
 
-    if (p) {
-        zodynas_.push_back(p);
+        if (zodis[L"Type"].is_equal(L"daiktavardis")) {
+            p = new DaiktavardisGeneric(cfg);
+        } else if (zodis[L"Type"].is_equal(L"budvardis")) {
+            p = new BudvardisGeneric(cfg);
+        } else if (zodis[L"Type"].is_equal(L"ivardis")) {
+            p = new IvardisGeneric(cfg);
+        } else if (zodis[L"Type"].is_equal(L"dalelyte")) {
+            p = new DalelyteGeneric(cfg);
+        } else {
+            printf_error(L"Undefined Type %s", zodis[L"Type"].to_string());
+        }
+
+        if (p) {
+            zodynas_.push_back(p);
+        }
     }
 }
 

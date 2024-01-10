@@ -53,8 +53,12 @@ class WordGeneric {
     virtual bool isEqual(const wchar_t *w) { return value_ == w; }
 
     virtual void info() {}
+    virtual std::wstring gautiForma(AttributeType &arg) { return value_; }
 
  protected:
+    virtual EAtvejis str2atvejis(const wchar_t *s);
+    virtual EGimine str2gimine(const wchar_t *s);
+    virtual ESkaicus str2skaicus(const wchar_t *s);
     virtual int add2wline(wchar_t *buf, int pos, const wchar_t *s, int align);
 
  protected:

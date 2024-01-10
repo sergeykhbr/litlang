@@ -1,0 +1,21 @@
+{
+  "Zodiai":[
+    [["mentorystė","daiktavardis",{"Gimine":"Vyriskoji","Skaicius":"Vienaskaita","Atvejis":"Vardininkas"}]],
+    [["tai", "ivardis", {}],
+      ["ne", "dalelyte", {}],
+      ["vienpusis", "budvardis", {"Gimine":"Vyriskoji","Skaicius":"Vienaskaita","Atvejis":"Vardininkas"}, "односторонний"],
+      ["dalijimas", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Vienaskaita", "Atvejis":"Sauksmininkas", "Sangrazynis":"-si"}, "(призыв) деление собственным опытом"],
+      ["patirtis", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Vienaskaita", "Atvejis":"Inagininkas"}, "опытом"],
+      ["ar", "dalelyte", {}, "или"],
+      ["patarimas", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Daugiskaita", "Atvejis":"Inagininkas"}, "совет"],
+      ["o", "dalelyte", {}, "а"],
+      ["mainas", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Daugiskaita", "Atvejis":"Vardininkas"}, "обмен"]]
+  ],
+  "Original":
+   ["Mentorystė.", 
+    "Tai ne vienpusis dalinimasis patirtimi ar patarimais, o Mainai.",
+    "Mainai kur dalindamasis gauni daug įžvalgų apie save, daug pozityvios energijos matant, kaip dėmesingas kito žmogaus klausymasis ar gebėjimas paklausti jo kryptingų klausimų padeda augti abiems.",
+    "Tą tvirtinu iš savo patyrimo, nes jau 9 metai esu LT Big Brother mentorė ir kviečiu jus jungtis prie šios programos.",
+    "Ir žinoma - tai puiki vieta Networkinti - sutikti labai įdomių žmonių, lietuvių profesionalų iš viso pasaulio!"
+   ]
+}

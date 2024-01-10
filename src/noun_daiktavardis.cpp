@@ -35,6 +35,10 @@
             Šauksmininkas, (S) звательный
         Linksniuotė - склонение, {"Linksniuote":1 or ..}
             1 .. 5 в зависимости от окончания
+        Модификаторы
+            Sangrąžinis daiktarvadis - Возвратное существительное -si (+Šauksmininkas): -as => -asis; -e => -esi
+            Deminutyvas - Уменьшительная форма -(uk) (+Šauksmininkas): as => -ukas; -e => -uk
+
 */
 
 DaiktavardisGeneric::DaiktavardisGeneric(AttributeType *cfg)
@@ -524,3 +528,42 @@ void DaiktavardisGeneric::info() {
     tcnt = add2wline(tstr, tcnt, lentele_[Daugiskaita][Sauksmininkas].c_str(), 0);
     printf_log(L"%s\n", tstr);
 }
+
+std::wstring DaiktavardisGeneric::gautiForma(AttributeType &arg) {
+    std::wstring ret = L"";
+    EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
+    EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
+    ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
+    std::wstring sangrazynis = L""; // возвратная форма (sangrąžynis) -si
+    std::wstring deminutyvas = L"";
+
+    if (arg.has_key(L"Sangrazynis")) {
+        // возвратная форма (sangrąžynis) -si
+        sangrazynis = std::wstring(arg[L"Sangrazynis"].to_string());
+    }
+
+    if (arg.has_key(L"Deminutyvas")) {
+        // уменьшительная форма (deminutyvas) -uk
+        deminutyvas = std::wstring(arg[L"Deminutyvas"].to_string());
+    }
+
+    if (sangrazynis != L""
+        && atvejis == Sauksmininkas
+        && gimine == Vyriskoji) {
+        // Возвратное существительное мужского рода (праткически не употребляется)
+        if (paradigma_ == Paradigma_2_e || paradigma_ == Paradigma_5_e) {
+            ret = imkSaknis() + L"esi";
+        } else if (paradigma_ == Paradigma_1_is || paradigma_ == Paradigma_3_is
+             || paradigma_ == Paradigma_1_as) {
+            ret = imkSaknis() + L"asis";
+        } else {
+            ret = imkSaknis() + L"is";
+            // unsupported = nepalaikomas
+            printf_error(L"nepalaikomas sangrąžynis daiktavardis (-si): %s", value_.c_str());
+        }
+    } else {
+        ret = lentele_[skaicus][atvejis];
+    }
+    return ret;
+}
+
