@@ -19,24 +19,29 @@
 /** 
     Veiksmažodis - глагол, {"Type":"veiksmazodis"}
         Giminė - Род
-            мужской
-            женский
-        Наклонение
-            показательное (indicative)
-            сослагательное (subjunctive)
-            повелительное (imperative)
-        Время
-            настоящее
-            прошедшее
-            прошедшее многократное
-            будующее
-        Лицо
-            1 ед.ч
-            2 ед.ч
-            3 ед.ч
-            1 мн.ч
-            2 мн.ч
-            3 мн.ч
+            Vyriškoji - мужской
+            Moteriškoji - женский
+        Nuosaka - Наклонение {"Nuosaka":"Tiesiogine"}
+            TiesiOginė - изъявительное (indicative)
+            TariamOji - сослагательное (subjunctive)
+            Liepiamoji - повелительное (imperative)
+            GiedžiamOji - побудительное
+        Asmenuotė - Спряжение, парадигма {"Asmenuote":1}
+            Pirmoji - I (dirbti)
+            Antroji - II (mylėti)
+            Trečioji - III (skaityti)
+        Laikas - Время {"Laikas":"Butasis dazninis"}
+            Esamasis laikas - настоящее
+            Būtasis laikas - прошедшее
+            Būtasis dažninis laikas - прошедшее многократное
+            Būsimasis laikas - будующее
+        Лицо {"Kas":"jis"}
+            1 ед.ч aš
+            2 ед.ч tu
+            3 ед.ч jis, ji
+            1 мн.ч mes
+            2 мн.ч jūs
+            3 мн.ч jie, jos
 
 */
 

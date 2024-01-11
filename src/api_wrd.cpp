@@ -16,10 +16,13 @@
 
 #include "api_wrd.h"
 #include <attribute.h>
+#include "verb_veiksmazodis.h"
 #include "noun_daiktavardis.h"
 #include "adjective_budvardis.h"
 #include "pronoun_ivardis.h"
 #include "particle_dalelyte.h"
+#include "adverb_prieveiksmis.h"
+#include "participant_dalyvis.h"
 #include <utils.h>
 
 static int idcnt_ = 0;
@@ -39,28 +42,75 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
     if (!cfg->is_dict()) {
         return;
     }
-    AttributeType &zodiai = (*cfg)[L"Items"];
-    for (unsigned i = 0; i < zodiai.size(); i++) {
-        AttributeType &zodis = zodiai[i];
+
+    AttributeType &Veiksmazodziai = (*cfg)[L"Veiksmazodis"];
+    for (unsigned i = 0; i < Veiksmazodziai.size(); i++) {
+        AttributeType &zodis = Veiksmazodziai[i];
         if (!zodis.is_dict()) {
             continue;
         }
+        p = new VeiksmazodisGeneric(&zodis);
+        zodynas_.push_back(p);
+    }
 
-        if (zodis[L"Type"].is_equal(L"daiktavardis")) {
-            p = new DaiktavardisGeneric(cfg);
-        } else if (zodis[L"Type"].is_equal(L"budvardis")) {
-            p = new BudvardisGeneric(cfg);
-        } else if (zodis[L"Type"].is_equal(L"ivardis")) {
-            p = new IvardisGeneric(cfg);
-        } else if (zodis[L"Type"].is_equal(L"dalelyte")) {
-            p = new DalelyteGeneric(cfg);
-        } else {
-            printf_error(L"Undefined Type %s", zodis[L"Type"].to_string());
+    AttributeType &Daiktavardziai = (*cfg)[L"Daiktavardis"];
+    for (unsigned i = 0; i < Daiktavardziai.size(); i++) {
+        AttributeType &zodis = Daiktavardziai[i];
+        if (!zodis.is_dict()) {
+            continue;
         }
+        p = new DaiktavardisGeneric(&zodis);
+        zodynas_.push_back(p);
+    }
 
-        if (p) {
-            zodynas_.push_back(p);
+    AttributeType &Budvardziai = (*cfg)[L"Budvardis"];
+    for (unsigned i = 0; i < Budvardziai.size(); i++) {
+        AttributeType &zodis = Budvardziai[i];
+        if (!zodis.is_dict()) {
+            continue;
         }
+        p = new BudvardisGeneric(&zodis);
+        zodynas_.push_back(p);
+    }
+
+    AttributeType &Ivardziai = (*cfg)[L"Ivardis"];
+    for (unsigned i = 0; i < Ivardziai.size(); i++) {
+        AttributeType &zodis = Ivardziai[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new IvardisGeneric(&zodis);
+        zodynas_.push_back(p);
+    }
+
+    AttributeType &Dalelytes = (*cfg)[L"Dalelyte"];
+    for (unsigned i = 0; i < Dalelytes.size(); i++) {
+        AttributeType &zodis = Dalelytes[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new DalelyteGeneric(&zodis);
+        zodynas_.push_back(p);
+    }
+
+    AttributeType &Prieveiksmiai = (*cfg)[L"Prieveiksmis"];
+    for (unsigned i = 0; i < Prieveiksmiai.size(); i++) {
+        AttributeType &zodis = Prieveiksmiai[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new PrieveiksmisGeneric(&zodis);
+        zodynas_.push_back(p);
+    }
+
+    AttributeType &Dalyviai = (*cfg)[L"Dalyvis"];
+    for (unsigned i = 0; i < Dalyviai.size(); i++) {
+        AttributeType &zodis = Dalyviai[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new DalyvisGeneric(&zodis);
+        zodynas_.push_back(p);
     }
 }
 
