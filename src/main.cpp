@@ -32,6 +32,20 @@ L"lietuvių profesionalų iš viso pasaulio!"
 L"Bravo LT Big Brother komandai ir vadovui Vytautas Jankauskas, PhD už įkvepiantį "
 L"mentorystės forumą!";
 
+/* https://lingvoforum.net/index.php?topic=14603.0
+8. Другие причастные формы
+
+Причастие одновременности образуется от основы инфинитива с помощью суффикса "-dam-" и окончаний имен прилагательных именительного падежа первой группы: miegoti -> miegodamas, miegodama, miegodami, miegodamos. Употребляется только в именительном падеже как русское деепричастие:
+
+jis miegodamas nieko negridėjo – он, спя, ничего не слышал
+
+
+
+Причастие долженствования образуется присоединением суффикса -n- и окончаний прилагательного первой группы к инфинитиву: matyti -> matytinas; norėti -> norėtinas
+
+Обозначает оно действие, которое стоит или нужно выполнить: tas dalykas yra minėtinas – эту вещь стоит упомянуть.
+*/
+
 std::wstring lesson2text(AttributeType &lesson) {
     std::wstring ret = L"";
     std::wstring generated;
@@ -97,7 +111,8 @@ int main(int argc, const char *argv[]) {
         wprintf(L"%s.\n", lesson2text(lesson).c_str());
     }
 
-    //WRD_gauti_zodis(L"pastaba")->info();
+    WRD_gauti_zodis(L"tas")->info();
+    WRD_gauti_zodis(L"ta")->info();
 
     return 0;
 }

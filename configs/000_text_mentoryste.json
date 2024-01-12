@@ -9,7 +9,9 @@
       ["ar", "dalelyte", {}, "или"],
       ["patarimas", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Daugiskaita", "Atvejis":"Inagininkas"}, "совет"],
       ["o", "dalelyte", {}, "а"],
-      ["mainas", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Daugiskaita", "Atvejis":"Vardininkas"}, "обмен"]]
+      ["mainas", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Daugiskaita", "Atvejis":"Vardininkas"}, "обмен"]],
+    [["mainas", "daiktavardis", {"Gimine":"Vyriskoji", "Skaicius":"Daugiskaita", "Atvejis":"Vardininkas"}, "обмен"]],
+    [["tas", "ivardis", {"Gimine":"Vyriskoji", "Skaicius":"Vienaskaita", "Atvejis":"Galininkas"}, "того"]],
   ],
   "Original":
    ["Mentorystė.", 

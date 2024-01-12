@@ -24,7 +24,7 @@ class DaiktavardisGeneric : public WordGeneric {
     DaiktavardisGeneric(AttributeType *cfg);
 
     virtual void info() override;
-    virtual std::wstring gautiForma(AttributeType &arg) override; // уменьшительная форма (deminutyvas) -uk
+    virtual std::wstring gautiForma(AttributeType &arg) override;
 
  protected:
     // определить парадигму

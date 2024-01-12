@@ -21,7 +21,7 @@
         Giminė - Род
             Vyriškoji - мужской
             Moteriškoji - женский
-        Nuosaka - Наклонение {"Nuosaka":"Tiesiogine"}
+        nUosaka - Наклонение {"Nuosaka":"Tiesiogine"}
             TiesiOginė - изъявительное (indicative)
             TariamOji - сослагательное (subjunctive)
             Liepiamoji - повелительное (imperative)
@@ -45,5 +45,8 @@
 
 */
 
-VeiksmazodisGeneric::VeiksmazodisGeneric(AttributeType *cfg) : WordGeneric(cfg) {
+VeiksmazodisGeneric::VeiksmazodisGeneric(AttributeType *cfg)
+    : WordGeneric(cfg),
+    formas_(Tiesiogine_Esamasis_laikas)
+{
 }

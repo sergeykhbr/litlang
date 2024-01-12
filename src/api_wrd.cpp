@@ -102,16 +102,6 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
         p = new PrieveiksmisGeneric(&zodis);
         zodynas_.push_back(p);
     }
-
-    AttributeType &Dalyviai = (*cfg)[L"Dalyvis"];
-    for (unsigned i = 0; i < Dalyviai.size(); i++) {
-        AttributeType &zodis = Dalyviai[i];
-        if (!zodis.is_dict()) {
-            continue;
-        }
-        p = new DalyvisGeneric(&zodis);
-        zodynas_.push_back(p);
-    }
 }
 
 // gauti = get

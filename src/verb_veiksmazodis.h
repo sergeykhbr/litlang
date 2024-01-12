@@ -22,5 +22,18 @@
 class VeiksmazodisGeneric : public WordGeneric {
  public:
     VeiksmazodisGeneric(AttributeType *cfg);
+
+ protected:
+    typedef enum EFormas {
+        Tiesiogine_Esamasis_laikas,
+        Tiesiogine_Butasis_laikas,
+        Tiesiogine_ButasisDazninis_laikas,
+        Tiesiogine_Busimasis_laikas,
+        Liepiamoji_nuosaka,
+        Tariamoji_nuosaka,
+        Formas_total
+    } EFormas;
+
+    EFormas formas_;
 };
 

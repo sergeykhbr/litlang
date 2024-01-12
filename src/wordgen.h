@@ -34,12 +34,12 @@ typedef enum ESkaicus {
 } ESkaicus;
 
 typedef enum EAtvejis {
-    Vardininkas,    // Именительный падеж: Кто, что? (Kas?)
-    Kilmininkas,    // Родительный падеж: Кого, чего? (Ko?) (kilminis = родной)
-    Naudininkas,    // Дательный падеж: Кому, чему? (Kam?) (naudinis = полезный)
-    Galininkas,     // Винительный падеж? Кого, что? (Ką?)
-    Inagininkas,    // Творительный падеж? Кем, чем? (Kuo?)
-    Vietininkas,    // Местный падеж? Где, в ком, в чем? (Kur, kame?)
+    Vardininkas,    // (Nom.) Именительный падеж: Кто, что? (Kas?)
+    Kilmininkas,    // (Gen.) Родительный падеж: Кого, чего? (Ko?) (kilminis = родной)
+    Naudininkas,    // (Dat.) Дательный падеж: Кому, чему? (Kam?) (naudinis = полезный)
+    Galininkas,     // (Acc.) Винительный падеж? Кого, что? (Ką?)
+    Inagininkas,    // (Inst.) Творительный падеж? Кем, чем? (Kuo?)
+    Vietininkas,    // (Loc.) Местный падеж? Где, в ком, в чем? (Kur, kame?)
     Sauksmininkas,  // Звательный падеж
     Atvejis_Total
 } EAtvejis;

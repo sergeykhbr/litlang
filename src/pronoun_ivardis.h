@@ -24,7 +24,29 @@ class IvardisGeneric : public WordGeneric {
     IvardisGeneric(AttributeType *cfg);
 
     virtual void info() override;
+    virtual std::wstring gautiForma(AttributeType &arg) override;
+
+ protected:
+    // определить парадигму
+    void nustatyti_paradigma(const wchar_t *linksniuote);
+
  private:
-    std::wstring ru_[Skaicus_Total][Gimine_Total][Atvejis_Total];
+    typedef enum ELinksniuote {
+        Paradigma_nezinoma,
+        Paradigma_V_tas,        // tas, šitas, anas, kas..
+        Paradigma_V_kitas,      // kitas, visas, tam tikras...
+        Paradigma_V_toks,       // toks, joks, visoks, kitoks
+        Paradigma_V_jis,        // jis, šis
+        Paradigma_V_pats,       // pats
+        Paradigma_M_ta,         // ta, šita, kita, visa
+        Paradigma_M_tokia,      // tokia, visokia
+        Paradigma_M_ji,         // ji, ši, pati
+        Paradigma_total
+    } ELinksniuote;
+
+    EGimine gimine_;
+    ELinksniuote linksniuote_;
+    std::wstring lt_[Skaicus_Total][Atvejis_Total];
+    std::wstring ru_[Skaicus_Total][Atvejis_Total];
 };
 
