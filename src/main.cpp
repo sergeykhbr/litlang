@@ -111,8 +111,7 @@ int main(int argc, const char *argv[]) {
         wprintf(L"%s.\n", lesson2text(lesson).c_str());
     }
 
-    WRD_gauti_zodis(L"tas")->info();
-    WRD_gauti_zodis(L"ta")->info();
+    WRD_gauti_zodis(L"žaisti")->info();
 
     return 0;
 }

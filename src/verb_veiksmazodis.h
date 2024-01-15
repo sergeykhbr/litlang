@@ -23,6 +23,13 @@ class VeiksmazodisGeneric : public WordGeneric {
  public:
     VeiksmazodisGeneric(AttributeType *cfg);
 
+    virtual void info() override;
+    virtual std::wstring gautiForma(AttributeType &arg) override;
+
+ protected:
+    // обновить (заполнить таблицу склонений)
+    void atnaujinti();
+
  protected:
     typedef enum EFormas {
         Tiesiogine_Esamasis_laikas,
@@ -34,6 +41,19 @@ class VeiksmazodisGeneric : public WordGeneric {
         Formas_total
     } EFormas;
 
-    EFormas formas_;
+    // asmuo - лицо
+    typedef enum EAsmuo {
+        as,
+        tu,
+        jis_ji,
+        mes,
+        jus,
+        jie_jos,
+        Asmuo_total
+    } EAsmuo;
+
+    int asmenuote_; // 1, 2 arba 3
+    std::wstring lt_[Formas_total][Asmuo_total];
+    std::wstring ru_;   // infinitive
 };
 

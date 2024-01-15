@@ -10,9 +10,14 @@
       Dalyvis причастие (participant);
       Skirtukas знак препинания (punctuation mark);",
   "Veiksmazodis":[
-     {"Value":["dalYti","dalIjasi","dalIjosi"],"Ru":"делиться"},
-     {"Value":["dalInti","dalIna","dalIno"],"Ru":"делиться","Info":"тоже, что и dalyti"},
-     {"Value":["gAuti","gAuna","gAvo"],"Ru":"получить"},
+     {"Value":"dirbti","Jis":["dirba","dirbo"],"Asmenuote":1,"Ru":"работать"},
+     {"Value":"žaisti","Jis":["žaidžia","žaidė"],"Asmenuote":1,"Ru":"играть"},
+     {"Value":"padarYti","Jis":["padaro","padarė"],"Asmenuote":3,"Ru":"делать"},
+     {"Value":"mylėti","Jis":["myli","mylėjo"],"Asmenuote":2,"Ru":"любить"},
+     {"Value":"skaityti","Jis":["skaito","skaitė"],"Asmenuote":3,"Ru":"читать"},
+     {"Value":"dalYti","Jis":["dalijasi","dalijosi"],"Asmenuote":2,"Ru":"делиться"},
+     {"Value":"dalInti","Jis":["dalina","dalino"],"Asmenuote":1,"Ru":"делиться","Info":"тоже, что и dalyti"},
+     {"Value":"gAuti","Jis":["gauna","gavo"],"Asmenuote":1,"Ru":"получить"},
    ],
   "Daiktavardis":[
      {"Value":"daiktavardis","Gimine":"V","Ru":"существительное"},
