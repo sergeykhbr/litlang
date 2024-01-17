@@ -44,6 +44,27 @@ typedef enum EAtvejis {
     Atvejis_Total
 } EAtvejis;
 
+typedef enum ELaikas {
+    Esamasis,       // наст. вр.
+    Butasis,        // прош. вр.
+    ButasisDazninis,// прош. повторяющееся вр.
+    Busimasis,      // будущее
+    Laikas_total
+} ELaikas;
+
+// asmuo - лицо
+typedef enum EAsmuo {
+    as,
+    tu,
+    jis,
+    ji,
+    mes,
+    jus,
+    jie,
+    jos,
+    Asmuo_total
+} EAsmuo;
+
 
 class WordGeneric {
  public:
@@ -53,12 +74,16 @@ class WordGeneric {
     virtual bool isEqual(const wchar_t *w) { return value_ == w; }
 
     virtual void info() {}
+    // šaknis = корень (getRoot)
+    virtual std::wstring imkSaknis(int idx) { return value_; }      // verb has 3 forms: 1,2 and 3
     virtual std::wstring gautiForma(AttributeType &arg) { return value_; }
 
  protected:
     virtual EAtvejis str2atvejis(const wchar_t *s);
     virtual EGimine str2gimine(const wchar_t *s);
     virtual ESkaicus str2skaicus(const wchar_t *s);
+    virtual ELaikas str2laikas(const wchar_t *s);
+    virtual EAsmuo str2asmuo(const wchar_t *s);
     virtual int add2wline(wchar_t *buf, int pos, const wchar_t *s, int align);
 
  protected:

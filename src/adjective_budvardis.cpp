@@ -100,7 +100,7 @@ BudvardisGeneric::BudvardisGeneric(AttributeType *cfg)
 
 // Užpildykite deklinacijos lentelę - Заполнить таблицу склонений (склонятельную таблицу)
 void BudvardisGeneric::atnaujinti() {
-    std::wstring saknis = imkSaknis();
+    std::wstring saknis = imkSaknis(0);
     std::wstring *l;
 
     switch (paradigma_) {
@@ -277,7 +277,7 @@ void BudvardisGeneric::atnaujinti() {
 }
 
 // root of the word (common part without ending):
-std::wstring BudvardisGeneric::imkSaknis() {
+std::wstring BudvardisGeneric::imkSaknis(int idx) {
     std::wstring ret = L"";
     wchar_t tstr[256] = {0};
     int wsz = static_cast<int>(value_.size());

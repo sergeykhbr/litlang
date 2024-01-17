@@ -24,6 +24,8 @@ class DaiktavardisGeneric : public WordGeneric {
     DaiktavardisGeneric(AttributeType *cfg);
 
     virtual void info() override;
+    // šaknis = корень (getRoot)
+    virtual std::wstring imkSaknis(int idx) override;
     virtual std::wstring gautiForma(AttributeType &arg) override;
 
  protected:
@@ -32,8 +34,6 @@ class DaiktavardisGeneric : public WordGeneric {
     // обновить (заполнить таблицу склонений)
     void atnaujinti();
 
-    // šaknis = корень (getRoot)
-    std::wstring imkSaknis();
     int imkLinksniuote();
 
  private:

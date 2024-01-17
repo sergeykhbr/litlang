@@ -102,6 +102,44 @@ ESkaicus WordGeneric::str2skaicus(const wchar_t *s) {
     return ret;
 }
 
+ELaikas WordGeneric::str2laikas(const wchar_t *asmuo) {
+    ELaikas ret = Esamasis;
+    if (wcscmp(asmuo, L"Esamasis") == 0) {
+        ret = Esamasis;
+    } else if (wcscmp(asmuo, L"Butasis") == 0) {
+        ret = Butasis;
+    } else if (wcscmp(asmuo, L"ButasisDazninis") == 0) {
+        ret = ButasisDazninis;
+    } else if (wcscmp(asmuo, L"Busimasis") == 0) {
+        ret = Busimasis;
+    }
+    return ret;
+}
+
+
+EAsmuo WordGeneric::str2asmuo(const wchar_t *asmuo) {
+    EAsmuo ret = as;
+    if (wcscmp(asmuo, L"as") == 0) {
+        ret = as;
+    } else if (wcscmp(asmuo, L"tu") == 0) {
+        ret = tu;
+    } else if (wcscmp(asmuo, L"jis") == 0) {
+        ret = jis;
+    } else if (wcscmp(asmuo, L"ji") == 0) {
+        ret = ji;
+    } else if (wcscmp(asmuo, L"mes") == 0) {
+        ret = mes;
+    } else if (wcscmp(asmuo, L"jus") == 0) {
+        ret = jus;
+    } else if (wcscmp(asmuo, L"jie") == 0) {
+        ret = jie;
+    } else if (wcscmp(asmuo, L"jos") == 0) {
+        ret = jos;
+    }
+    return ret;
+}
+
+
 int WordGeneric::add2wline(wchar_t *buf, int pos, const wchar_t *s, int align) {
     wchar_t *p = &buf[pos];
     while (*s) {

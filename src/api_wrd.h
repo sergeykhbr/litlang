@@ -25,6 +25,5 @@ int WRD_unique_id();
 void WRD_pridelioti_zodis(AttributeType *w);
 
 // gauti = get
-WordGeneric *WRD_gauti_zodis(const wchar_t *s);
+WordGeneric *WRD_gauti_zodis(const wchar_t *s, const wchar_t *type);
 
-void WRD_info();

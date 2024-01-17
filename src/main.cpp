@@ -71,7 +71,7 @@ std::wstring lesson2text(AttributeType &lesson) {
         ret += L"Generated: ";
         for (unsigned n = 0; n < gen_fragment.size(); n++) {
             AttributeType &zodis = gen_fragment[n];
-            p = WRD_gauti_zodis(zodis[0u].to_string());
+            p = WRD_gauti_zodis(zodis[0u].to_string(), zodis[1].to_string());
 
             if (p) {
                 if (n) {
@@ -111,7 +111,7 @@ int main(int argc, const char *argv[]) {
         wprintf(L"%s.\n", lesson2text(lesson).c_str());
     }
 
-    WRD_gauti_zodis(L"žaisti")->info();
+    WRD_gauti_zodis(L"miegoti", L"Dalyvis")->info();
 
     return 0;
 }

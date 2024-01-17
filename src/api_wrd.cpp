@@ -24,9 +24,10 @@
 #include "adverb_prieveiksmis.h"
 #include "participant_dalyvis.h"
 #include <utils.h>
+#include <map>
 
 static int idcnt_ = 0;
-static std::list<WordGeneric *> zodynas_;
+static std::map<std::wstring, std::list<WordGeneric *>> zodynas_;
 
 int WRD_unique_id() {
     return ++idcnt_;
@@ -50,7 +51,9 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
             continue;
         }
         p = new VeiksmazodisGeneric(&zodis);
-        zodynas_.push_back(p);
+        zodynas_[L"Veiksmazodis"].push_back(p);
+        p = new DalyvisGeneric(&zodis, static_cast<VeiksmazodisGeneric *>(p));
+        zodynas_[L"Dalyvis"].push_back(p);
     }
 
     AttributeType &Daiktavardziai = (*cfg)[L"Daiktavardis"];
@@ -60,7 +63,7 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
             continue;
         }
         p = new DaiktavardisGeneric(&zodis);
-        zodynas_.push_back(p);
+        zodynas_[L"Daiktavardis"].push_back(p);
     }
 
     AttributeType &Budvardziai = (*cfg)[L"Budvardis"];
@@ -70,7 +73,7 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
             continue;
         }
         p = new BudvardisGeneric(&zodis);
-        zodynas_.push_back(p);
+        zodynas_[L"Budvardis"].push_back(p);
     }
 
     AttributeType &Ivardziai = (*cfg)[L"Ivardis"];
@@ -80,7 +83,7 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
             continue;
         }
         p = new IvardisGeneric(&zodis);
-        zodynas_.push_back(p);
+        zodynas_[L"Ivardis"].push_back(p);
     }
 
     AttributeType &Dalelytes = (*cfg)[L"Dalelyte"];
@@ -90,7 +93,7 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
             continue;
         }
         p = new DalelyteGeneric(&zodis);
-        zodynas_.push_back(p);
+        zodynas_[L"Dalelyte"].push_back(p);
     }
 
     AttributeType &Prieveiksmiai = (*cfg)[L"Prieveiksmis"];
@@ -100,13 +103,13 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
             continue;
         }
         p = new PrieveiksmisGeneric(&zodis);
-        zodynas_.push_back(p);
+        zodynas_[L"Prieveiksmis"].push_back(p);
     }
 }
 
 // gauti = get
-WordGeneric *WRD_gauti_zodis(const wchar_t *s) {
-    for (auto &p : zodynas_) {
+WordGeneric *WRD_gauti_zodis(const wchar_t *s, const wchar_t *type) {
+    for (auto &p : zodynas_[type]) {
         if (wcscmp(p->getValue(), s) == 0) {
             return p;
         }
@@ -114,8 +117,3 @@ WordGeneric *WRD_gauti_zodis(const wchar_t *s) {
     return 0;
 }
 
-void WRD_info() {
-    for (auto &p : zodynas_) {
-        p->info();
-    }
-}

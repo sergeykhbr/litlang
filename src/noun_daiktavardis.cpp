@@ -133,7 +133,7 @@ void DaiktavardisGeneric::nustatyti_paradigma(int linksniuote) {
 
 // Užpildykite deklinacijos lentelę - Заполнить таблицу склонений (склонятельную таблицу)
 void DaiktavardisGeneric::atnaujinti() {
-    std::wstring saknis = imkSaknis();
+    std::wstring saknis = imkSaknis(0);
     std::wstring daugiskaita_kilmininkas = saknis;
 
     // Множестенное число, родительное падеж, если число круглое или превышает десяток
@@ -417,7 +417,7 @@ void DaiktavardisGeneric::atnaujinti() {
 }
 
 // root of the word (common part without ending):
-std::wstring DaiktavardisGeneric::imkSaknis() {
+std::wstring DaiktavardisGeneric::imkSaknis(int idx) {
     std::wstring ret = L"";
     wchar_t tstr[256] = {0};
     int wsz = static_cast<int>(value_.size());
@@ -552,12 +552,12 @@ std::wstring DaiktavardisGeneric::gautiForma(AttributeType &arg) {
         && gimine == Vyriskoji) {
         // Возвратное существительное мужского рода (праткически не употребляется)
         if (paradigma_ == Paradigma_2_e || paradigma_ == Paradigma_5_e) {
-            ret = imkSaknis() + L"esi";
+            ret = imkSaknis(0) + L"esi";
         } else if (paradigma_ == Paradigma_1_is || paradigma_ == Paradigma_3_is
              || paradigma_ == Paradigma_1_as) {
-            ret = imkSaknis() + L"asis";
+            ret = imkSaknis(0) + L"asis";
         } else {
-            ret = imkSaknis() + L"is";
+            ret = imkSaknis(0) + L"is";
             // unsupported = nepalaikomas
             printf_error(L"nepalaikomas sangrąžynis daiktavardis (-si): %s", value_.c_str());
         }

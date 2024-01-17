@@ -24,6 +24,8 @@ class BudvardisGeneric : public WordGeneric {     // глагол
     BudvardisGeneric(AttributeType *cfg);
 
     virtual void info() override;
+    // šaknis = корень (getRoot)
+    virtual std::wstring imkSaknis(int idx) override;
 
  protected:
     // определить парадигму
@@ -31,8 +33,6 @@ class BudvardisGeneric : public WordGeneric {     // глагол
     // обновить (заполнить таблицу склонений)
     void atnaujinti();
 
-    // šaknis = корень (getRoot)
-    std::wstring imkSaknis();
     int imkLinksniuote();
 
  protected:

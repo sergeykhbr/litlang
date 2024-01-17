@@ -17,10 +17,38 @@
 #pragma once
 
 #include "wordgen.h"
+#include "verb_veiksmazodis.h"
 
 // причастие, dalyvis
 class DalyvisGeneric : public WordGeneric {
  public:
-    DalyvisGeneric(AttributeType *cfg);
+    DalyvisGeneric(AttributeType *cfg, VeiksmazodisGeneric *verb);
+
+    virtual void info() override;
+    virtual std::wstring gautiForma(AttributeType &arg) override;
+
+ protected:
+    // rūšis = залог
+    typedef enum ERusis {
+        Veikiamoji,         // акт. залог (veikiamoji rūšis) (идущий)
+        Neveikiamoji,       // пас. залог (neveikiamoji rūšis), (просмотренный)
+        Rusis_total
+    } ERusis;
+
+    // 
+    typedef enum EFormas {
+        Liepiamoji,         // причастие долженствования
+        Vienalaikiskumas,   // одноврменно -dam-
+        Formas_total
+    } EFormas;
+
+ protected:
+    // обновить (заполнить таблицу склонений)
+    void atnaujinti();
+
+ protected:
+    VeiksmazodisGeneric *veiksmazodis_;
+    std::wstring lt_[Rusis_total][Laikas_total][Skaicus_Total][Atvejis_Total][Gimine_Total];
+    std::wstring lt_vienalaikis_[Skaicus_Total][Gimine_Total];  // -dam-
 };
 

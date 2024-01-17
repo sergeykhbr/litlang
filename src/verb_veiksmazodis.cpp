@@ -31,7 +31,7 @@
             Pirmoji - I (dirbti)
             Antroji - II (mylėti)
             Trečioji - III (skaityti)
-        Laikas - Время {"Laikas":"Butasis dazninis"}
+        Laikas - Время {"Laikas":"ButasisDazninis"}
             Esamasis laikas - настоящее
             Būtasis laikas - прошедшее
             Būtasis dažninis laikas - прошедшее многократное
@@ -50,8 +50,10 @@ VeiksmazodisGeneric::VeiksmazodisGeneric(AttributeType *cfg)
     : WordGeneric(cfg)
 {
     asmenuote_ = (*cfg)[L"Asmenuote"].to_int();
-    lt_[Tiesiogine_Esamasis_laikas][jis_ji] = std::wstring((*cfg)[L"Jis"][0u].to_string());
-    lt_[Tiesiogine_Butasis_laikas][jis_ji] = std::wstring((*cfg)[L"Jis"][1].to_string());
+    lt_[Esamasis][jis] = std::wstring((*cfg)[L"Jis"][0u].to_string());
+    lt_[Esamasis][ji] = std::wstring((*cfg)[L"Jis"][0u].to_string());
+    lt_[Butasis][jis] = std::wstring((*cfg)[L"Jis"][1].to_string());
+    lt_[Butasis][ji] = std::wstring((*cfg)[L"Jis"][1].to_string());
 
     AttributeType &ru = (*cfg)[L"Ru"];
     if (ru.is_string()) {
@@ -59,6 +61,28 @@ VeiksmazodisGeneric::VeiksmazodisGeneric(AttributeType *cfg)
     }
 
     atnaujinti();
+}
+
+std::wstring VeiksmazodisGeneric::imkSaknis(int idx) {
+    std::wstring ret = L"";
+    if (idx == 1) {
+        // -ti
+        ret = value_.substr(0, value_.size() - 2);
+    } else if (idx == 2) {
+        // -(i)a; -i; -o
+        const wchar_t *wzodis = lt_[Esamasis][jis].c_str();
+        int vsz = static_cast<int>(lt_[Esamasis][jis].size());
+        if (wzodis[vsz-2] == L'i' && wzodis[vsz-1] == L'a') {
+            ret = lt_[Esamasis][jis].substr(0, vsz - 2);
+        } else {
+            ret = lt_[Esamasis][jis].substr(0, vsz - 1);
+        }
+    } else if (idx == 3) {
+        // -o; -ė
+        int vsz = static_cast<int>(lt_[Butasis][jis].size());
+        ret = lt_[Butasis][jis].substr(0, vsz - 1);
+    }
+    return ret;
 }
 
 // Užpildykite deklinacijos lentelę - Заполнить таблицу склонений (склонятельную таблицу)
@@ -88,44 +112,45 @@ void VeiksmazodisGeneric::atnaujinti() {
     }
 
     // 3 asmuo, vietininkas, esamasis laikas
-    wzodis = lt_[Tiesiogine_Esamasis_laikas][jis_ji].c_str();
-    vsz = static_cast<int>(lt_[Tiesiogine_Esamasis_laikas][jis_ji].size());
+    wzodis = lt_[Esamasis][jis].c_str();
+    vsz = static_cast<int>(lt_[Esamasis][jis].size());
+    saknis2 = imkSaknis(2);
     if (wzodis[vsz-2] == L'i' && wzodis[vsz-1] == L'a') {
         asmenuote_ = 1;
-        saknis2 = lt_[Tiesiogine_Esamasis_laikas][jis_ji].substr(0, vsz - 2);
         galunes2 = L"ia";
         galunes[as] = L"iu";
         galunes[tu] = L"i";
         galunes[mes] = L"iame";
         galunes[jus] = L"iate";
-        galunes[jie_jos] = L"ia";
+        galunes[jie] = L"ia";
+        galunes[jos] = L"ia";
     } else if (wzodis[vsz-1] == L'a') {
         asmenuote_ = 1;
-        saknis2 = lt_[Tiesiogine_Esamasis_laikas][jis_ji].substr(0, vsz - 1);
         galunes2 = L"a";
         galunes[as] = L"u";
         galunes[tu] = L"i";
         galunes[mes] = L"ame";
         galunes[jus] = L"ate";
-        galunes[jie_jos] = L"a";
+        galunes[jie] = L"a";
+        galunes[jos] = L"a";
     } else if (wzodis[vsz-1] == L'i') {
         asmenuote_ = 2;
-        saknis2 = lt_[Tiesiogine_Esamasis_laikas][jis_ji].substr(0, vsz - 1);
         galunes2 = L"i";
         galunes[as] = L"iu";
         galunes[tu] = L"i";
         galunes[mes] = L"ime";
         galunes[jus] = L"ite";
-        galunes[jie_jos] = L"i";
+        galunes[jie] = L"i";
+        galunes[jos] = L"i";
     } else if (wzodis[vsz-1] == L'o') {
         asmenuote_ = 3;
-        saknis2 = lt_[Tiesiogine_Esamasis_laikas][jis_ji].substr(0, vsz - 1);
         galunes2 = L"o";
         galunes[as] = L"au";
         galunes[tu] = L"ai";
         galunes[mes] = L"ome";
         galunes[jus] = L"ote";
-        galunes[jie_jos] = L"o";
+        galunes[jie] = L"o";
+        galunes[jos] = L"o";
     } else {
         // unsupported (private) ending = nepalaikomas galūnės
         wprintf(L"warning: nepalaikomas asmenų galūnės asmenuote: %s\n", wzodis);
@@ -138,32 +163,39 @@ void VeiksmazodisGeneric::atnaujinti() {
         _dz = L"ž";
     }
 
-    lt_[Tiesiogine_Esamasis_laikas][as] = saknis2 + _dz + galunes[as];
-    lt_[Tiesiogine_Esamasis_laikas][tu] = saknis2 + galunes[tu];
-    lt_[Tiesiogine_Esamasis_laikas][mes] = saknis2 + _dz + galunes[mes];
-    lt_[Tiesiogine_Esamasis_laikas][jus] = saknis2 + _dz + galunes[jus];
-    lt_[Tiesiogine_Esamasis_laikas][jie_jos] = saknis2 + _dz + galunes[jie_jos];
+    lt_[Esamasis][as] = saknis2 + _dz + galunes[as];
+    lt_[Esamasis][tu] = saknis2 + galunes[tu];
+    lt_[Esamasis][mes] = saknis2 + _dz + galunes[mes];
+    lt_[Esamasis][jus] = saknis2 + _dz + galunes[jus];
+    lt_[Esamasis][jie] = saknis2 + _dz + galunes[jie];
+    lt_[Esamasis][jos] = saknis2 + _dz + galunes[jos];
 
 
     // 3 asmuo, vietininkas, būtasis laikas
-    wzodis = lt_[Tiesiogine_Butasis_laikas][jis_ji].c_str();
-    vsz = static_cast<int>(lt_[Tiesiogine_Butasis_laikas][jis_ji].size());
+    wzodis = lt_[Butasis][jis].c_str();
+    vsz = static_cast<int>(lt_[Butasis][jis].size());
+    saknis3 = imkSaknis(3);
+    std::wstring _i = L"";
+    if (value_[value_.size() - 3] == L'y' || value_[value_.size() - 3] == L'i') {
+        // -iti or -yti
+        _i = L"i";
+    }
     if (wzodis[vsz-1] == L'o') {
-        saknis3 = lt_[Tiesiogine_Butasis_laikas][jis_ji].substr(0, vsz - 1);
         galunes3 = L"o";
-        galunes[as] = L"au";
+        galunes[as] = _i + L"au";
         galunes[tu] = L"ai";
         galunes[mes] = L"ome";
         galunes[jus] = L"ote";
-        galunes[jie_jos] = L"o";
+        galunes[jie] = L"o";
+        galunes[jos] = L"o";
     } else if (wzodis[vsz-1] == L'ė') {
-        saknis3 = lt_[Tiesiogine_Butasis_laikas][jis_ji].substr(0, vsz - 1);
         galunes3 = L"ė";
-        galunes[as] = L"au";
+        galunes[as] = _i + L"au";
         galunes[tu] = L"ei";
         galunes[mes] = L"ėme";
         galunes[jus] = L"ėte";
-        galunes[jie_jos] = L"ė";
+        galunes[jie] = L"ė";
+        galunes[jos] = L"ė";
     } else {
         // unsupported (private) ending = nepalaikomas galūnės
         wprintf(L"warning: nepalaikomas asmenų galūnės asmenuote: %s\n", wzodis);
@@ -171,27 +203,30 @@ void VeiksmazodisGeneric::atnaujinti() {
 
     vsz = static_cast<int>(saknis3.size());
     if (saknis3.c_str()[vsz - 1] == L'd') {
-        lt_[Tiesiogine_Butasis_laikas][as] = saknis3.substr(0, vsz - 1) + L"ži" + galunes[as];
+        lt_[Butasis][as] = saknis3.substr(0, vsz - 1) + L"ži" + galunes[as];
     } else if (saknis3.c_str()[vsz - 1] == L't') {
-        lt_[Tiesiogine_Butasis_laikas][as] = saknis3.substr(0, vsz - 1) + L"či" + galunes[as];
+        lt_[Butasis][as] = saknis3.substr(0, vsz - 1) + L"či" + galunes[as];
     } else {
-        lt_[Tiesiogine_Butasis_laikas][as] = saknis3 + galunes[as];
+        lt_[Butasis][as] = saknis3 + galunes[as];
     }
-    lt_[Tiesiogine_Butasis_laikas][tu] = saknis3 + galunes[tu];
-    lt_[Tiesiogine_Butasis_laikas][mes] = saknis3 + galunes[mes];
-    lt_[Tiesiogine_Butasis_laikas][jus] = saknis3 + galunes[jus];
-    lt_[Tiesiogine_Butasis_laikas][jie_jos] = saknis3 + galunes[jie_jos];
+    lt_[Butasis][tu] = saknis3 + galunes[tu];
+    lt_[Butasis][mes] = saknis3 + galunes[mes];
+    lt_[Butasis][jus] = saknis3 + galunes[jus];
+    lt_[Butasis][jie] = saknis3 + galunes[jie];
+    lt_[Butasis][jos] = saknis3 + galunes[jos];
 
     // Būtasis dažninis laikas
-    lt_[Tiesiogine_ButasisDazninis_laikas][as] = saknis1 + L"davau";
-    lt_[Tiesiogine_ButasisDazninis_laikas][tu] = saknis1 + L"davai";
-    lt_[Tiesiogine_ButasisDazninis_laikas][jis_ji] = saknis1 + L"davo";
-    lt_[Tiesiogine_ButasisDazninis_laikas][mes] = saknis1 + L"davome";
-    lt_[Tiesiogine_ButasisDazninis_laikas][jus] = saknis1 + L"davote";
-    lt_[Tiesiogine_ButasisDazninis_laikas][jie_jos] = saknis1 + L"davo";
+    lt_[ButasisDazninis][as] = saknis1 + L"davau";
+    lt_[ButasisDazninis][tu] = saknis1 + L"davai";
+    lt_[ButasisDazninis][jis] = saknis1 + L"davo";
+    lt_[ButasisDazninis][ji] = saknis1 + L"davo";
+    lt_[ButasisDazninis][mes] = saknis1 + L"davome";
+    lt_[ButasisDazninis][jus] = saknis1 + L"davote";
+    lt_[ButasisDazninis][jie] = saknis1 + L"davo";
+    lt_[ButasisDazninis][jos] = saknis1 + L"davo";
 
     // Būsimasis laikas
-    std::wstring saknis4 = saknis1;
+    std::wstring saknis4 = imkSaknis(1);
     wzodis = saknis4.c_str();
     vsz = static_cast<int>(saknis4.size());
     std::wstring _s = L"s";
@@ -201,12 +236,42 @@ void VeiksmazodisGeneric::atnaujinti() {
         saknis4 = saknis4.substr(0, vsz - 1);
         _s = L"š";
     }
-    lt_[Tiesiogine_Busimasis_laikas][as] = saknis4 + _s + L"iu";
-    lt_[Tiesiogine_Busimasis_laikas][tu] = saknis4 + _s + L"i";
-    lt_[Tiesiogine_Busimasis_laikas][jis_ji] = saknis4 + _s;
-    lt_[Tiesiogine_Busimasis_laikas][mes] = saknis4 + _s + L"ime";
-    lt_[Tiesiogine_Busimasis_laikas][jus] = saknis4 + _s + L"ite";
-    lt_[Tiesiogine_Busimasis_laikas][jie_jos] = saknis4 + _s;
+    lt_[Busimasis][as] = saknis4 + _s + L"iu";
+    lt_[Busimasis][tu] = saknis4 + _s + L"i";
+    lt_[Busimasis][jis] = saknis4 + _s;
+    lt_[Busimasis][ji] = saknis4 + _s;
+    lt_[Busimasis][mes] = saknis4 + _s + L"ime";
+    lt_[Busimasis][jus] = saknis4 + _s + L"ite";
+    lt_[Busimasis][jie] = saknis4 + _s;
+    lt_[Busimasis][jos] = saknis4 + _s;
+
+
+    // Liepiamoji nuosaka, Повелительное наклонение
+    std::wstring saknis5 = saknis1;
+    wzodis = saknis5.c_str();
+    vsz = static_cast<int>(saknis5.size());
+    std::wstring _k = L"k";     // TODO: -ki
+    if (wzodis[vsz - 1] == L'g') {
+        saknis5 = saknis5.substr(0, vsz - 1) + L"k";
+    }
+    lt_liepiamoji_[as] = L"";
+    lt_liepiamoji_[tu] = saknis5 + _k;
+    lt_liepiamoji_[jis] = L"te" + lt_[Esamasis][jis];
+    lt_liepiamoji_[ji] = L"te" + lt_[Esamasis][ji];
+    lt_liepiamoji_[mes] = saknis5 + _k + L"ime";
+    lt_liepiamoji_[jus] = saknis5 + _k + L"ite";
+    lt_liepiamoji_[jie] = L"te" + lt_[Esamasis][jie];
+    lt_liepiamoji_[jos] = L"te" + lt_[Esamasis][jos];
+
+    // Tariamoji nuosaka, Условное наклонение
+    lt_tariamoji_[as] = saknis1 + L"čiau";
+    lt_tariamoji_[tu] = saknis1 + L"tum";
+    lt_tariamoji_[jis] = saknis1 + L"tų";
+    lt_tariamoji_[ji] = saknis1 + L"tų";
+    lt_tariamoji_[mes] = saknis1 + L"tume";
+    lt_tariamoji_[jus] = saknis1 + L"tute";   // tu(mė)te
+    lt_tariamoji_[jie] = saknis1 + L"tų";
+    lt_tariamoji_[jos] = saknis1 + L"tų";
 }
 
 void VeiksmazodisGeneric::info() {
@@ -222,42 +287,42 @@ void VeiksmazodisGeneric::info() {
                L"Изявительное наклонение, настоящее время");
 
     tcnt = add2wline(tstr, 0, L"    aš: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Esamasis_laikas][as].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Esamasis][as].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"mes: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Esamasis_laikas][mes].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Esamasis][mes].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    tu: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Esamasis_laikas][tu].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Esamasis][tu].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jūs: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Esamasis_laikas][jus].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Esamasis][jus].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    jis,ji: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Esamasis_laikas][jis_ji].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Esamasis][jis].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jie,jos: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Esamasis_laikas][jie_jos].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Esamasis][jie].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     printf_log(L"  Tiesioginė nuosaka, Būtasis laikas (%s):\n",
                L"Изявительное наклонение, прошедшее время");
 
     tcnt = add2wline(tstr, 0, L"    aš: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Butasis_laikas][as].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Butasis][as].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"mes: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Butasis_laikas][mes].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Butasis][mes].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    tu: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Butasis_laikas][tu].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Butasis][tu].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jūs: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Butasis_laikas][jus].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Butasis][jus].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    jis,ji: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Butasis_laikas][jis_ji].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Butasis][jis].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jie,jos: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Butasis_laikas][jie_jos].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Butasis][jie].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
 
@@ -265,49 +330,100 @@ void VeiksmazodisGeneric::info() {
                L"Изявительное наклонение, прошедшее повторяющееся время");
 
     tcnt = add2wline(tstr, 0, L"    aš: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_ButasisDazninis_laikas][as].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[ButasisDazninis][as].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"mes: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_ButasisDazninis_laikas][mes].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[ButasisDazninis][mes].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    tu: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_ButasisDazninis_laikas][tu].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[ButasisDazninis][tu].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jūs: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_ButasisDazninis_laikas][jus].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[ButasisDazninis][jus].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    jis,ji: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_ButasisDazninis_laikas][jis_ji].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[ButasisDazninis][jis].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jie,jos: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_ButasisDazninis_laikas][jie_jos].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[ButasisDazninis][jie].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     printf_log(L"  Tiesioginė nuosaka, Būsimasis laikas (%s):\n",
                L"Изявительное наклонение, будущее время");
 
     tcnt = add2wline(tstr, 0, L"    aš: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Busimasis_laikas][as].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Busimasis][as].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"mes: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Busimasis_laikas][mes].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Busimasis][mes].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    tu: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Busimasis_laikas][tu].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Busimasis][tu].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jūs: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Busimasis_laikas][jus].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Busimasis][jus].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 
     tcnt = add2wline(tstr, 0, L"    jis,ji: ", 14);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Busimasis_laikas][jis_ji].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Busimasis][jis].c_str(), wsz);
     tcnt = add2wline(tstr, tcnt, L"jie,jos: ", 10);
-    tcnt = add2wline(tstr, tcnt, lt_[Tiesiogine_Busimasis_laikas][jie_jos].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, lt_[Busimasis][jie].c_str(), wsz);
+    printf_log(L"%s\n", tstr);
+
+
+    printf_log(L"  Liepiamoji nuosaka (%s):\n",
+               L"Повелительное наклонение");
+
+    tcnt = add2wline(tstr, 0, L"    aš: ", 14);
+    tcnt = add2wline(tstr, tcnt, lt_liepiamoji_[as].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"mes: ", 10);
+    tcnt = add2wline(tstr, tcnt, lt_liepiamoji_[mes].c_str(), wsz);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    tu: ", 14);
+    tcnt = add2wline(tstr, tcnt, lt_liepiamoji_[tu].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"jūs: ", 10);
+    tcnt = add2wline(tstr, tcnt, lt_liepiamoji_[jus].c_str(), wsz);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    jis,ji: ", 14);
+    tcnt = add2wline(tstr, tcnt, lt_liepiamoji_[jis].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"jie,jos: ", 10);
+    tcnt = add2wline(tstr, tcnt, lt_liepiamoji_[jie].c_str(), wsz);
+    printf_log(L"%s\n", tstr);
+
+
+    printf_log(L"  Tariamoji nuosaka (%s):\n",
+               L"Условное наклонение");
+
+    tcnt = add2wline(tstr, 0, L"    aš: ", 14);
+    tcnt = add2wline(tstr, tcnt, lt_tariamoji_[as].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"mes: ", 10);
+    tcnt = add2wline(tstr, tcnt, lt_tariamoji_[mes].c_str(), wsz);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    tu: ", 14);
+    tcnt = add2wline(tstr, tcnt, lt_tariamoji_[tu].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"jūs: ", 10);
+    tcnt = add2wline(tstr, tcnt, lt_tariamoji_[jus].c_str(), wsz);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    jis,ji: ", 14);
+    tcnt = add2wline(tstr, tcnt, lt_tariamoji_[jis].c_str(), wsz);
+    tcnt = add2wline(tstr, tcnt, L"jie,jos: ", 10);
+    tcnt = add2wline(tstr, tcnt, lt_tariamoji_[jie].c_str(), wsz);
     printf_log(L"%s\n", tstr);
 }
 
 std::wstring VeiksmazodisGeneric::gautiForma(AttributeType &arg) {
     std::wstring ret = L"";
-    //EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
-    //EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
-    //ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
+    EAsmuo asmuo = str2asmuo(arg[L"Asmuo"].to_string());
+    if (!arg.has_key(L"Nuosaka") || arg.is_equal(L"Tiesiogine")) {
+        ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
+        ret = lt_[laikas][asmuo];
+    } else if (arg[L"Nuosaka"].is_equal(L"Liepiamoji")) {
+        ret = lt_liepiamoji_[asmuo];
+    } else if (arg[L"Nuosaka"].is_equal(L"Tariamoji")) {
+        ret = lt_tariamoji_[asmuo];
+    }
+
     return ret;
 }
