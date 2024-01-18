@@ -85,6 +85,15 @@ std::wstring VeiksmazodisGeneric::imkSaknis(int idx) {
     return ret;
 }
 
+std::wstring VeiksmazodisGeneric::imkZodis(int idx) {
+    if (idx == 2) {
+        return lt_[Esamasis][jis];
+    } else if (idx == 3) {
+        return lt_[Butasis][jis];
+    }
+    return value_;
+}
+
 // Užpildykite deklinacijos lentelę - Заполнить таблицу склонений (склонятельную таблицу)
 void VeiksmazodisGeneric::atnaujinti() {
     int vsz = static_cast<int>(value_.size());

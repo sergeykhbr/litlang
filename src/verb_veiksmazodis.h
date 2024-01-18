@@ -25,6 +25,7 @@ class VeiksmazodisGeneric : public WordGeneric {
 
     virtual void info() override;
     virtual std::wstring imkSaknis(int idx) override;
+    virtual std::wstring imkZodis(int idx) override;
     virtual std::wstring gautiForma(AttributeType &arg) override;
     virtual int imkAsmenuote() { return asmenuote_; }
 

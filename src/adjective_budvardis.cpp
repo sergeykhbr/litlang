@@ -461,4 +461,13 @@ void BudvardisGeneric::info() {
     printf_log(L"%s\n", tstr);
 }
 
+std::wstring BudvardisGeneric::gautiForma(AttributeType &arg) {
+    std::wstring ret = L"";
+    ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
+    EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
+    EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
+
+    ret = lentele_[skaicus][gimine][atvejis];
+    return ret;
+}
 

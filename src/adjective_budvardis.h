@@ -26,6 +26,7 @@ class BudvardisGeneric : public WordGeneric {     // глагол
     virtual void info() override;
     // šaknis = корень (getRoot)
     virtual std::wstring imkSaknis(int idx) override;
+    virtual std::wstring gautiForma(AttributeType &arg) override;
 
  protected:
     // определить парадигму

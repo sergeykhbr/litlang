@@ -23,6 +23,8 @@
 #include "particle_dalelyte.h"
 #include "adverb_prieveiksmis.h"
 #include "participant_dalyvis.h"
+#include "preposition_prielinksnis.h"
+#include "conjuction_jungtukas.h"
 #include <utils.h>
 #include <map>
 
@@ -96,6 +98,7 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
         zodynas_[L"Dalelyte"].push_back(p);
     }
 
+    // наречие
     AttributeType &Prieveiksmiai = (*cfg)[L"Prieveiksmis"];
     for (unsigned i = 0; i < Prieveiksmiai.size(); i++) {
         AttributeType &zodis = Prieveiksmiai[i];
@@ -104,6 +107,39 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
         }
         p = new PrieveiksmisGeneric(&zodis);
         zodynas_[L"Prieveiksmis"].push_back(p);
+    }
+
+    // предлоги
+    AttributeType &Prielinksniai = (*cfg)[L"Prielinksnis"];
+    for (unsigned i = 0; i < Prielinksniai.size(); i++) {
+        AttributeType &zodis = Prielinksniai[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new PrielinksnisGeneric(&zodis);
+        zodynas_[L"Prielinksnis"].push_back(p);
+    }
+
+    // союзы
+    AttributeType &Jungtukai = (*cfg)[L"Jungtukas"];
+    for (unsigned i = 0; i < Jungtukai.size(); i++) {
+        AttributeType &zodis = Jungtukai[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new JungtukasGeneric(&zodis);
+        zodynas_[L"Jungtukas"].push_back(p);
+    }
+
+    // Знаки препинания
+    AttributeType &Skirtukiai = (*cfg)[L"Skirtukas"];
+    for (unsigned i = 0; i < Skirtukiai.size(); i++) {
+        AttributeType &zodis = Skirtukiai[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new WordGeneric(&zodis);
+        zodynas_[L"Skirtukas"].push_back(p);
     }
 }
 

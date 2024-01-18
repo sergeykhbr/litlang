@@ -534,12 +534,12 @@ std::wstring DaiktavardisGeneric::gautiForma(AttributeType &arg) {
     EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
     EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
     ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
-    std::wstring sangrazynis = L""; // возвратная форма (sangrąžynis) -si
+    std::wstring sangrazinis = L""; // возвратная форма (sangrąžynis) -si
     std::wstring deminutyvas = L"";
 
     if (arg.has_key(L"Sangrazynis")) {
         // возвратная форма (sangrąžynis) -si
-        sangrazynis = std::wstring(arg[L"Sangrazynis"].to_string());
+        sangrazinis = std::wstring(arg[L"Sangrazinis"].to_string());
     }
 
     if (arg.has_key(L"Deminutyvas")) {
@@ -547,7 +547,7 @@ std::wstring DaiktavardisGeneric::gautiForma(AttributeType &arg) {
         deminutyvas = std::wstring(arg[L"Deminutyvas"].to_string());
     }
 
-    if (sangrazynis != L""
+    if (sangrazinis != L""
         && atvejis == Sauksmininkas
         && gimine == Vyriskoji) {
         // Возвратное существительное мужского рода (праткически не употребляется)

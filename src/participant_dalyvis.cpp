@@ -52,6 +52,7 @@ DalyvisGeneric::DalyvisGeneric(AttributeType *cfg, VeiksmazodisGeneric *verb)
 }
 
 void DalyvisGeneric::atnaujinti() {
+    std::wstring saknis1 = veiksmazodis_->imkSaknis(1);
     std::wstring saknis2 = veiksmazodis_->imkSaknis(2);
     std::wstring _a_i = L"";
     std::wstring _a_i_nosine = L"";
@@ -64,7 +65,7 @@ void DalyvisGeneric::atnaujinti() {
         _a_i_nosine = L"į";
     }
 
-    // Vienaskaita
+    // Активная форма, наст.вр. Vienaskaita
     // я идущий, ты идущий, он идущий
     // я идущая, ты идущая, она идущая
     lt_[Veikiamoji][Esamasis][Vienaskaita][Vardininkas][Vyriskoji] = saknis2 + _a_i_nosine + L"s"; // -antis/-intis are possible too
@@ -82,7 +83,6 @@ void DalyvisGeneric::atnaujinti() {
     // same as vardininkas (taip pat kaip vardininkas)
     lt_[Veikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Vyriskoji] = saknis2 + _a_i_nosine + L"s"; // -antis/-intis are possible too
     lt_[Veikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Moteriskoji] = saknis2 + _a_i + L"nti";
-
     // Daugiskaita
     // мы идущие, вы идущие, они идущие (м.р.)
     // мы идущие, вы идущие, они идущие (ж.р.)
@@ -103,9 +103,48 @@ void DalyvisGeneric::atnaujinti() {
     lt_[Veikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji] = saknis2 + _a_i + L"nčios";
 
 
+    // Пассивная форма, наст. вр., Vienaskaita (-m + окончание прилагательных первой группы)
+    // я видимый, ты видимый, он видимый
+    // я видимая, ты видимая, она видимая
+    std::wstring zodis2 = veiksmazodis_->imkZodis(2);
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Vardininkas][Vyriskoji] = zodis2 + L"m" + L"as";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Vardininkas][Moteriskoji] = zodis2 + L"m" + L"a";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Kilmininkas][Vyriskoji] = zodis2 + L"m" + L"o";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Kilmininkas][Moteriskoji] = zodis2 + L"m" + L"os";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Naudininkas][Vyriskoji] = zodis2 + L"m" + L"am";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Naudininkas][Moteriskoji] = zodis2 + L"m" + L"ai";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Galininkas][Vyriskoji] = zodis2 + L"m" + L"ą";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Galininkas][Moteriskoji] = zodis2 + L"m" + L"ą";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Inagininkas][Vyriskoji] = zodis2 + L"m" + L"u";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Inagininkas][Moteriskoji] = zodis2 + L"m" + L"a";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Vietininkas][Vyriskoji] = zodis2 + L"m" + L"ame";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Vietininkas][Moteriskoji] = zodis2 + L"m" + L"oje";
+    // same as vardininkas (taip pat kaip vardininkas)
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Vyriskoji] = zodis2 + L"m" + L"as";
+    lt_[Neveikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Moteriskoji] = zodis2 + L"m" + L"a";
+    // Daugiskaita
+    // мы видимые, вы видимые, они видимые(м.р.)
+    // мы видимые, вы видимые, они видимые (ж.р.)
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Vardininkas][Vyriskoji] = zodis2 + L"m" + L"i";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Vardininkas][Moteriskoji] = zodis2 + L"m" + L"os";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Kilmininkas][Vyriskoji] = zodis2 + L"m" + L"ų";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Kilmininkas][Moteriskoji] = zodis2 + L"m" + L"ų";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Naudininkas][Vyriskoji] = zodis2 + L"m" + L"iems";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Naudininkas][Moteriskoji] = zodis2 + L"m" + L"oms";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Galininkas][Vyriskoji] = zodis2 + L"m" + L"us";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Galininkas][Moteriskoji] = zodis2 + L"m" + L"as";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Inagininkas][Vyriskoji] = zodis2 + L"m" + L"ais";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Inagininkas][Moteriskoji] = zodis2 + L"m" + L"omis";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Vietininkas][Vyriskoji] = zodis2 + L"m" + L"uose";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Vietininkas][Moteriskoji] = zodis2 + L"m" + L"ose";
+    // same as vardininkas (taip pat kaip vardininkas)
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Vyriskoji] = zodis2 + L"m" + L"i";
+    lt_[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji] = zodis2 + L"m" + L"os";
+
+
+
     // Одновременности. -dam- + окончание прилагательных первой группы Им.падежа.
     // Употребляется только в иментильном падеже как деепричастие: делая, идя, спя...
-    std::wstring saknis1 = veiksmazodis_->imkSaknis(1);
     lt_vienalaikis_[Vienaskaita][Vyriskoji] = saknis1 + L"dam" + L"as";
     lt_vienalaikis_[Vienaskaita][Moteriskoji] = saknis1 + L"dam" + L"a";
     lt_vienalaikis_[Daugiskaita][Vyriskoji] = saknis1 + L"dam" + L"i";
@@ -120,59 +159,57 @@ void DalyvisGeneric::info() {
     if (aligncnt < 20) {
         aligncnt = 20;
     }
-    printf_log(L"\nDalyvis: %s, (%s)\n",
-            value_.c_str(),
-            L"-щий");
+    printf_log(L"\nDalyvis: %s\n", value_.c_str());
 
-    printf_log(L"Tiesioginė nuosaka, Esamasis laikas (%s):\n",
-               L"Активный залог, н.вр.");
+    printf_log(L"  Tiesioginė nuosaka, Veikiamoji rūšis, Esamasis laikas (%s):\n",
+               L"-щий, Активный залог, н.вр.");
     // 19 = aligncnt - 1
-    printf_log(L"%26s %19s %19s %19s\n",
+    printf_log(L"%30s %19s %19s %19s\n",
         L"ед.ч.,м.р.", L"ед.ч.,ж.р.", L"мн.ч.,м.р.", L"мн.ч.,ж.р.");
 
-    tcnt = add2wline(tstr, 0, L"Vardininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Vardininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Vardininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Vardininkas][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Vardininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Vardininkas][Moteriskoji].c_str(), aligncnt);
     printf_log(L"%s\n", tstr);
 
-    tcnt = add2wline(tstr, 0, L"Kilmininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Kilmininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Kilmininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Kilmininkas][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Kilmininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Kilmininkas][Moteriskoji].c_str(), aligncnt);
     printf_log(L"%s\n", tstr);
 
-    tcnt = add2wline(tstr, 0, L"Naudininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Naudininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Naudininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Naudininkas][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Naudininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Naudininkas][Moteriskoji].c_str(), aligncnt);
     printf_log(L"%s\n", tstr);
 
-    tcnt = add2wline(tstr, 0, L"Galininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Galininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Galininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Galininkas][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Galininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Galininkas][Moteriskoji].c_str(), aligncnt);
     printf_log(L"%s\n", tstr);
 
-    tcnt = add2wline(tstr, 0, L"Inagininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Inagininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Inagininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Inagininkas][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Inagininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Inagininkas][Moteriskoji].c_str(), aligncnt);
     printf_log(L"%s\n", tstr);
 
-    tcnt = add2wline(tstr, 0, L"Vietininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Vietininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Vietininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Vietininkas][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Vietininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Vietininkas][Moteriskoji].c_str(), aligncnt);
     printf_log(L"%s\n", tstr);
 
-    tcnt = add2wline(tstr, 0, L"Sauksmininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Sauksmininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_[Veikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Vyriskoji].c_str(), aligncnt);
@@ -180,9 +217,65 @@ void DalyvisGeneric::info() {
     printf_log(L"%s\n", tstr);
 
 
-    printf_log(L"Vienalaikis formas, (%s):\n", L"форма одновременности, только в Им.п.");
+    printf_log(L"  Tiesioginė nuosaka, Neveikiamoji rūšis, Esamasis laikas (%s):\n",
+               L"-мый, Пассивный залог, н.вр.");
+    // 19 = aligncnt - 1
+    printf_log(L"%30s %19s %19s %19s\n",
+        L"ед.ч.,м.р.", L"ед.ч.,ж.р.", L"мн.ч.,м.р.", L"мн.ч.,ж.р.");
 
-    tcnt = add2wline(tstr, 0, L"Vardininkas: ", 16);
+    tcnt = add2wline(tstr, 0, L"    Vardininkas: ", 20);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Vardininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Vardininkas][Moteriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Vardininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Vardininkas][Moteriskoji].c_str(), aligncnt);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    Kilmininkas: ", 20);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Kilmininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Kilmininkas][Moteriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Kilmininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Kilmininkas][Moteriskoji].c_str(), aligncnt);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    Naudininkas: ", 20);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Naudininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Naudininkas][Moteriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Naudininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Naudininkas][Moteriskoji].c_str(), aligncnt);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    Galininkas: ", 20);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Galininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Galininkas][Moteriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Galininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Galininkas][Moteriskoji].c_str(), aligncnt);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    Inagininkas: ", 20);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Inagininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Inagininkas][Moteriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Inagininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Inagininkas][Moteriskoji].c_str(), aligncnt);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    Vietininkas: ", 20);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Vietininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Vietininkas][Moteriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Vietininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Vietininkas][Moteriskoji].c_str(), aligncnt);
+    printf_log(L"%s\n", tstr);
+
+    tcnt = add2wline(tstr, 0, L"    Sauksmininkas: ", 20);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Moteriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Vyriskoji].c_str(), aligncnt);
+    tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji].c_str(), aligncnt);
+    printf_log(L"%s\n", tstr);
+
+
+    printf_log(L"  Vienalaikis formas, (деепричастие, %s):\n", L"форма одновременности, только в Им.п.");
+
+    tcnt = add2wline(tstr, 0, L"    Vardininkas: ", 20);
     tcnt = add2wline(tstr, tcnt, lt_vienalaikis_[Vienaskaita][Vyriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_vienalaikis_[Vienaskaita][Moteriskoji].c_str(), aligncnt);
     tcnt = add2wline(tstr, tcnt, lt_vienalaikis_[Daugiskaita][Vyriskoji].c_str(), aligncnt);
@@ -200,6 +293,14 @@ std::wstring DalyvisGeneric::gautiForma(AttributeType &arg) {
         //ret = lt_[laikas][asmuo];
     } else if (arg[L"Formas"].is_equal(L"Vienalaikis")) {
         ret = lt_vienalaikis_[skaicus][gimine];
+    }
+
+    if (arg.has_key(L"Sangrazinis")) {
+        // dalyti [dalija, dalijo] - делить
+        // dalytis [dalijasi, dalijosi] - делиться
+        if (arg[L"Sangrazinis"].is_equal(L"-is")) {
+            ret += L"is";
+        }
     }
 
     return ret;

@@ -76,6 +76,7 @@ class WordGeneric {
     virtual void info() {}
     // šaknis = корень (getRoot)
     virtual std::wstring imkSaknis(int idx) { return value_; }      // verb has 3 forms: 1,2 and 3
+    virtual std::wstring imkZodis(int idx) { return value_; }       // verb has 3 forms: 1,2 and 3
     virtual std::wstring gautiForma(AttributeType &arg) { return value_; }
 
  protected:

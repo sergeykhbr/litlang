@@ -5,29 +5,33 @@
       Daiktavardis существительное (noun);
       Budvardis прилагательное (adjective);
       Įvardis местоимение (pronoun);
-      Dalelytė частица (particle);
-      Prieveiksmis наречие (adverb);
+      Dalelytė, dll. частица (particle);
+      Prieveiksmis, prv. наречие (adverb);
       Dalyvis причастие (participant);
+      Prielinksnis, prl. предлог ();
+      Jungtukas, jng. союз ();
       Skirtukas знак препинания (punctuation mark);",
   "Veiksmazodis":[
+     {"Value":"dalInti","Jis":["dalina","dalino"],"Asmenuote":1,"Ru":"делить","Info":"тоже, что и dalyti"},
+     {"Value":"dalYti","Jis":["dalija","dalijo"],"Asmenuote":2,"Ru":"делить"},
      {"Value":"dirbti","Jis":["dirba","dirbo"],"Asmenuote":1,"Ru":"работать"},
-     {"Value":"žaisti","Jis":["žaidžia","žaidė"],"Asmenuote":1,"Ru":"играть"},
-     {"Value":"padarYti","Jis":["padaro","padarė"],"Asmenuote":3,"Ru":"делать"},
+     {"Value":"eiti","Jis":["eina","ėjo"],"Asmenuote":1,"Ru":"ходить"},
+     {"Value":"gAuti","Jis":["gauna","gavo"],"Asmenuote":1,"Ru":"получить"},
+     {"Value":"matYti","Jis":["mato","matė"],"Asmenuote":2,"Ru":"видеть"},
      {"Value":"miegOti","Jis":["miega","miegojo"],"Asmenuote":1,"Ru":"спать"},
      {"Value":"mylėti","Jis":["myli","mylėjo"],"Asmenuote":2,"Ru":"любить"},
+     {"Value":"padarYti","Jis":["padaro","padarė"],"Asmenuote":3,"Ru":"делать"},
      {"Value":"skaityti","Jis":["skaito","skaitė"],"Asmenuote":3,"Ru":"читать"},
-     {"Value":"dalYti","Jis":["dalijasi","dalijosi"],"Asmenuote":2,"Ru":"делиться"},
-     {"Value":"dalInti","Jis":["dalina","dalino"],"Asmenuote":1,"Ru":"делиться","Info":"тоже, что и dalyti"},
-     {"Value":"gAuti","Jis":["gauna","gavo"],"Asmenuote":1,"Ru":"получить"},
-     {"Value":"eiti","Jis":["eina","ėjo"],"Asmenuote":1,"Ru":"ходить"},
+     {"Value":"žaisti","Jis":["žaidžia","žaidė"],"Asmenuote":1,"Ru":"играть"},
      {"Value":"žiūrėti","Jis":["žiūri","žiūrėjo"],"Asmenuote":2,"Ru":"смотреть"},
    ],
   "Daiktavardis":[
-     {"Value":"daiktavardis","Gimine":"V","Ru":"существительное"},
      {"Value":"budvardis","Gimine":"V","Ru":"прилагательное"},
-     {"Value":"veiksmažodis","Gimine":"V","Ru":"глагол"},
-     {"Value":"įvardis","Gimine":"V","Ru":"местоимение"},
+     {"Value":"daiktavardis","Gimine":"V","Ru":"существительное"},
      {"Value":"dalyvis","Gimine":"V","Ru":"причастие"},
+     {"Value":"enErgija","Gimine":"M","Ru":"энергия"},
+     {"Value":"įvardis","Gimine":"V","Ru":"местоимение"},
+     {"Value":"įžvalga","Gimine":"M","Ru":"дальновидность"},
      {"Value":"prieveiksmis","Gimine":"V","Ru":"наречие"},
      {"Value":"dalelytė","Gimine":"M","Linksniuote":2,"Ru":"частица"},
      {"Value":"linksnis","Gimine":"V","Ru":"род"},
@@ -51,6 +55,7 @@
      {"Value":"sutikimas","Ru":"согласие"},
      {"Value":"sūnus","Gimine":"V","Ru":"сын"},
      {"Value":"vaisius","Gimine":"V","Ru":"фрукт"},
+     {"Value":"veiksmažodis","Gimine":"V","Ru":"глагол"},
      {"Value":"vyšnia","Gimine":"M","Ru":"вишня"},
    ],
    "Budvardis":[
@@ -72,6 +77,7 @@
                              ["",""]]]},
      {"Value":"gražus","Ru":"красивый"},
      {"Value":"naminis","Linksniuote":3,"Ru":"домашний"},
+     {"Value":"posityvUs","Ru":"положительный"},
      {"Value":"vienpUsis","Ru":"односторонний"},
      {"Value":"žalias","Ru":"зеленый"},
    ],
@@ -94,6 +100,10 @@
                                        ["они","их","им","их","ими","в них"]]},
      {"Value":"tas","Gimine":"V","Linksniuote":"tas","Ru":[["тот","того","тому","того","тем","в том"],
                                                            ["те","тех","тем","тех","теми","в тех"]]},
+     {"Value":"sAvo","Gimine":"V","Lt":[["savo","savęs","sau","save","savimi","savyje"],
+                                        ["","","","","",""]],
+                                  "Ru":[["свой","себя","себе","себя","собою","в себе"],
+                                        ["","","","","",""]]},
      {"Value":"ta","Gimine":"M","Linksniuote":"ta","Ru":"та"},
      {"Value":"šitas","Gimine":"V","Linksniuote":"tas","Ru":"этот"},
      {"Value":"šita","Gimine":"M","Linksniuote":"ta","Ru":"эта"},
@@ -125,6 +135,12 @@
   ],
   "Prieveiksmis":[
      {"Value":"daug","Ru":"много"},
+  ],
+  "Prielinksnis":[
+     {"Value":"apie","Ru":"о"},
+  ],
+  "Jungtukas":[
+     {"Value":"kur","Ru":"где"},
   ],
   "Skirtukas":[
      {"Value":"CRLF"},
