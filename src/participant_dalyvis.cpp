@@ -19,25 +19,32 @@
 
 /** 
     Dalyvis - причастие, {"Type":"dalyvis"}
-        Giminė
+        - Formas:
+            - not specified
+            - Ivardis - Местоименная форма как у прилашательных, 
+                -usis (-ysis), -ioji в активном залоге
+                -asis, -oji в страдательном залоге
+            - Padaiyvinis - деепричастный -ant, -int в акт. залоге наст времени: видя, делая; -(i)us - пр.вр.: увидев
+            - Vienalaikas - одноврменности, переводится как деепричастие
+                -dam- суффикс
+        - Giminė - род, {"Gimine":"Vyriskoji", "Moteriskoji"}
             Vyriškoji
             Moteriškoji
-        Skaičius
+        - Skaičius - число, {"Skacius":"Vienaskaita","Daugiskaita"}
             Vienaskaita
             Daugiskaita
-        Atvejis - падеж
-        - Время
+        - Atvejis - падеж, {"Atvejis":"Vardninkas",...}
+            Vardninkas
+            ..
+            Šauksmininkas
+        - Laikas - Время, {"Laikas":"Esamasis","Butasis",..}
             настоящее
             прошедшее
             прошедшее многократное
             будущее
-        - Залог
+        - Rūšis - Залог, {"rusis":"Veikiamoji", "Neveikiamoji"}
             активный (идущий, прошедший, шедший, тот кто пойдет)
             страдательный (просматриваемый, просмотренный, !нет многокр формы!, тот который будет)
-
-        - Местоименная форма как у прилашательных
-            -usis (-ysis), -ioji в активном залоге
-            -asis, -oji в страдательном залоге
 
         - {"Sangrazynis":"-si"} - возвратный
         - {"Formas":"Vienalaikis"} - одноврменный суффикс + окончание прилаг. 1 группы
@@ -49,6 +56,16 @@ DalyvisGeneric::DalyvisGeneric(AttributeType *cfg, VeiksmazodisGeneric *verb)
     veiksmazodis_(verb)
 {
     atnaujinti();
+}
+
+DalyvisGeneric::ERusis DalyvisGeneric::str2rusis(const wchar_t *s) {
+    ERusis ret = Veikiamoji;
+    if (wcscmp(s, L"Veikiamoji") == 0) {
+        ret = Veikiamoji;
+    } else if (wcscmp(s, L"Neveikiamoji") == 0) {
+        ret = Neveikiamoji;
+    }
+    return ret;
 }
 
 void DalyvisGeneric::atnaujinti() {
@@ -101,6 +118,9 @@ void DalyvisGeneric::atnaujinti() {
     // same as vardininkas (taip pat kaip vardininkas)
     lt_[Veikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Vyriskoji] = saknis2 + _a_i_nosine;       // -antys/-intys are possible too
     lt_[Veikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji] = saknis2 + _a_i + L"nčios";
+    // Герундная форма: увидя
+    lt_padaiyvinis_[Esamasis] = saknis2 + _a_i + L"nt";
+
 
 
     // Пассивная форма, наст. вр., Vienaskaita (-m + окончание прилагательных первой группы)
@@ -140,6 +160,41 @@ void DalyvisGeneric::atnaujinti() {
     // same as vardininkas (taip pat kaip vardininkas)
     lt_[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Vyriskoji] = zodis2 + L"m" + L"i";
     lt_[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji] = zodis2 + L"m" + L"os";
+    // ---
+    // Местоименная форма:
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Vardininkas][Vyriskoji] = zodis2 + L"m" + L"asis";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Vardininkas][Moteriskoji] = zodis2 + L"m" + L"oji";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Kilmininkas][Vyriskoji] = zodis2 + L"m" + L"ojo";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Kilmininkas][Moteriskoji] = zodis2 + L"m" + L"osios";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Naudininkas][Vyriskoji] = zodis2 + L"m" + L"ajam";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Naudininkas][Moteriskoji] = zodis2 + L"m" + L"ajai";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Galininkas][Vyriskoji] = zodis2 + L"m" + L"ąji";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Galininkas][Moteriskoji] = zodis2 + L"m" + L"ąja";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Inagininkas][Vyriskoji] = zodis2 + L"m" + L"uoju";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Inagininkas][Moteriskoji] = zodis2 + L"m" + L"ąja";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Vietininkas][Vyriskoji] = zodis2 + L"m" + L"ajame";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Vietininkas][Moteriskoji] = zodis2 + L"m" + L"ojoje";
+    // same as vardininkas (taip pat kaip vardininkas)
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Vyriskoji] = zodis2 + L"m" + L"asis";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Vienaskaita][Sauksmininkas][Moteriskoji] = zodis2 + L"m" + L"oji";
+    // Daugiskaita
+    // мы видимые, вы видимые, они видимые(м.р.)
+    // мы видимые, вы видимые, они видимые (ж.р.)
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Vardininkas][Vyriskoji] = zodis2 + L"m" + L"ieji";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Vardininkas][Moteriskoji] = zodis2 + L"m" + L"osios";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Kilmininkas][Vyriskoji] = zodis2 + L"m" + L"ųjų";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Kilmininkas][Moteriskoji] = zodis2 + L"m" + L"ųjų";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Naudininkas][Vyriskoji] = zodis2 + L"m" + L"iesiems";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Naudininkas][Moteriskoji] = zodis2 + L"m" + L"osioms";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Galininkas][Vyriskoji] = zodis2 + L"m" + L"uosius";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Galininkas][Moteriskoji] = zodis2 + L"m" + L"ąsias";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Inagininkas][Vyriskoji] = zodis2 + L"m" + L"aisiais";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Inagininkas][Moteriskoji] = zodis2 + L"m" + L"osiomis";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Vietininkas][Vyriskoji] = zodis2 + L"m" + L"uosiuose";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Vietininkas][Moteriskoji] = zodis2 + L"m" + L"osiose";
+    // same as vardininkas (taip pat kaip vardininkas)
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Vyriskoji] = zodis2 + L"m" + L"ieji";
+    lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji] = zodis2 + L"m" + L"osios";
 
 
 
@@ -285,13 +340,27 @@ void DalyvisGeneric::info() {
 
 std::wstring DalyvisGeneric::gautiForma(AttributeType &arg) {
     std::wstring ret = L"";
-    ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
-    EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
     if (!arg.has_key(L"Formas")) {
+        // forma is not specified
+        ERusis rusis = str2rusis(arg[L"Rusis"].to_string());
         ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
-        EAsmuo asmuo = str2asmuo(arg[L"Asmuo"].to_string());
-        //ret = lt_[laikas][asmuo];
+        ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
+        EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
+        EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
+        ret = lt_[rusis][laikas][skaicus][atvejis][gimine];
+    } else if (arg[L"Formas"].is_equal(L"Ivardis")) {
+        ERusis rusis = str2rusis(arg[L"Rusis"].to_string());
+        ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
+        ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
+        EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
+        EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
+        ret = lt_ivardziuotinis[rusis][laikas][skaicus][atvejis][gimine];
+    } else if (arg[L"Formas"].is_equal(L"Padaiyvinis")) {
+        ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
+        ret = lt_padaiyvinis_[laikas];
     } else if (arg[L"Formas"].is_equal(L"Vienalaikis")) {
+        ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
+        EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
         ret = lt_vienalaikis_[skaicus][gimine];
     }
 

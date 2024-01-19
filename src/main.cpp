@@ -32,6 +32,8 @@ L"lietuvių profesionalų iš viso pasaulio!"
 L"Bravo LT Big Brother komandai ir vadovui Vytautas Jankauskas, PhD už įkvepiantį "
 L"mentorystės forumą!";
 
+// https://www.lituanistica.ru/materials_grammar.html#5
+
 /* https://lingvoforum.net/index.php?topic=14603.0
 8. Другие причастные формы
 

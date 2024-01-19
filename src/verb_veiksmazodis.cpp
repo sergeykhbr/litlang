@@ -424,6 +424,11 @@ void VeiksmazodisGeneric::info() {
 
 std::wstring VeiksmazodisGeneric::gautiForma(AttributeType &arg) {
     std::wstring ret = L"";
+    if (arg.size() == 0) {
+        // infinitive
+        return value_;
+    }
+
     EAsmuo asmuo = str2asmuo(arg[L"Asmuo"].to_string());
     if (!arg.has_key(L"Nuosaka") || arg.is_equal(L"Tiesiogine")) {
         ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());

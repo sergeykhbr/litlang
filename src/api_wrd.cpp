@@ -23,6 +23,7 @@
 #include "particle_dalelyte.h"
 #include "adverb_prieveiksmis.h"
 #include "participant_dalyvis.h"
+#include "halfparticipant_podalyvis.h"
 #include "preposition_prielinksnis.h"
 #include "conjuction_jungtukas.h"
 #include <utils.h>
@@ -56,6 +57,8 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
         zodynas_[L"Veiksmazodis"].push_back(p);
         p = new DalyvisGeneric(&zodis, static_cast<VeiksmazodisGeneric *>(p));
         zodynas_[L"Dalyvis"].push_back(p);
+        p = new PodalyvisGeneric(&zodis, static_cast<VeiksmazodisGeneric *>(p));
+        zodynas_[L"Podalyvis"].push_back(p);
     }
 
     AttributeType &Daiktavardziai = (*cfg)[L"Daiktavardis"];
