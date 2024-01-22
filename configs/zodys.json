@@ -25,7 +25,7 @@
      {"Value":"miegOti","Jis":["miega","miegojo"],"Asmenuote":1,"Ru":"спать"},
      {"Value":"mylėti","Jis":["myli","mylėjo"],"Asmenuote":2,"Ru":"любить"},
      {"Value":"padarYti","Jis":["padaro","padarė"],"Asmenuote":3,"Ru":"делать"},
-     {"Value":"padĖti","Jis":["padeda","padėjo"],"Asmenuote":1,"Ru":"положить"},
+     {"Value":"padĖti","Jis":["padeda","padėjo"],"Asmenuote":1,"Ru":"помогать, положить"},
      {"Value":"paklAusti","Jis":["paklausia","paklausė"],"Asmenuote":1,"Ru":"спросить"},
      {"Value":"skaityti","Jis":["skaito","skaitė"],"Asmenuote":3,"Ru":"читать"},
      {"Value":"žaisti","Jis":["žaidžia","žaidė"],"Asmenuote":1,"Ru":"играть"},
@@ -36,6 +36,7 @@
      {"Value":"daiktavardis","Gimine":"V","Ru":"существительное"},
      {"Value":"dalyvis","Gimine":"V","Ru":"причастие"},
      {"Value":"enErgija","Gimine":"M","Ru":"энергия"},
+     {"Value":"gebėjimas","Gimine":"M","Ru":"способность"},
      {"Value":"įvardis","Gimine":"V","Ru":"местоимение"},
      {"Value":"įžvalga","Gimine":"M","Ru":"дальновидность"},
      {"Value":"prieveiksmis","Gimine":"V","Ru":"наречие"},
@@ -135,6 +136,10 @@
      {"Value":"pAti","Gimine":"M","Linksniuote":"ji","Ru":"сама"},
      {"Value":"tai","Ru":"это","Info":"Может быть - той: ta,Vienskaita,Moteriskoji,Naudininkas"},
    ],
+  "Skaitvardis":[
+     {"Value":"Abejetas","Lt":[["abeji","abejos"],["abiejų","abiejų"],["",""],["",""],["abiem","abiem"],["",""]],
+                         "Ru":[["оба","обе"],["обоих","обеих"],["обоим","обеим"],["обоих","обеих"],["обоими","обеими"],["обоих","обеих"]]},
+  ],
   "Dalelyte":[
      {"Value":"ar","Ru":"ли"},
      {"Value":"ne","Ru":"нет"},

@@ -26,6 +26,7 @@
 #include "halfparticipant_podalyvis.h"
 #include "preposition_prielinksnis.h"
 #include "conjuction_jungtukas.h"
+#include "numeral_skaitvardis.h"
 #include <utils.h>
 #include <map>
 
@@ -43,6 +44,7 @@ int WRD_unique_id() {
 //      įvardis, pronoun, местоимение
 void WRD_pridelioti_zodis(AttributeType *cfg) {
     WordGeneric *p = 0;
+    VeiksmazodisGeneric *pv = 0;
     if (!cfg->is_dict()) {
         return;
     }
@@ -53,11 +55,11 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
         if (!zodis.is_dict()) {
             continue;
         }
-        p = new VeiksmazodisGeneric(&zodis);
-        zodynas_[L"Veiksmazodis"].push_back(p);
-        p = new DalyvisGeneric(&zodis, static_cast<VeiksmazodisGeneric *>(p));
+        pv = new VeiksmazodisGeneric(&zodis);
+        zodynas_[L"Veiksmazodis"].push_back(pv);
+        p = new DalyvisGeneric(&zodis, pv);
         zodynas_[L"Dalyvis"].push_back(p);
-        p = new PodalyvisGeneric(&zodis, static_cast<VeiksmazodisGeneric *>(p));
+        p = new PodalyvisGeneric(&zodis, pv);
         zodynas_[L"Podalyvis"].push_back(p);
     }
 
