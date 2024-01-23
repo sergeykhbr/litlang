@@ -24,7 +24,10 @@ class SkaitvardisGeneric : public WordGeneric {
     SkaitvardisGeneric(AttributeType *cfg);
 
     virtual void info() override;
+    virtual std::wstring gautiForma(AttributeType &arg) override;
+
  private:
-    std::wstring ru_[Skaicus_Total][Gimine_Total][Atvejis_Total];
+    std::wstring lt_[Atvejis_Total][Gimine_Total];
+    std::wstring ru_[Atvejis_Total][Gimine_Total];
 };
 

@@ -93,6 +93,16 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
         zodynas_[L"Ivardis"].push_back(p);
     }
 
+    AttributeType &Skiatvardzis = (*cfg)[L"Skaitvardis"];
+    for (unsigned i = 0; i < Skiatvardzis.size(); i++) {
+        AttributeType &zodis = Skiatvardzis[i];
+        if (!zodis.is_dict()) {
+            continue;
+        }
+        p = new SkaitvardisGeneric(&zodis);
+        zodynas_[L"Skaitvardis"].push_back(p);
+    }
+
     AttributeType &Dalelytes = (*cfg)[L"Dalelyte"];
     for (unsigned i = 0; i < Dalelytes.size(); i++) {
         AttributeType &zodis = Dalelytes[i];

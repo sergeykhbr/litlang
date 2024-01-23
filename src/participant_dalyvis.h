@@ -52,6 +52,5 @@ class DalyvisGeneric : public WordGeneric {
     std::wstring lt_[Rusis_total][Laikas_total][Skaicus_Total][Atvejis_Total][Gimine_Total];
     std::wstring lt_ivardziuotinis[Rusis_total][Laikas_total][Skaicus_Total][Atvejis_Total][Gimine_Total];  // ĮvardžiUotinis: местоименная форма
     std::wstring lt_padaiyvinis_[Laikas_total];                 // деепричастная (герундная) форма
-    std::wstring lt_vienalaikis_[Skaicus_Total][Gimine_Total];  // -dam-
 };
 

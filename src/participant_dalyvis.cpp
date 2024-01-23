@@ -195,15 +195,6 @@ void DalyvisGeneric::atnaujinti() {
     // same as vardininkas (taip pat kaip vardininkas)
     lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Vyriskoji] = zodis2 + L"m" + L"ieji";
     lt_ivardziuotinis[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji] = zodis2 + L"m" + L"osios";
-
-
-
-    // Одновременности. -dam- + окончание прилагательных первой группы Им.падежа.
-    // Употребляется только в иментильном падеже как деепричастие: делая, идя, спя...
-    lt_vienalaikis_[Vienaskaita][Vyriskoji] = saknis1 + L"dam" + L"as";
-    lt_vienalaikis_[Vienaskaita][Moteriskoji] = saknis1 + L"dam" + L"a";
-    lt_vienalaikis_[Daugiskaita][Vyriskoji] = saknis1 + L"dam" + L"i";
-    lt_vienalaikis_[Daugiskaita][Moteriskoji] = saknis1 + L"dam" + L"os";
 }
 
 void DalyvisGeneric::info() {
@@ -327,15 +318,6 @@ void DalyvisGeneric::info() {
     tcnt = add2wline(tstr, tcnt, lt_[Neveikiamoji][Esamasis][Daugiskaita][Sauksmininkas][Moteriskoji].c_str(), aligncnt);
     printf_log(L"%s\n", tstr);
 
-
-    printf_log(L"  Vienalaikis formas, (деепричастие, %s):\n", L"форма одновременности, только в Им.п.");
-
-    tcnt = add2wline(tstr, 0, L"    Vardininkas: ", 20);
-    tcnt = add2wline(tstr, tcnt, lt_vienalaikis_[Vienaskaita][Vyriskoji].c_str(), aligncnt);
-    tcnt = add2wline(tstr, tcnt, lt_vienalaikis_[Vienaskaita][Moteriskoji].c_str(), aligncnt);
-    tcnt = add2wline(tstr, tcnt, lt_vienalaikis_[Daugiskaita][Vyriskoji].c_str(), aligncnt);
-    tcnt = add2wline(tstr, tcnt, lt_vienalaikis_[Daugiskaita][Moteriskoji].c_str(), aligncnt);
-    printf_log(L"%s\n", tstr);
 }
 
 std::wstring DalyvisGeneric::gautiForma(AttributeType &arg) {
@@ -358,10 +340,6 @@ std::wstring DalyvisGeneric::gautiForma(AttributeType &arg) {
     } else if (arg[L"Formas"].is_equal(L"Padaiyvinis")) {
         ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
         ret = lt_padaiyvinis_[laikas];
-    } else if (arg[L"Formas"].is_equal(L"Vienalaikis")) {
-        ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
-        EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
-        ret = lt_vienalaikis_[skaicus][gimine];
     }
 
     if (arg.has_key(L"Sangrazinis")) {

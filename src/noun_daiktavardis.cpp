@@ -532,7 +532,7 @@ void DaiktavardisGeneric::info() {
 std::wstring DaiktavardisGeneric::gautiForma(AttributeType &arg) {
     std::wstring ret = L"";
     EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
-    EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
+    EGimine gimine = Gimine_nezinoma;
     ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
     std::wstring sangrazinis = L""; // возвратная форма (sangrąžynis) -si
     std::wstring deminutyvas = L"";
@@ -545,6 +545,10 @@ std::wstring DaiktavardisGeneric::gautiForma(AttributeType &arg) {
     if (arg.has_key(L"Deminutyvas")) {
         // уменьшительная форма (deminutyvas) -uk
         deminutyvas = std::wstring(arg[L"Deminutyvas"].to_string());
+    }
+
+    if (arg.has_key(L"Gimine")) {
+        gimine = str2gimine(arg[L"Gimine"].to_string());
     }
 
     if (sangrazinis != L""
