@@ -280,13 +280,7 @@ std::wstring IvardisGeneric::gautiForma(AttributeType &arg) {
     std::wstring ret = L"";
     if (arg.is_dict() && arg.size()) {
         EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
-        //EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
         ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
-        //if (gimine_ != Gimine_nezinoma && gimine_ != gimine) {
-        //    // sutApti - совпадать, "рода не совпали".
-        //   printf_error(L"Giminenys nesutapo %d != %d", gimine_, gimine);
-        //}
-
         ret = lt_[skaicus][atvejis];
     } else {
         ret = lt_[Vienaskaita][Vardininkas];

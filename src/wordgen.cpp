@@ -46,7 +46,7 @@ WordGeneric::WordGeneric(AttributeType *cfg) {
             tbuf[cnt++] = L'ų';
         } else if (*twstr == L'Ū') {
             stressed = cnt;
-            tbuf[cnt++] = L'Ū';
+            tbuf[cnt++] = L'ū';
         } else if (*twstr == L'Ž') {
             tbuf[cnt++] = L'ž';
         } else {

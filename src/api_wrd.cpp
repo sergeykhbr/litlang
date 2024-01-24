@@ -160,6 +160,11 @@ void WRD_pridelioti_zodis(AttributeType *cfg) {
 
 // gauti = get
 WordGeneric *WRD_gauti_zodis(const wchar_t *s, const wchar_t *type) {
+    if (wcscmp(type, L"AsIs") == 0) {
+        AttributeType cfg(Attr_Dict);
+        cfg[L"Value"].make_string(s);
+        return new WordGeneric(&cfg);
+    }
     for (auto &p : zodynas_[type]) {
         if (wcscmp(p->getValue(), s) == 0) {
             return p;

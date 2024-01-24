@@ -39,6 +39,7 @@ class VeiksmazodisGeneric : public WordGeneric {
     std::wstring lt_[Laikas_total][Asmuo_total];    // Tiesiogine nuosaka - изъявительное наклонение
     std::wstring lt_liepiamoji_[Asmuo_total];       // повелительное наклонение
     std::wstring lt_tariamoji_[Asmuo_total];        // условное наклонение
+    std::wstring lt_si_[Laikas_total][Asmuo_total]; // Tiesiogine nuosaka - изъявительное наклонение, возвратная форма
     std::wstring ru_;   // infinitive
 };
 

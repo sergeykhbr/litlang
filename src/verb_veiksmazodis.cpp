@@ -43,17 +43,33 @@
             1 мн.ч mes
             2 мн.ч jūs
             3 мн.ч jie, jos
+        Sangrazinis - Возвратная форма -ться 
+            -tis инфинитив
 
 */
 
 VeiksmazodisGeneric::VeiksmazodisGeneric(AttributeType *cfg)
     : WordGeneric(cfg)
 {
-    asmenuote_ = (*cfg)[L"Asmenuote"].to_int();
     lt_[Esamasis][jis] = std::wstring((*cfg)[L"Jis"][0u].to_string());
     lt_[Esamasis][ji] = std::wstring((*cfg)[L"Jis"][0u].to_string());
     lt_[Butasis][jis] = std::wstring((*cfg)[L"Jis"][1].to_string());
     lt_[Butasis][ji] = std::wstring((*cfg)[L"Jis"][1].to_string());
+
+    if ((*cfg).has_key(L"Lt")) {
+        AttributeType &lt = (*cfg)[L"Lt"];
+        if (lt.is_dict()) {
+            if (lt.has_key(L"Esamasis")) {
+                AttributeType &esa = lt[L"Esamasis"];
+                lt_[Esamasis][as] = std::wstring(esa[0u].to_string());
+                lt_[Esamasis][tu] = std::wstring(esa[1].to_string());
+                lt_[Esamasis][mes] = std::wstring(esa[3].to_string());
+                lt_[Esamasis][jus] = std::wstring(esa[4].to_string());
+                lt_[Esamasis][jie] = std::wstring(esa[5].to_string());
+                lt_[Esamasis][jos] = std::wstring(esa[5].to_string());
+            }
+        }
+    }
 
     AttributeType &ru = (*cfg)[L"Ru"];
     if (ru.is_string()) {
@@ -102,6 +118,7 @@ void VeiksmazodisGeneric::atnaujinti() {
     std::wstring saknis2;   // jis, esamasis laikas
     std::wstring saknis3;   // jus, butasis laikas
     std::wstring galunes[Asmuo_total];
+    std::wstring galunes_si[Asmuo_total]; // возвратная форма
     std::wstring galunes1;  // -ti
     std::wstring galunes2;  // -(i)a; -i; -o
     std::wstring galunes3;  // -o; -ė
@@ -133,6 +150,15 @@ void VeiksmazodisGeneric::atnaujinti() {
         galunes[jus] = L"iate";
         galunes[jie] = L"ia";
         galunes[jos] = L"ia";
+
+        galunes_si[as] = L"iuosi";
+        galunes_si[tu] = L"iesi";
+        galunes_si[jis] = L"iasi";
+        galunes_si[ji] = L"iasi";
+        galunes_si[mes] = L"iamės";
+        galunes_si[jus] = L"iatės";
+        galunes_si[jie] = L"iasi";
+        galunes_si[jos] = L"iasi";
     } else if (wzodis[vsz-1] == L'a') {
         asmenuote_ = 1;
         galunes2 = L"a";
@@ -142,6 +168,15 @@ void VeiksmazodisGeneric::atnaujinti() {
         galunes[jus] = L"ate";
         galunes[jie] = L"a";
         galunes[jos] = L"a";
+
+        galunes_si[as] = L"uosi";
+        galunes_si[tu] = L"iesi";
+        galunes_si[jis] = L"asi";
+        galunes_si[ji] = L"asi";
+        galunes_si[mes] = L"amės";
+        galunes_si[jus] = L"atės";
+        galunes_si[jie] = L"asi";
+        galunes_si[jos] = L"asi";
     } else if (wzodis[vsz-1] == L'i') {
         asmenuote_ = 2;
         galunes2 = L"i";
@@ -151,6 +186,15 @@ void VeiksmazodisGeneric::atnaujinti() {
         galunes[jus] = L"ite";
         galunes[jie] = L"i";
         galunes[jos] = L"i";
+
+        galunes_si[as] = L"iuosi";
+        galunes_si[tu] = L"iesi";
+        galunes_si[jis] = L"isi";
+        galunes_si[ji] = L"isi";
+        galunes_si[mes] = L"imės";
+        galunes_si[jus] = L"itės";
+        galunes_si[jie] = L"isi";
+        galunes_si[jos] = L"isi";
     } else if (wzodis[vsz-1] == L'o') {
         asmenuote_ = 3;
         galunes2 = L"o";
@@ -160,6 +204,15 @@ void VeiksmazodisGeneric::atnaujinti() {
         galunes[jus] = L"ote";
         galunes[jie] = L"o";
         galunes[jos] = L"o";
+
+        galunes_si[as] = L"ausi";
+        galunes_si[tu] = L"aisi";
+        galunes_si[jis] = L"osi";
+        galunes_si[ji] = L"osi";
+        galunes_si[mes] = L"omės";
+        galunes_si[jus] = L"otės";
+        galunes_si[jie] = L"osi";
+        galunes_si[jos] = L"osi";
     } else {
         // unsupported (private) ending = nepalaikomas galūnės
         wprintf(L"warning: nepalaikomas asmenų galūnės asmenuote: %s\n", wzodis);
@@ -172,12 +225,24 @@ void VeiksmazodisGeneric::atnaujinti() {
         _dz = L"ž";
     }
 
-    lt_[Esamasis][as] = saknis2 + _dz + galunes[as];
-    lt_[Esamasis][tu] = saknis2 + galunes[tu];
-    lt_[Esamasis][mes] = saknis2 + _dz + galunes[mes];
-    lt_[Esamasis][jus] = saknis2 + _dz + galunes[jus];
-    lt_[Esamasis][jie] = saknis2 + _dz + galunes[jie];
-    lt_[Esamasis][jos] = saknis2 + _dz + galunes[jos];
+    if (lt_[Esamasis][as].size() == 0) {
+        // was not defined as a list
+        lt_[Esamasis][as] = saknis2 + _dz + galunes[as];
+        lt_[Esamasis][tu] = saknis2 + galunes[tu];
+        lt_[Esamasis][mes] = saknis2 + _dz + galunes[mes];
+        lt_[Esamasis][jus] = saknis2 + _dz + galunes[jus];
+        lt_[Esamasis][jie] = saknis2 + _dz + galunes[jie];
+        lt_[Esamasis][jos] = saknis2 + _dz + galunes[jos];
+
+        lt_si_[Esamasis][as] = saknis2 + _dz + galunes_si[as];
+        lt_si_[Esamasis][tu] = saknis2 + galunes_si[tu];
+        lt_si_[Esamasis][jis] = saknis2 + galunes_si[jis];
+        lt_si_[Esamasis][ji] = saknis2 + galunes_si[ji];
+        lt_si_[Esamasis][mes] = saknis2 + _dz + galunes_si[mes];
+        lt_si_[Esamasis][jus] = saknis2 + _dz + galunes_si[jus];
+        lt_si_[Esamasis][jie] = saknis2 + _dz + galunes_si[jie];
+        lt_si_[Esamasis][jos] = saknis2 + _dz + galunes_si[jos];
+    }
 
 
     // 3 asmuo, vietininkas, būtasis laikas
@@ -424,19 +489,26 @@ void VeiksmazodisGeneric::info() {
 
 std::wstring VeiksmazodisGeneric::gautiForma(AttributeType &arg) {
     std::wstring ret = L"";
-    if (arg.size() == 0) {
+    if (arg.has_key(L"Asmuo") == 0) {
         // infinitive
-        return value_;
-    }
-
-    EAsmuo asmuo = str2asmuo(arg[L"Asmuo"].to_string());
-    if (!arg.has_key(L"Nuosaka") || arg.is_equal(L"Tiesiogine")) {
-        ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
-        ret = lt_[laikas][asmuo];
-    } else if (arg[L"Nuosaka"].is_equal(L"Liepiamoji")) {
-        ret = lt_liepiamoji_[asmuo];
-    } else if (arg[L"Nuosaka"].is_equal(L"Tariamoji")) {
-        ret = lt_tariamoji_[asmuo];
+        ret = value_;
+        if (arg.has_key(L"Sangrazinis")) {
+            ret += L"s";
+        }
+    } else {
+        EAsmuo asmuo = str2asmuo(arg[L"Asmuo"].to_string());
+        if (!arg.has_key(L"Nuosaka") || arg.is_equal(L"Tiesiogine")) {
+            ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
+            if (arg.has_key(L"Sangrazinis")) {
+                ret = lt_si_[laikas][asmuo];
+            } else {
+                ret = lt_[laikas][asmuo];
+            }
+        } else if (arg[L"Nuosaka"].is_equal(L"Liepiamoji")) {
+            ret = lt_liepiamoji_[asmuo];
+        } else if (arg[L"Nuosaka"].is_equal(L"Tariamoji")) {
+            ret = lt_tariamoji_[asmuo];
+        }
     }
 
     return ret;
