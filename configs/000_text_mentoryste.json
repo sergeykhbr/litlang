@@ -61,6 +61,16 @@
      ["ši","Ivardis", {"Skaicius":"Vienaskaita","Atvejis":"Kilmininkas"}, "этой"],
      ["programa","Daiktavardis", {"Skaicius":"Vienaskaita","Atvejis":"Kilmininkas"}, "программе"],
     ],
+    [["ir", "Jungtukas", {}, "и"],
+     ["žinomas", "Budvardis", {"Skaicius":"Vienaskaita","Gimine":"M","Atvejis":"Vardininkas"}, "разумеется"],
+     [" -", "Skirtukas", {}],
+     ["ta", "Ivardis", {"Skaicius":"Vienaskaita","Atvejis":"Naudininkas"}, "то"],
+     ["puikus", "Budvardis", {"Skaicius":"Vienaskaita","Gimine":"M","Atvejis":"Vardininkas"}, "превосходное"],
+     ["vieta", "Daiktavardis", {"Skaicius":"Vienaskaita","Atvejis":"Vardininkas"}, "место (ж.р.)"],
+     ["networkinti", "AsIs", {}, "-inti акт.причастие, н.вр., ж.р., (-щая), пересказательная конструкция"],
+     [" -", "Skirtukas", {}],
+     ["sutikti", "Veiksmazodis", {}, "встретить"],
+    ]
   ],
   "Original":
    ["Mentorystė.", 

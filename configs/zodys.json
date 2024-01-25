@@ -31,9 +31,11 @@
      {"Value":"padĖti","Jis":["padeda","padėjo"],"Ru":"помогать, положить"},
      {"Value":"paklAusti","Jis":["paklausia","paklausė"],"Ru":"спросить"},
      {"Value":"skaityti","Jis":["skaito","skaitė"],"Ru":"читать"},
+     {"Value":"sutIkti","Jis":["sutinka","sutiko"],"Ru":"встретить"},
      {"Value":"tvIrtinti","Jis":["tvirtina","tvirtino"],"Ru":"утверждать"},
      {"Value":"žaisti","Jis":["žaidžia","žaidė"],"Ru":"играть"},
      {"Value":"žiūrėti","Jis":["žiūri","žiūrėjo"],"Ru":"смотреть"},
+     {"Value":"žinOti","Jis":["žino","žinojo"],"Ru":"знать"},
    ],
   "Daiktavardis":[
      {"Value":"budvardis","Gimine":"V","Ru":"прилагательное"},
@@ -72,6 +74,7 @@
      {"Value":"sūnus","Gimine":"V","Ru":"сын"},
      {"Value":"vaisius","Gimine":"V","Ru":"фрукт"},
      {"Value":"veiksmažodis","Gimine":"V","Ru":"глагол"},
+     {"Value":"vietA","Gimine":"M","Ru":"место"},
      {"Value":"vyšnia","Gimine":"M","Ru":"вишня"},
      {"Value":"žmogus","Gimine":"M","Ru":"человек"},
    ],
@@ -97,8 +100,10 @@
      {"Value":"gražus","Ru":"красивый"},
      {"Value":"naminis","Linksniuote":3,"Ru":"домашний"},
      {"Value":"pozityvUs","Ru":"положительный"},
+     {"Value":"puikUs","Ru":"превосходный"},
      {"Value":"vienpUsis","Ru":"односторонний"},
      {"Value":"žalias","Ru":"зеленый"},
+     {"Value":"žinomas","Ru":"известный"},
    ],
   "Ivardis":[
      {"Value":"aš","Lt":[["aš","manęs","man","mane","manimi","manyje"],
@@ -185,5 +190,6 @@
      {"Value":","},
      {"Value":"."},
      {"Value":"!"},
+     {"Value":" -"},
   ],
 }
