@@ -1,0 +1,38 @@
+{
+  "Zodiai":[
+    [["aš", "Ivardis", {"Skaicius":"Daugiskaita","Atvejis":"Vardininkas"}, "мы"],
+     ["žinoti", "Veiksmazodis", {"Laikas":"Esamasis","Asmuo":"mes"}, "знаем"],
+     [",", "Skirtukas", {}],
+     ["kaip","Jungtukas", {}, "как"],
+     ["tu", "Ivardis", {"Skaicius":"Daugiskaita","Atvejis":"Naudininkas"}, "вам"],
+     ["svarbus","Budvardis", {"Skaicius":"Daugiskaita","Gimine":"V","Atvejis":"Vardininkas"}, "важно"],
+     ["apsaugoti","Veiksmazodis", {}, "обезопасить"],
+     ["savo", "Ivardis", {"Skaicius":"Vienaskaita", "Atvejis":"Vardininkas"}, "свой"],
+     ["asmeninis", "Budvardis", {"Skaicius":"Daugiskaita","Gimine":"V","Atvejis":"Galininkas"}, "личные"],
+     ["duomenys","Daiktavardis", {"Skaicius":"Daugiskaita","Atvejis":"Galininkas"}, "данные"]
+    ],
+    [["aš", "Ivardis", {"Skaicius":"Daugiskaita","Atvejis":"Naudininkas"}, "нам"],
+     ["taip", "Prieveiksmis", {}, "так"],
+     ["pat", "Dalelyte", {}, "же"],
+    ],
+    [["norėti", "Podalyvis", {"Skaicius":"Daugiskaita","Gimine":"V"}, "хотя"],
+     ["tinkamas", "Budvardis", {"Skaicius":"Vienaskaita","Gimine":"M","Atvejis":"Naudininkas"}, "подходящей"],
+     ["jis", "Ivardis", {"Skaicius":"Daugiskaita","Atvejis":"Inagininkas"}, "ими"],
+    ],
+  ],
+  "Original":
+   ["Mes žinome, kaip jums svarbu apsaugoti savo asmeninius duomenis.",
+    "Mums taip pat!",
+    "Norėdami tinkamai jais pasirūpinti, atnaujinkite savo slaptažodį.",
+    "Norėdami juos nustatyti, naudokite toliau esantį mygtuką:",
+    "Atnaujinkite slaptažodį",
+    "Aplankykite mūsų parduotuvę",
+    "Kodėl verta būti Xiaomi gerbėju?",
+    "Galimybė susipažinti su naujausiais Xiaomi pasaulio gaminiais",
+    "Specialios nuolaidos ir lengvatos - tiesiog mokėsite mažiau!",
+    "Programa Mi Coins - apdovanojame už kiekvieną pirkinį ir dar daugiau!",
+    "Specialiai Mi gerbėjams skirtos akcijos",
+    "Pirkimų istorija",
+    "Tai nėra skubus atvejis, tiesiog stengiamės kuo geriau apsaugoti jūsų duomenis"
+   ]
+}

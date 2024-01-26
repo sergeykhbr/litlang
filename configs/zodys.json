@@ -13,6 +13,7 @@
       Skaitvardis, sktv. числительное ();
       Skirtukas знак препинания (punctuation mark);",
   "Veiksmazodis":[
+     {"Value":"apsAugoti","Jis":["apsaugo","apsaugojo"],"Ru":"предохранить"},
      {"Value":"Augti","Jis":["auga","augo"],"Ru":"расти"},
      {"Value":"bŪti","Jis":["yra","buvo"],"Lt":{"Esamasis":["esu","esi","yra","esame","esate","yra"]},"Ru":"быть"},
      {"Value":"dalInti","Jis":["dalina","dalino"],"Ru":"делить","//":"тоже, что и dalyti"},
@@ -27,6 +28,7 @@
      {"Value":"matYti","Jis":["mato","matė"],"Ru":"видеть"},
      {"Value":"miegOti","Jis":["miega","miegojo"],"Ru":"спать"},
      {"Value":"mylėti","Jis":["myli","mylėjo"],"Ru":"любить"},
+     {"Value":"norĖti","Jis":["nori","norėjo"],"Ru":"хотеть"},
      {"Value":"padarYti","Jis":["padaro","padarė"],"Ru":"делать"},
      {"Value":"padĖti","Jis":["padeda","padėjo"],"Ru":"помогать, положить"},
      {"Value":"paklAusti","Jis":["paklausia","paklausė"],"Ru":"спросить"},
@@ -41,6 +43,7 @@
      {"Value":"budvardis","Gimine":"V","Ru":"прилагательное"},
      {"Value":"daiktavardis","Gimine":"V","Ru":"существительное"},
      {"Value":"dalyvis","Gimine":"V","Ru":"причастие"},
+     {"Value":"dUomenys","Gimine":"V","Ru":"данные"},
      {"Value":"enErgija","Gimine":"M","Ru":"энергия"},
      {"Value":"gebėjimas","Gimine":"M","Ru":"способность"},
      {"Value":"įvardis","Gimine":"V","Ru":"местоимение"},
@@ -83,6 +86,7 @@
      {"Value":"žmogus","Gimine":"M","Lt":{"Daugiskaita":["žmonės","žmonių","žmonėm","žmones","žmonėmis","žmonėse","žmonės"]},"Ru":"человек"},
    ],
    "Budvardis":[
+     {"Value":"asmenInis","Ru":"личный"},
      {"Value":"dalinis","Ru":"частичный"},
      {"Value":"dėmesIngas","Ru":"внимательный"},
      {"Value":"didelis","Linksniuote":1,"Ru":"большой"},
@@ -106,6 +110,8 @@
      {"Value":"naminis","Linksniuote":3,"Ru":"домашний"},
      {"Value":"pozityvUs","Ru":"положительный"},
      {"Value":"puikUs","Ru":"превосходный"},
+     {"Value":"svarbUs","Ru":"важный"},
+     {"Value":"tInkamas","Ru":"годный"},
      {"Value":"vienpUsis","Ru":"односторонний"},
      {"Value":"žalias","Ru":"зеленый"},
      {"Value":"žinomas","Ru":"известный"},
@@ -173,11 +179,13 @@
      {"Value":"ne","Ru":"не"},
      {"Value":"ne","Ru":"ни"},
      {"Value":"o","Ru":"а"},
+     {"Value":"pat","Ru":"же"},
   ],
   "Prieveiksmis":[
      {"Value":"ar","Ru":"также"},
      {"Value":"daug","Ru":"много"},
      {"Value":"labaI","Ru":"очень"},
+     {"Value":"taIp","Ru":"так"},
   ],
   "Prielinksnis":[
      {"Value":"apie","Ru":"о"},
