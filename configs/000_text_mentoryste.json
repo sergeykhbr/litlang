@@ -70,6 +70,15 @@
      ["networkinti", "AsIs", {}, "-inti акт.причастие, н.вр., ж.р., (-щая), пересказательная конструкция"],
      [" -", "Skirtukas", {}],
      ["sutikti", "Veiksmazodis", {}, "встретить"],
+     ["labai", "Prieveiksmis", {}, "очень"],
+     ["įdomus", "Budvardis", {"Skaicius":"Daugiskaita","Gimine":"M","Atvejis":"Kilmininkas"}, "интересных"],
+     ["žmogus", "Daiktavardis", {"Skaicius":"Daugiskaita","Atvejis":"Kilmininkas"}, "людей"],
+     [",", "Skirtukas", {}],
+     ["lietuvis", "Daiktavardis", {"Skaicius":"Daugiskaita","Atvejis":"Kilmininkas"}, "литовцев"],
+     ["profesionalas", "Daiktavardis", {"Skaicius":"Daugiskaita","Atvejis":"Kilmininkas"}, "профессоиналов"],
+     ["iš", "Prielinksnis", {}, "со"],
+     ["viso", "Ivardis", {}, "всего"],
+     ["pasaulis", "Daiktavardis", {"Skaicius":"Vienaskaita","Atvejis":"Kilmininkas"}, "мира"],
     ]
   ],
   "Original":

@@ -60,6 +60,25 @@ DaiktavardisGeneric::DaiktavardisGeneric(AttributeType *cfg)
     if ((*cfg).has_key(L"Linksniuote")) {
         linksniuote = (*cfg)[L"Linksniuote"].to_int();
     }
+    if ((*cfg).has_key(L"Lt")) {
+        AttributeType &lt = (*cfg)[L"Lt"];
+        if (lt.is_list()) {
+            // todo:
+        } else if (lt.is_dict()) {
+            if (lt.has_key(L"Vienaskaita")) {
+                AttributeType &vien = lt[L"Vienaskaita"];
+                for (unsigned i = 0; i < vien.size(); i++) {
+                    lentele_[Vienaskaita][i] = std::wstring(vien[i].to_string());
+                }
+            }
+            if (lt.has_key(L"Daugiskaita")) {
+                AttributeType &daug = lt[L"Daugiskaita"];
+                for (unsigned i = 0; i < daug.size(); i++) {
+                    lentele_[Daugiskaita][i] = std::wstring(daug[i].to_string());
+                }
+            }
+        }
+    }
 
     AttributeType &ru = (*cfg)[L"Ru"];
     if (ru.is_string()) {
@@ -314,13 +333,28 @@ void DaiktavardisGeneric::atnaujinti() {
         lentele_[Vienaskaita][Vietininkas] = saknis + std::wstring(L"uje");  // местный. sūnuje
         lentele_[Vienaskaita][Sauksmininkas] = saknis + std::wstring(L"au");  // звательный. sūnau
 
-        lentele_[Daugiskaita][Vardininkas] = saknis + std::wstring(L"ūs");  // sūnūs
-        lentele_[Daugiskaita][Kilmininkas] = daugiskaita_kilmininkas + std::wstring(L"ų");// sunų
-        lentele_[Daugiskaita][Naudininkas] = saknis + std::wstring(L"ums"); // sūnums
-        lentele_[Daugiskaita][Galininkas] = saknis + std::wstring(L"us");   // sūnus
-        lentele_[Daugiskaita][Inagininkas] = saknis + std::wstring(L"umis"); // sūnumis
-        lentele_[Daugiskaita][Vietininkas] = saknis + std::wstring(L"uose");// sūnuose
-        lentele_[Daugiskaita][Sauksmininkas] = saknis + std::wstring(L"ūs");// sūnūs
+        // žmogus - ед. число, žmonės - мн. число
+        if (lentele_[Daugiskaita][Vardininkas].size() == 0) {
+            lentele_[Daugiskaita][Vardininkas] = saknis + std::wstring(L"ūs");  // sūnūs
+        }
+        if (lentele_[Daugiskaita][Kilmininkas].size() == 0) {
+            lentele_[Daugiskaita][Kilmininkas] = daugiskaita_kilmininkas + std::wstring(L"ų");// sunų
+        }
+        if (lentele_[Daugiskaita][Naudininkas].size() == 0) {
+            lentele_[Daugiskaita][Naudininkas] = saknis + std::wstring(L"ums"); // sūnums
+        }
+        if (lentele_[Daugiskaita][Galininkas].size() == 0) {
+            lentele_[Daugiskaita][Galininkas] = saknis + std::wstring(L"us");   // sūnus
+        }
+        if (lentele_[Daugiskaita][Inagininkas].size() == 0) {
+            lentele_[Daugiskaita][Inagininkas] = saknis + std::wstring(L"umis"); // sūnumis
+        }
+        if (lentele_[Daugiskaita][Vietininkas].size() == 0) {
+            lentele_[Daugiskaita][Vietininkas] = saknis + std::wstring(L"uose");// sūnuose
+        }
+        if (lentele_[Daugiskaita][Sauksmininkas].size() == 0) {
+            lentele_[Daugiskaita][Sauksmininkas] = saknis + std::wstring(L"ūs");// sūnūs
+        }
         break;
 
     case Paradigma_4_ius:
