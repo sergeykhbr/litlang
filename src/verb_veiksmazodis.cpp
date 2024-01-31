@@ -324,16 +324,15 @@ void VeiksmazodisGeneric::atnaujinti() {
     std::wstring saknis5 = saknis1;
     wzodis = saknis5.c_str();
     vsz = static_cast<int>(saknis5.size());
-    std::wstring _k = L"k";     // TODO: -ki
     if (wzodis[vsz - 1] == L'g') {
-        saknis5 = saknis5.substr(0, vsz - 1) + L"k";
+        saknis5 = saknis5.substr(0, vsz - 1);
     }
     lt_liepiamoji_[as] = L"";
-    lt_liepiamoji_[tu] = saknis5 + _k;
+    lt_liepiamoji_[tu] = saknis5 + L"k";
     lt_liepiamoji_[jis] = L"te" + lt_[Esamasis][jis];
     lt_liepiamoji_[ji] = L"te" + lt_[Esamasis][ji];
-    lt_liepiamoji_[mes] = saknis5 + _k + L"ime";
-    lt_liepiamoji_[jus] = saknis5 + _k + L"ite";
+    lt_liepiamoji_[mes] = saknis5 + L"kime";
+    lt_liepiamoji_[jus] = saknis5 + L"kite";
     lt_liepiamoji_[jie] = L"te" + lt_[Esamasis][jie];
     lt_liepiamoji_[jos] = L"te" + lt_[Esamasis][jos];
 
@@ -493,14 +492,20 @@ std::wstring VeiksmazodisGeneric::gautiForma(AttributeType &arg) {
         // infinitive
         ret = value_;
         if (arg.has_key(L"Sangrazinis")) {
-            ret += L"s";
+            if (!arg.has_key(L"Priesdelis")) {
+                ret += L"s";
+            } else {
+                ret = std::wstring(arg[L"Priesdelis"].to_string()) + L"si" + ret;
+            }
         }
     } else {
         EAsmuo asmuo = str2asmuo(arg[L"Asmuo"].to_string());
         if (!arg.has_key(L"Nuosaka") || arg.is_equal(L"Tiesiogine")) {
             ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
-            if (arg.has_key(L"Sangrazinis")) {
+            if (arg.has_key(L"Sangrazinis") && !arg.has_key(L"Priesdelis")) {
                 ret = lt_si_[laikas][asmuo];
+            } else if (arg.has_key(L"Sangrazinis") && arg.has_key(L"Priesdelis")) {
+                ret = std::wstring(arg[L"Priesdelis"].to_string()) + L"si" + lt_[laikas][asmuo];
             } else {
                 ret = lt_[laikas][asmuo];
             }

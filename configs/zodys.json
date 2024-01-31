@@ -9,11 +9,13 @@
       Prieveiksmis, prv. наречие (adverb);
       Dalyvis причастие (participant);
       Prielinksnis, prl. предлог (preposition);
+      Priešdelis приставка;
       Jungtukas, jng. союз (conjuction);
       Skaitvardis, sktv. числительное ();
       Skirtukas знак препинания (punctuation mark);",
   "Veiksmazodis":[
      {"Value":"apsAugoti","Jis":["apsaugo","apsaugojo"],"Ru":"предохранить"},
+     {"Value":"atnaUjinti","Jis":["atnaujina","atnaujino"],"Ru":"обновить"},
      {"Value":"Augti","Jis":["auga","augo"],"Ru":"расти"},
      {"Value":"bŪti","Jis":["yra","buvo"],"Lt":{"Esamasis":["esu","esi","yra","esame","esate","yra"]},"Ru":"быть"},
      {"Value":"dalInti","Jis":["dalina","dalino"],"Ru":"делить","//":"тоже, что и dalyti"},
@@ -28,10 +30,14 @@
      {"Value":"matYti","Jis":["mato","matė"],"Ru":"видеть"},
      {"Value":"miegOti","Jis":["miega","miegojo"],"Ru":"спать"},
      {"Value":"mylėti","Jis":["myli","mylėjo"],"Ru":"любить"},
+     {"Value":"naudOti","Jis":["naudoja","naudojo"],"Ru":"употреблять"},
      {"Value":"norĖti","Jis":["nori","norėjo"],"Ru":"хотеть"},
+     {"Value":"nustatYti","Jis":["nustato","nustatė"],"Ru":"установить"},
      {"Value":"padarYti","Jis":["padaro","padarė"],"Ru":"делать"},
      {"Value":"padĖti","Jis":["padeda","padėjo"],"Ru":"помогать, положить"},
      {"Value":"paklAusti","Jis":["paklausia","paklausė"],"Ru":"спросить"},
+     {"Value":"pasirŪpinti","Jis":["pasirupina","pasirūpino"],"Ru":"позаботиться"},
+     {"Value":"rŪpinti","Jis":["rupina","rūpino"],"Ru":"oзабочивать"},
      {"Value":"skaityti","Jis":["skaito","skaitė"],"Ru":"читать"},
      {"Value":"sutIkti","Jis":["sutinka","sutiko"],"Ru":"встретить"},
      {"Value":"tvIrtinti","Jis":["tvirtina","tvirtino"],"Ru":"утверждать"},
@@ -77,6 +83,7 @@
      {"Value":"profesionAlas","Gimine":"V","Ru":"профессионал"},
      {"Value":"programA","Gimine":"M","Ru":"программа"},
      {"Value":"sesuo","Gimine":"M","Ru":"сестра"},
+     {"Value":"slaptAžodis","Gimine":"V","Ru":"пароль"},
      {"Value":"sutikimas","Ru":"согласие"},
      {"Value":"sūnus","Gimine":"V","Ru":"сын"},
      {"Value":"vaisius","Gimine":"V","Ru":"фрукт"},
@@ -185,6 +192,7 @@
      {"Value":"ar","Ru":"также"},
      {"Value":"daug","Ru":"много"},
      {"Value":"labaI","Ru":"очень"},
+     {"Value":"toliaU","Ru":"далее"},
      {"Value":"taIp","Ru":"так"},
   ],
   "Prielinksnis":[

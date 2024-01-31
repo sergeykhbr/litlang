@@ -18,6 +18,18 @@
     [["norėti", "Podalyvis", {"Skaicius":"Daugiskaita","Gimine":"V"}, "хотя"],
      ["tinkamas", "Budvardis", {"Skaicius":"Vienaskaita","Gimine":"M","Atvejis":"Naudininkas"}, "подходящей"],
      ["jis", "Ivardis", {"Skaicius":"Daugiskaita","Atvejis":"Inagininkas"}, "ими"],
+     ["rūpinti", "Veiksmazodis", {"Sangrazinis":"yes","Priesdelis":"pa"}, "по-заботит-ся"],
+     [",", "Skirtukas", {}],
+     ["atnaujinti", "Veiksmazodis", {"Asmuo":"jus","Nuosaka":"Liepiamoji"}, "обновите"],
+     ["savo", "Ivardis", {"Skaicius":"Vienaskaita","Atvejis":"Vardininkas"}, "свой"],
+     ["slaptažodis","Daiktavardis", {"Skaicius":"Vienaskaita","Atvejis":"Galininkas"}, "пароль"]
+    ],
+    [["norėti", "Podalyvis", {"Skaicius":"Daugiskaita","Gimine":"V"}, "хотя"],
+     ["jis", "Ivardis", {"Skaicius":"Daugiskaita","Atvejis":"Galininkas"}, "их"],
+     ["nustatyti", "Veiksmazodis", {}, "установить"],
+     [",", "Skirtukas", {}],
+     ["naudoti", "Veiksmazodis", {"Asmuo":"jus","Nuosaka":"Liepiamoji"}, "примените"],
+     ["toliau", "Prieveiksmis", {}, "далее"],
     ],
   ],
   "Original":
