@@ -71,6 +71,10 @@ DalyvisGeneric::ERusis DalyvisGeneric::str2rusis(const wchar_t *s) {
 void DalyvisGeneric::atnaujinti() {
     std::wstring saknis1 = veiksmazodis_->imkSaknis(1);
     std::wstring saknis2 = veiksmazodis_->imkSaknis(2);
+    // Exception:
+    if (saknis2 == L"yr") {
+        saknis2 = L"es";
+    }
     std::wstring _a_i = L"";
     std::wstring _a_i_nosine = L"";
     if (veiksmazodis_->imkAsmenuote() == 1

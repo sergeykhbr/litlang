@@ -68,9 +68,16 @@ class BudvardisGeneric : public WordGeneric {     // глагол
         Pardigma_Total
     } EParadigma;
 
+    typedef enum ELaipsnis {
+        Laipsnis_nezinoma,
+        Laipsnis_Lyginamasis,       // сравнительная степень
+        Laipsnis_Superlatyvas,      // превосходная степень
+        Laipsnis_Total
+    } ELaipsnis;
+
     EGimine gimine_;
     EParadigma paradigma_;
-    std::wstring lentele_[Skaicus_Total][Gimine_Total][Atvejis_Total];
+    std::wstring lt_[Laipsnis_Total][Skaicus_Total][Gimine_Total][Atvejis_Total];
     std::wstring ru_[Skaicus_Total][Gimine_Total][Atvejis_Total];
 };
 
