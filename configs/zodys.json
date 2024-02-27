@@ -15,6 +15,7 @@
       Skirtukas знак препинания (punctuation mark);",
   "Veiksmazodis":[
      {"Value":"aplankYti","Jis":["aplanko","aplankė"],"Ru":"посетить"},
+     {"Value":"apdovanOti","Jis":["apdovanoja","apdovanojo"],"Ru":"наградить"},
      {"Value":"apsAugoti","Jis":["apsaugo","apsaugojo"],"Ru":"предохранить"},
      {"Value":"atnaUjinti","Jis":["atnaujina","atnaujino"],"Ru":"обновить"},
      {"Value":"Augti","Jis":["auga","augo"],"Ru":"расти"},
@@ -92,6 +93,7 @@
      {"Value":"patirtIs","Gimine":"V","Linksniuote":3,"Ru":"опыт (накопленный)"},
      {"Value":"patyrImas","Gimine":"V","Ru":"опыт (момент)"},
      {"Value":"pilis","Gimine":"V","Ru":"замок"},
+     {"Value":"pirkinYs","Gimine":"V","Ru":"покупка"},
      {"Value":"profesionAlas","Gimine":"V","Ru":"профессионал"},
      {"Value":"programA","Gimine":"M","Ru":"программа"},
      {"Value":"sesuo","Gimine":"M","Ru":"сестра"},
@@ -173,6 +175,7 @@
      {"Value":"ši","Gimine":"M","Lt":[["ši","šios","šiai","šią","šia","šioje"],
                                       ["","","","","",""]],
                                  "Ru":"эта"},
+     {"Value":"kiekvIenas","Gimine":"V","Linksniuote":"kitas","Ru":"каждый"},
      {"Value":"kitas","Gimine":"V","Linksniuote":"kitas","Ru":"другой"},
      {"Value":"kita","Gimine":"M","Linksniuote":"ta","Ru":"другая"},
      {"Value":"kitOks","Gimine":"V","Linksniuote":"toks","Ru":"иной"},
@@ -198,6 +201,7 @@
   ],
   "Dalelyte":[
      {"Value":"ar","Ru":"ли"},
+     {"Value":"dar","Ru":"даже"},
      {"Value":"jau","Ru":"уже"},
      {"Value":"ne","Ru":"нет"},
      {"Value":"ne","Ru":"не"},
@@ -208,6 +212,7 @@
   "Prieveiksmis":[
      {"Value":"ar","Ru":"также"},
      {"Value":"daug","Ru":"много"},
+     {"Value":"daugiaU","Ru":"больше"},
      {"Value":"labaI","Ru":"очень"},
      {"Value":"taIp","Ru":"так"},
      {"Value":"tiesiOg","Ru":"просто"},
@@ -218,6 +223,7 @@
      {"Value":"iš","Ru":"из"},
      {"Value":"prie","Ru":"к"},
      {"Value":"su","Ru":"с"},
+     {"Value":"už","Ru":"за"},
   ],
   "Jungtukas":[
      {"Value":"ar","Ru":"или"},
