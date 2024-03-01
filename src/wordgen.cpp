@@ -89,6 +89,8 @@ EGimine WordGeneric::str2gimine(const wchar_t *s) {
     if (wcscmp(s, L"Moteriskoji") == 0
         || wcscmp(s, L"M") == 0) {
         ret = Moteriskoji;
+    } else if (wcscmp(s, L"Bevarde") == 0) {
+        ret = Bevarde;
     }
     return ret;
 }

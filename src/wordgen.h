@@ -24,6 +24,7 @@ typedef enum EGimine {
     Gimine_nezinoma,
     Vyriskoji,
     Moteriskoji,
+    Bevarde,            // средний
     Gimine_Total
 } EGimine;
 

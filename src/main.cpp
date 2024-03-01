@@ -85,7 +85,10 @@ std::wstring lesson2text(AttributeType &lesson) {
                 printf_error(L"Zodis nerastas '%s'\n", zodis[0u].to_string());
             }
         }
-        ret += L".\n\n";
+        if (!gen_fragment[gen_fragment.size() - 1][1].is_equal(L"Skirtukas")) {
+            ret += L".";
+        }
+        ret += L"\n\n";
     }
     return ret;
 }

@@ -69,7 +69,7 @@ class BudvardisGeneric : public WordGeneric {     // глагол
     } EParadigma;
 
     typedef enum ELaipsnis {
-        Laipsnis_nezinoma,
+        Laipsnis_nezinoma,          // простая форма
         Laipsnis_Lyginamasis,       // сравнительная степень
         Laipsnis_Superlatyvas,      // превосходная степень
         Laipsnis_Total
@@ -78,6 +78,7 @@ class BudvardisGeneric : public WordGeneric {     // глагол
     EGimine gimine_;
     EParadigma paradigma_;
     std::wstring lt_[Laipsnis_Total][Skaicus_Total][Gimine_Total][Atvejis_Total];
+    std::wstring lt_bevarde_;       // Bevardė gimine - средний род, сравнительная степерь
     std::wstring ru_[Skaicus_Total][Gimine_Total][Atvejis_Total];
 };
 

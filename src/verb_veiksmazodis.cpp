@@ -88,6 +88,10 @@ std::wstring VeiksmazodisGeneric::imkSaknis(int idx) {
         // -(i)a; -i; -o
         const wchar_t *wzodis = lt_[Esamasis][jis].c_str();
         int vsz = static_cast<int>(lt_[Esamasis][jis].size());
+        if (yraSangrazinis()) {
+            // remove -si when infintive end on -tis
+            vsz -= 2;
+        }
         if (wzodis[vsz-2] == L'i' && wzodis[vsz-1] == L'a') {
             ret = lt_[Esamasis][jis].substr(0, vsz - 2);
         } else {
@@ -96,6 +100,10 @@ std::wstring VeiksmazodisGeneric::imkSaknis(int idx) {
     } else if (idx == 3) {
         // -o; -ė
         int vsz = static_cast<int>(lt_[Butasis][jis].size());
+        if (yraSangrazinis()) {
+            // remove -si when infintive end on -tis
+            vsz -= 2;
+        }
         ret = lt_[Butasis][jis].substr(0, vsz - 1);
     }
     return ret;
@@ -108,6 +116,15 @@ std::wstring VeiksmazodisGeneric::imkZodis(int idx) {
         return lt_[Butasis][jis];
     }
     return value_;
+}
+
+bool VeiksmazodisGeneric::yraSangrazinis() {
+    int vsz = static_cast<int>(value_.size());
+    const wchar_t *wzodis = value_.c_str();
+    if (wzodis[vsz-3] == L't' && wzodis[vsz-2] == L'i' && wzodis[vsz-1] == L's') {
+        return true;
+    }
+    return false;
 }
 
 // Užpildykite deklinacijos lentelę - Заполнить таблицу склонений (склонятельную таблицу)
@@ -129,17 +146,23 @@ void VeiksmazodisGeneric::atnaujinti() {
     std::wstring _o_e = L"";
 
     // Infinitive:
-    if (wzodis[vsz-2] == L't' && wzodis[vsz-1] == L'i') {
+    if (yraSangrazinis()) {
+        saknis1 = value_.substr(0, vsz - 3);
+        galunes1 = L"tis";
+        // 3 asmuo, vietininkas, esamasis laikas
+        wzodis = lt_[Esamasis][jis].c_str();
+        vsz = static_cast<int>(lt_[Esamasis][jis].size()) - 2;  // ignore -si ending
+    } else if (wzodis[vsz-2] == L't' && wzodis[vsz-1] == L'i') {
         saknis1 = value_.substr(0, vsz - 2);
         galunes1 = L"ti";
+        // 3 asmuo, vietininkas, esamasis laikas
+        wzodis = lt_[Esamasis][jis].c_str();
+        vsz = static_cast<int>(lt_[Esamasis][jis].size());
     } else {
         // unsupported format
         wprintf(L"warning: nepalaikomas veikmažodiai formatas %s\n", L"-ti");
     }
 
-    // 3 asmuo, vietininkas, esamasis laikas
-    wzodis = lt_[Esamasis][jis].c_str();
-    vsz = static_cast<int>(lt_[Esamasis][jis].size());
     saknis2 = imkSaknis(2);
     if (wzodis[vsz-2] == L'i' && wzodis[vsz-1] == L'a') {
         asmenuote_ = 1;
@@ -248,6 +271,9 @@ void VeiksmazodisGeneric::atnaujinti() {
     // 3 asmuo, vietininkas, būtasis laikas
     wzodis = lt_[Butasis][jis].c_str();
     vsz = static_cast<int>(lt_[Butasis][jis].size());
+    if (yraSangrazinis()) {
+        vsz -= 2;       // remove -si at the end of "butasis laikas" when infinitive on -tis
+    }
     saknis3 = imkSaknis(3);
     std::wstring _i = L"";
     if (value_[value_.size() - 3] == L'y' || value_[value_.size() - 3] == L'i') {
@@ -502,7 +528,8 @@ std::wstring VeiksmazodisGeneric::gautiForma(AttributeType &arg) {
         EAsmuo asmuo = str2asmuo(arg[L"Asmuo"].to_string());
         if (!arg.has_key(L"Nuosaka") || arg.is_equal(L"Tiesiogine")) {
             ELaikas laikas = str2laikas(arg[L"Laikas"].to_string());
-            if (arg.has_key(L"Sangrazinis") && !arg.has_key(L"Priesdelis")) {
+            if (yraSangrazinis() || 
+                (arg.has_key(L"Sangrazinis") && !arg.has_key(L"Priesdelis"))) {
                 ret = lt_si_[laikas][asmuo];
             } else if (arg.has_key(L"Sangrazinis") && arg.has_key(L"Priesdelis")) {
                 ret = std::wstring(arg[L"Priesdelis"].to_string()) + L"si" + lt_[laikas][asmuo];

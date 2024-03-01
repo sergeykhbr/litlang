@@ -43,6 +43,7 @@
      - Geminė, род
          Vyreškoji мужской
          Moteriškoji женский
+         Bevardė средний (превосходная степень) - больше, меньше, лучше и т.д.
      - Skaičiu
          Vienaskaita 
          Daugiskaita
@@ -317,6 +318,9 @@ void BudvardisGeneric::atnaujinti() {
     l[Inagininkas] = saknis + L"aus" + std::wstring(L"iomis"); // puikiausiomis
     l[Vietininkas] = saknis + L"aus" + std::wstring(L"iose");  // puikiausiose
 
+    // Bevardė gimine - Средний род
+    lt_[Laipsnis_nezinoma][Vienaskaita][Bevarde][Vardininkas] = saknis + L"iau";
+    lt_[Laipsnis_Superlatyvas][Vienaskaita][Bevarde][Vardininkas] = saknis + L"iau";
 }
 
 // root of the word (common part without ending):

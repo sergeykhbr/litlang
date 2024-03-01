@@ -32,6 +32,7 @@ class VeiksmazodisGeneric : public WordGeneric {
  protected:
     // обновить (заполнить таблицу склонений)
     void atnaujinti();
+    bool yraSangrazinis();                          // -tis - только возвратная форма
 
  protected:
 

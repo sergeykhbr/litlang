@@ -224,7 +224,7 @@ void DaiktavardisGeneric::atnaujinti() {
         break;
 
     case Paradigma_1_ys:
-        lentele_[Vienaskaita][Vardininkas] = saknis + std::wstring(L"ias");  // именительный. kambarys = команата
+        lentele_[Vienaskaita][Vardininkas] = saknis + std::wstring(L"ys");  // именительный. kambarys = команата
         lentele_[Vienaskaita][Kilmininkas] = saknis + std::wstring(L"io");   // родительный. kambario = комнаты
         lentele_[Vienaskaita][Naudininkas] = saknis + std::wstring(L"iui");  // дательный/полезный. kambariui = комнате
         lentele_[Vienaskaita][Galininkas] = saknis + std::wstring(L"į");    // винительный/могущий. kambarį = комнату
