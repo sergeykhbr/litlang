@@ -1,0 +1,25 @@
+{
+  "Zodiai":[
+    [["-", "Skirtukas",{}]
+     ["dėmesys","Daiktavardis",{"Skaicius":"Vienaskaita","Atvejis":"Kilmininkas"}, "внимание"],
+     ["!", "Skirtukas",{}]],
+    [["svečias", "Daiktavardis", {"Skaicius":"Daugiskaita", "Atvejis":"Vardininkas"}, "гости"],
+     ["iš", "Prielinksnis", {}, "из"],
+    ],
+  ],
+  "Original":
+   ["- Dėmesio!", 
+    "Svečiai iš pirmos grupės, jūsų laukia salėje.",
+    "Kartoju.",
+    "- Laba diena, ponios ir ponai.",
+    "Sveiki atvykę.",
+    "Malonu jus matyti.",
+    "Graži diena šiandien, ar ne?",
+    "- Tikrai, oras puikus.",
+    "- Kaip sekėsi kelionė?",
+    "- Ačiū, kelionė buvo puiki.",
+    "Oras nuostabus.",
+    "Reikia tikėtis, kad ir toliau viskas bus puiku.",
+    "Mes šauniai praleisime laiką.",
+   ]
+}
