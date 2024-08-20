@@ -38,7 +38,7 @@
      ["klausimas","Daiktavardis", {"Skaicius":"Daugiskaita","Atvejis":"Kilmininkas"}, "вопросы"],
      ["padėti","Veiksmazodis", {"Asmuo":"jis","Laikas":"Esamasis"}, "помогает"],
      ["augti","Veiksmazodis", {}, "расти"],
-     ["abu","Skaitvardis", {"Atvejis":"Naudininkas","Gimine":"M"}, "для обоих"],
+     ["abu","Skaitvardis", {"Gimine":"M","Skaicius":"Vienaskaita","Atvejis":"Naudininkas"}, "для обоих"],
     ],
     [["tas", "Ivardis", {"Skaicius":"Vienaskaita", "Atvejis":"Galininkas"}, "того"],
      ["tvirtinti", "Veiksmazodis", {"Asmuo":"as","Laikas":"Esamasis"}, "утверждаю"],

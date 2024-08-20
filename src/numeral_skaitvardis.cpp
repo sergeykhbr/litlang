@@ -35,25 +35,30 @@
 SkaitvardisGeneric::SkaitvardisGeneric(AttributeType *cfg) : WordGeneric(cfg) {
     AttributeType &lt = (*cfg)[L"Lt"];
     if (lt.is_string()) {
+        lt_[Vyriskoji][Vienaskaita][Vardininkas] = std::wstring(lt.to_string());
     } else if (lt.is_list()) {
         for (unsigned i = 0; i < lt.size(); i++) {
             AttributeType &v = lt[i];
             if (v.is_list()) {
-                lt_[i][Vyriskoji] = std::wstring(v[0u].to_string());
-                lt_[i][Moteriskoji] = std::wstring(v[0u].to_string());
+                lt_[Vyriskoji][Vienaskaita][i] = std::wstring(v[0u].to_string());
+                lt_[Moteriskoji][Vienaskaita][i] = std::wstring(v[1].to_string());
+                lt_[Vyriskoji][Daugiskaita][i] = std::wstring(v[2].to_string());
+                lt_[Moteriskoji][Daugiskaita][i] = std::wstring(v[3].to_string());
             }
         }
     }
 
     AttributeType &ru = (*cfg)[L"Ru"];
     if (ru.is_string()) {
-        ru_[Vardininkas][Vyriskoji] = std::wstring(ru.to_string());
+        ru_[Vyriskoji][Vienaskaita][Vardininkas] = std::wstring(ru.to_string());
     } else if (ru.is_list()) {
         for (unsigned i = 0; i < ru.size(); i++) {
             AttributeType &v = ru[i];
             if (v.is_list()) {
-                ru_[i][Vyriskoji] = std::wstring(v[0u].to_string());
-                ru_[i][Moteriskoji] = std::wstring(v[0u].to_string());
+                ru_[Vyriskoji][Vienaskaita][i] = std::wstring(v[0u].to_string());
+                ru_[Moteriskoji][Vienaskaita][i] = std::wstring(v[1].to_string());
+                ru_[Vyriskoji][Daugiskaita][i] = std::wstring(v[2].to_string());
+                ru_[Moteriskoji][Daugiskaita][i] = std::wstring(v[3].to_string());
             }
         }
     }
@@ -65,13 +70,14 @@ void SkaitvardisGeneric::info() {
     tcnt = add2wline(tstr, tcnt, L"\nSkaitvardis: ", 0);
     tcnt = add2wline(tstr, tcnt, value_.c_str(), 0);
     tcnt = add2wline(tstr, tcnt, L", (", 0);
-    tcnt = add2wline(tstr, tcnt, ru_[Vardininkas][Vyriskoji].c_str(), 0);
+    tcnt = add2wline(tstr, tcnt, ru_[Vyriskoji][Vienaskaita][Vardininkas].c_str(), 0);
     tcnt = add2wline(tstr, tcnt, L")", 0);
     printf_log(L"%s\n", tstr);
 }
 
 std::wstring SkaitvardisGeneric::gautiForma(AttributeType &arg) {
     EGimine gimine = str2gimine(arg[L"Gimine"].to_string());
+    ESkaicus skaicus = str2skaicus(arg[L"Skaicius"].to_string());
     EAtvejis atvejis = str2atvejis(arg[L"Atvejis"].to_string());
-    return lt_[atvejis][gimine];
+    return lt_[gimine][skaicus][atvejis];
 }
