@@ -21,6 +21,9 @@
 #include <io.h>
 #include <fcntl.h>
 
+#include <iostream>
+#include <sstream>
+
 std::wstring l1 = 
 L"Mentorystė. Tai ne vienpusis dalinimasis patirtimi ar patarimais, o Mainai. "
 L"Mainai kur dalindamasis gauni daug įžvalgų apie save, daug pozityvios energijos "
@@ -93,6 +96,70 @@ std::wstring lesson2text(AttributeType &lesson) {
     return ret;
 }
 
+std::wstring to_wlower_lt(std::wstring str) {
+    std::wstring ret = L"";
+    for (std::wstring::iterator it = str.begin(); it != str.end(); it++) {
+        if (*it >= L'A' && *it <= L'Z') {
+            ret += *it - L'A' + L'a';
+        } else if (*it == L'Ą' || *it == L'ą') {
+            ret += L'a';
+        } else if (*it == L'Č' || *it == L'č') {
+            ret += L'c';
+        } else if (*it == L'Ę' || *it == L'ę') {
+            ret += L'e';
+        } else if (*it == L'Ė' || *it == L'ė') {
+            ret += L'e';
+        } else if (*it == L'Į' || *it == L'į') {
+            ret += L'i';
+        } else if (*it == L'Š' || *it == L'š') {
+            ret += L's';
+        } else if (*it == L'Ų' || *it == L'ų') {
+            ret += L'u';
+        } else if (*it == L'Ū' || *it == L'ū') {
+            ret += L'u';
+        } else if (*it == L'Ž' || *it == L'ž') {
+            ret += L'z';
+        } else {
+            ret += *it;
+        }
+    }
+    return ret;
+}
+
+void ask_words(AttributeType &zodiai, const wchar_t *type) {
+    AttributeType &words = zodiai[type];
+    AttributeType trial(Attr_Dict);
+    std::wstring lt, ref;
+
+    int i = 0;
+    while (trial.size() != words.size()) {
+        AttributeType &w = words[i];
+
+        ref = to_wlower_lt(w[L"Value"].to_string());
+        if (trial.has_key(ref.c_str())) {
+            i = (i + 1) % words.size();
+            continue;
+        }
+
+        // Ask question:
+        wprintf(L"%s: ", w[L"Ru"].to_string());
+        // get response
+        std::getline(std::wcin, lt);
+        lt = to_wlower_lt(lt);
+
+        if (lt == ref) {
+            trial[lt.c_str()].make_int64(0);
+            wprintf(L"+ %s, %d to go\n",
+                    w[L"Value"].to_string(),
+                    words.size() - trial.size());
+        } else {
+            wprintf(L"- %s\n", w[L"Value"].to_string());
+        }
+
+        i = (i + 1) % words.size();
+    }
+}
+
 int main(int argc, const char *argv[]) {
     AttributeType databuf;
     AttributeType zodiai;
@@ -115,6 +182,8 @@ int main(int argc, const char *argv[]) {
     if (lesson.is_dict()) {
         wprintf(L"%s.\n", lesson2text(lesson).c_str());
     }
+
+    ask_words(zodiai, L"Veiksmazodis");
 
     //WRD_gauti_zodis(L"dirbti", L"Dalyvis")->info();
 
