@@ -20,7 +20,7 @@
      {"Value":"atnaUjinti","Jis":["atnaujina","atnaujino"],"Ru":"обновить"},
      {"Value":"Augti","Jis":["auga","augo"],"Ru":"расти"},
      {"Value":"bŪti","Jis":["yra","buvo"],"Lt":{"Esamasis":["esu","esi","yra","esame","esate","yra"]},"Ru":"быть"},
-     {"Value":"dalInti","Jis":["dalina","dalino"],"Ru":"делить","//":"тоже, что и dalyti"},
+     {"Value":"dalInti","Jis":["dalina","dalino"],"Ru":"делить(n)","//":"тоже, что и dalyti"},
      {"Value":"dalYti","Jis":["dalija","dalijo"],"Ru":"делить"},
      {"Value":"dirbti","Jis":["dirba","dirbo"],"Ru":"работать"},
      {"Value":"eiti","Jis":["eina","ėjo"],"Ru":"ходить"},

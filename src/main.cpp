@@ -119,6 +119,9 @@ std::wstring to_wlower_lt(std::wstring str) {
             ret += L'u';
         } else if (*it == L'Ž' || *it == L'ž') {
             ret += L'z';
+        } else if (*it == L'(' || *it == L'//') {
+            // special symbols to ignore aftervards
+            break;
         } else {
             ret += *it;
         }
@@ -126,34 +129,40 @@ std::wstring to_wlower_lt(std::wstring str) {
     return ret;
 }
 
-void ask_words(AttributeType &zodiai, const wchar_t *type) {
+void ask_words(AttributeType &zodiai, const wchar_t *type, std::wstring qlang) {
     AttributeType &words = zodiai[type];
     AttributeType trial(Attr_Dict);
-    std::wstring lt, ref;
+    std::wstring resp, ask, ref;
 
     int i = 0;
     while (trial.size() != words.size()) {
         AttributeType &w = words[i];
 
-        ref = to_wlower_lt(w[L"Value"].to_string());
-        if (trial.has_key(ref.c_str())) {
+        if (qlang == L"Ru") {
+            ask = w[L"Ru"].to_string();
+            ref = w[L"Value"].to_string();
+        } else {
+            ask = w[L"Value"].to_string();
+            ref = w[L"Ru"].to_string();
+        }
+        if (trial.has_key(ask.c_str())) {
             i = (i + 1) % words.size();
             continue;
         }
 
         // Ask question:
-        wprintf(L"%s: ", w[L"Ru"].to_string());
+        wprintf(L"%s: ", ask.c_str());
         // get response
-        std::getline(std::wcin, lt);
-        lt = to_wlower_lt(lt);
+        std::getline(std::wcin, resp);
+        resp = to_wlower_lt(resp);
 
-        if (lt == ref) {
-            trial[lt.c_str()].make_int64(0);
+        if (resp == to_wlower_lt(ref)) {
+            trial[ask.c_str()].make_int64(0);
             wprintf(L"+ %s, %d to go\n",
-                    w[L"Value"].to_string(),
+                    ref.c_str(),
                     words.size() - trial.size());
         } else {
-            wprintf(L"- %s\n", w[L"Value"].to_string());
+            wprintf(L"- %s\n", ref.c_str());
         }
 
         i = (i + 1) % words.size();
@@ -183,7 +192,8 @@ int main(int argc, const char *argv[]) {
         wprintf(L"%s.\n", lesson2text(lesson).c_str());
     }
 
-    ask_words(zodiai, L"Veiksmazodis");
+    ask_words(zodiai, L"Veiksmazodis", L"Ru");
+    ask_words(zodiai, L"Veiksmazodis", L"Value");
 
     //WRD_gauti_zodis(L"dirbti", L"Dalyvis")->info();
 
