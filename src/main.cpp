@@ -122,6 +122,9 @@ std::wstring to_wlower_lt(std::wstring str) {
         } else if (*it == L'(' || *it == L'//') {
             // special symbols to ignore aftervards
             break;
+        } else if (*it == L' ' && (*(it + 1) == L'//' || *(it + 1) == L'(')) {
+            // special symbols after to ignore aftervards. do not ignore ',' separator
+            break;
         } else {
             ret += *it;
         }
@@ -174,7 +177,8 @@ int main(int argc, const char *argv[]) {
     AttributeType zodiai;
     AttributeType lesson;
 
-    _setmode(_fileno(stdout), _O_U8TEXT);
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-z") == 0) {
