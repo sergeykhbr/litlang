@@ -29,6 +29,11 @@
      ["oras", "Daiktavardis", {"Skaicius":"Vienaskaita","Atvejis":"Vardininkas"},"погода"],
      ["puikus", "Budvardis", {"Skaicius":"Vienaskaita","Gimine":"V","Atvejis":"Vardininkas"}, "превосходная"],
     ],
+    [["-", "Skirtukas",{}],
+     ["kaip", "Jungtukas",{}, "как"],
+     ["sektis", "Veiksmazodis",{"Asmuo":"jis","Laikas":"Butasis"}, "удалась"],
+     ["?", "Skirtukas",{}]
+    ],
   ],
   "Original":
    ["- Dėmesio!", 

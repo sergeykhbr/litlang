@@ -196,8 +196,10 @@ int main(int argc, const char *argv[]) {
         wprintf(L"%s.\n", lesson2text(lesson).c_str());
     }
 
-    ask_words(zodiai, L"Veiksmazodis", L"Ru");
-    ask_words(zodiai, L"Veiksmazodis", L"Value");
+    //ask_words(zodiai, L"Veiksmazodis", L"Ru");
+    //ask_words(zodiai, L"Veiksmazodis", L"Value");
+
+    ask_words(zodiai, L"Daiktavardis", L"Ru");
 
     //WRD_gauti_zodis(L"dirbti", L"Dalyvis")->info();
 
