@@ -132,6 +132,9 @@ std::wstring to_wlower_lt(std::wstring str) {
     return ret;
 }
 
+#include <map>
+std::map<int, std::wstring> dbgIdx_;
+
 void ask_words(AttributeType &zodiai, const wchar_t *type, std::wstring qlang) {
     AttributeType &words = zodiai[type];
     AttributeType trial(Attr_Dict);
@@ -149,6 +152,10 @@ void ask_words(AttributeType &zodiai, const wchar_t *type, std::wstring qlang) {
             ref = w[L"Ru"].to_string();
         }
         if (trial.has_key(ask.c_str())) {
+            const wchar_t *x = ref.c_str();
+            if (dbgIdx_.count(i % words.size()) == 0) {
+                bool st = true;
+            }
             i = (i + 1) % words.size();
             continue;
         }
@@ -164,6 +171,7 @@ void ask_words(AttributeType &zodiai, const wchar_t *type, std::wstring qlang) {
             wprintf(L"+ %s, %d to go\n",
                     ref.c_str(),
                     words.size() - trial.size());
+            dbgIdx_[i % words.size()] = ask;
         } else {
             wprintf(L"- %s\n", ref.c_str());
         }
